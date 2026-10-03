@@ -4,38 +4,38 @@
 #include "utility.h"
 
 namespace GameTab {
-	const std::vector<const char*> KILL_DISTANCE = { "Short", "Medium", "Long", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
-	const std::vector<const char*> TASKBARUPDATES = { "Always", "Meetings", "Never", "3", "4", "5", "6" };
-	const std::vector<const char*> SMAC_PUNISHMENTS = { "Do Nothing", "Warn Self"/*, "Warn All (Chat)", State.SafeMode ? "Attempt to Ban" : "Attempt to Kick"*/};
-	const std::vector<const char*> SMAC_HOST_PUNISHMENTS = { "Do Nothing", "Warn Self"/*, "Warn All (Chat)"*/, "Kick", "Ban"};
-	const std::vector<const char*> SHIPVENTS = { "Admin", "Hallway", "Cafeteria", "Electrical", "Upper Engine", "Security", "Medbay", "Weapons", "Lower Reactor", "Lower Engine", "Shields", "Upper Reactor", "Upper Navigation", "Lower Navigation" };
-	const std::vector<const char*> HQVENTS = { "Balcony", "Cafeteria", "Reactor", "Laboratory", "Office", "Admin", "Greenhouse", "Medbay", "Decontamination", "Locker Room", "Launchpad" };
-	const std::vector<const char*> PBVENTS = { "Security", "Electrical", "O2", "Communications", "Office", "Admin", "Laboratory", "Lava Pool", "Storage", "Right Seismic", "Left Seismic", "Outside Admin" };
-	const std::vector<const char*> AIRSHIPVENTS = { "Vault", "Cockpit", "Viewing Deck", "Engine", "Kitchen", "Lower Main Hall", "Upper Main Hall", "Right Gap Room", "Left Gap Room", "Showers", "Records", "Cargo Bay" };
-	const std::vector<const char*> FUNGLEVENTS = { "Communications", "Kitchen", "Lookout", "Outside Dorm", "Laboratory", "Reactor", "Jungle (Laboratory)", "Jungle (Greenhouse)", "Splash Zone", "Cafeteria" };
+	const std::vector<const char*> KILL_DISTANCE = { "Corta", "Media", "Larga", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" };
+	const std::vector<const char*> TASKBARUPDATES = { "Siempre", "Reuniones", "Nunca", "3", "4", "5", "6" };
+	const std::vector<const char*> SMAC_PUNISHMENTS = { "No hacer nada", "Advertirse a uno mismo"/*, "Warn All (Chat)", State.SafeMode ? "Attempt to Ban" : "Attempt to Kick"*/};
+	const std::vector<const char*> SMAC_HOST_PUNISHMENTS = { "No hacer nada", "Advertirse a uno mismo"/*, "Warn All (Chat)"*/, "Expulsar", "Banear"};
+	const std::vector<const char*> SHIPVENTS = { "Admin", "Pasillo", "Cafetería", "Electricidad", "Motor Superior", "Seguridad", "Ala Médica", "Armería", "Reactor Inferior", "Motor Inferior", "Escudos", "Reactor Superior", "Navegación Superior", "Navegación Inferior" };
+	const std::vector<const char*> HQVENTS = { "Balcón", "Cafetería", "Reactor", "Laboratorio", "Oficina", "Admin", "Invernadero", "Ala Médica", "Descontaminación", "Vestidores", "Plataforma de Lanzamiento" };
+	const std::vector<const char*> PBVENTS = { "Seguridad", "Electricidad", "O2", "Comunicaciones", "Oficina", "Admin", "Laboratorio", "Piscina de Lava", "Almacén", "Sísmico Derecho", "Sísmico Izquierdo", "Fuera de Admin" };
+	const std::vector<const char*> AIRSHIPVENTS = { "Bóveda", "Cabina", "Mirador", "Motor", "Cocina", "Sala Principal Inferior", "Sala Principal Superior", "Habitación de Brecha Derecha", "Habitación de Brecha Izquierda", "Duchas", "Archivos", "Bahía de Carga" };
+	const std::vector<const char*> FUNGLEVENTS = { "Comunicaciones", "Cocina", "Mirador", "Fuera de Dormitorios", "Laboratorio", "Reactor", "Jungla (Laboratorio)", "Jungla (Invernadero)", "Zona de Salpicaduras", "Cafetería" };
 	const std::vector<std::string> PLATFORM_FILTERS = { "Epic Games (PC)", "Steam (PC)", "Mac", "Microsoft Store (PC)", "itch.io (PC)", "iOS/iPadOS (Mobile)", "Android (Mobile)", "Nintendo Switch (Console)", "Xbox (Console)", "Playstation (Console)", "Unknown" };
-	const std::vector<const char*> COLORS = { "Red", "Blue", "Green", "Pink", "Orange", "Yellow", "Black", "White", "Purple", "Brown", "Cyan", "Lime", "Maroon", "Rose", "Banana", "Gray", "Tan", "Coral" };
-	const std::vector<const char*> HOSTCOLORS = { "Red", "Blue", "Green", "Pink", "Orange", "Yellow", "Black", "White", "Purple", "Brown", "Cyan", "Lime", "Maroon", "Rose", "Banana", "Gray", "Tan", "Coral", "Fortegreen" };
+	const std::vector<const char*> COLORS = { "Rojo", "Azul", "Verde", "Rosa", "Naranja", "Amarillo", "Negro", "Blanco", "Morado", "Marrón", "Cian", "Lima", "Granate", "Rosa Claro", "Plátano", "Gris", "Canela", "Coral" };
+	const std::vector<const char*> HOSTCOLORS = { "Rojo", "Azul", "Verde", "Rosa", "Naranja", "Amarillo", "Negro", "Blanco", "Morado", "Marrón", "Cian", "Lima", "Granate", "Rosa Claro", "Plátano", "Gris", "Canela", "Coral", "Verde Fuerte" };
 	const ColorMapping COLOR_NAMES_COLOR[] = {
-		{"Red",			    ImColor::ImColor(0xFF1111C6)}, // 0xAABBGGRR
-		{"Blue",			ImColor::ImColor(0xFFD22E13)},
-		{"Green",			ImColor::ImColor(0xFF2D8011)},
-		{"Pink",			ImColor::ImColor(0xFFBB54EE)},
-		{"Orange",			ImColor::ImColor(0xFF0D7DF0)},
-		{"Yellow",			ImColor::ImColor(0xFF57F6F6)},
-		{"Black",			ImColor::ImColor(0xFF4E473F)},
-		{"White",			ImColor::ImColor(0xFFF1E1D7)},
-		{"Purple",			ImColor::ImColor(0xFFBC2F6B)},
-		{"Brown",			ImColor::ImColor(0xFF1E4971)},
-		{"Cyan",			ImColor::ImColor(0xFFDDFF38)},
-		{"Lime",			ImColor::ImColor(0xFF39F050)},
-		{"Maroon",			ImColor::ImColor(0xFF2E1D5F)},
-		{"Rose",			ImColor::ImColor(0xFFD3C0EC)},
-		{"Banana",			ImColor::ImColor(0xFFA8E7F0)},
-		{"Gray",			ImColor::ImColor(0xFF938575)},
-		{"Tan",			    ImColor::ImColor(0xFF778891)},
+		{"Rojo",			ImColor::ImColor(0xFF1111C6)}, // 0xAABBGGRR
+		{"Azul",			ImColor::ImColor(0xFFD22E13)},
+		{"Verde",			ImColor::ImColor(0xFF2D8011)},
+		{"Rosa",			ImColor::ImColor(0xFFBB54EE)},
+		{"Naranja",			ImColor::ImColor(0xFF0D7DF0)},
+		{"Amarillo",		ImColor::ImColor(0xFF57F6F6)},
+		{"Negro",			ImColor::ImColor(0xFF4E473F)},
+		{"Blanco",			ImColor::ImColor(0xFFF1E1D7)},
+		{"Morado",			ImColor::ImColor(0xFFBC2F6B)},
+		{"Marrón",			ImColor::ImColor(0xFF1E4971)},
+		{"Cian",			ImColor::ImColor(0xFFDDFF38)},
+		{"Lima",			ImColor::ImColor(0xFF39F050)},
+		{"Granate",			ImColor::ImColor(0xFF2E1D5F)},
+		{"Rosa Claro",		ImColor::ImColor(0xFFD3C0EC)},
+		{"Plátano",			ImColor::ImColor(0xFFA8E7F0)},
+		{"Gris",			ImColor::ImColor(0xFF938575)},
+		{"Canela",			ImColor::ImColor(0xFF778891)},
 		{"Coral",			ImColor::ImColor(0xFF6464D7)},
-		{"Fortegreen",      ImColor::ImColor(0xFF62A626)},
+		{"Verde Fuerte",    ImColor::ImColor(0xFF62A626)},
 	};
 	void Render();
 	void OpenSubGroup(const std::string& name);

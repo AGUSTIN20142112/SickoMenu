@@ -350,11 +350,25 @@ namespace Menu {
 			}
 		}
 		ImGui::TextColored(ImVec4(0.f, 0.f, 0.f, 0.f), "space");
-		if (searchResults.size() == 0) BoldText("No results.");
+		if (searchResults.size() == 0) BoldText("Sin resultados.");
 		else {
-			BoldText(("Search Result" + std::string(searchResults.size() == 1 ? "" : "s")).c_str());
+			BoldText((std::string("Resultado") + (searchResults.size() == 1 ? "" : "s") + " de búsqueda").c_str());
 			for (auto& [tabName, subGroup] : searchResults) {
-				std::string label = /*subGroup.empty() ? */tabName/* : (tabName + " > " + subGroup)*/;
+				std::string displayTab = tabName;
+				if (tabName == "Settings") displayTab = "Ajustes";
+				else if (tabName == "Game") displayTab = "Partida";
+				else if (tabName == "Self") displayTab = "Personaje";
+				else if (tabName == "Radar") displayTab = "Radar";
+				else if (tabName == "Replay") displayTab = "Repetición";
+				else if (tabName == "ESP") displayTab = "ESP (Visión)";
+				else if (tabName == "Players") displayTab = "Jugadores";
+				else if (tabName == "Tasks") displayTab = "Tareas";
+				else if (tabName == "Sabotage") displayTab = "Sabotaje";
+				else if (tabName == "Doors") displayTab = "Puertas";
+				else if (tabName == "Host") displayTab = "Anfitrión";
+				else if (tabName == "Debug") displayTab = "Depuración";
+
+				std::string label = displayTab;
 				if (ImGui::Selectable((label + "##searchresult").c_str())) {
 					Tabs selectedTab = CategoryNameToTab(tabName);
 					if (IsTabUsable(selectedTab)) {

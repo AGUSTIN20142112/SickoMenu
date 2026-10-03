@@ -196,7 +196,7 @@ namespace SettingsTab {
 			ImGui::Dummy(ImVec2(5, 5) * State.dpiScale);
 
 #ifdef _DEBUG
-			if (ToggleButton("Show Debug Tab", &State.showDebugTab)) {
+			if (ToggleButton("Mostrar Pestaña de Depuración", &State.showDebugTab)) {
 				State.Save();
 			}
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
@@ -484,7 +484,7 @@ namespace SettingsTab {
 
 			ImGui::Spacing();
 
-			if (ToggleButton("Force DTLS", &State.ForceDTLS)) {
+			if (ToggleButton("Forzar DTLS", &State.ForceDTLS)) {
 				State.Save();
 			}
 			/*if (State.DisableHostAnticheat) {

@@ -32,10 +32,10 @@ namespace HostTab {
     }
 
     void OpenSubGroup(const std::string& name) {
-        if (name == "Utils") CloseOtherGroups(Groups::Utils);
-        else if (name == "Settings") CloseOtherGroups(Groups::Settings);
-        else if (name == "Tournaments" && State.TournamentMode) CloseOtherGroups(Groups::Tournaments);
-        else if (name == "Moderation" && State.Mod_EnableModeration) CloseOtherGroups(Groups::Moderation);
+        if (name == "Utils" || name == "Utilidades") CloseOtherGroups(Groups::Utils);
+        else if (name == "Settings" || name == "Ajustes") CloseOtherGroups(Groups::Settings);
+        else if ((name == "Tournaments" || name == "Torneos") && State.TournamentMode) CloseOtherGroups(Groups::Tournaments);
+        else if ((name == "Moderation" || name == "Moderación" || name == "Moderacion") && State.Mod_EnableModeration) CloseOtherGroups(Groups::Moderation);
     }
 
     /*std::string GetPlayerNameFromFriendCode(std::string friendCode) {
@@ -138,29 +138,29 @@ namespace HostTab {
     void Render() {
         if (IsHost()) {
             ColorMapping ROLE_NAMES_COLOR[] = {
-                {"Random",			ImVec4(1.f, 1.f, 1.f, 1.f)},
-                {"Crewmate",		State.CrewmateColor},
-                {"Scientist",		State.ScientistColor},
-                {"Engineer",		State.EngineerColor},
-                {"Noisemaker",		State.NoisemakerColor},
-                {"Tracker",			State.TrackerColor},
+                {"Aleatorio",		ImVec4(1.f, 1.f, 1.f, 1.f)},
+                {"Tripulante",		State.CrewmateColor},
+                {"Científico",		State.ScientistColor},
+                {"Ingeniero",		State.EngineerColor},
+                {"Ruidoso",			State.NoisemakerColor},
+                {"Rastreador",		State.TrackerColor},
                 {"Detective",		State.DetectiveColor},
-                {"Judge",           State.JudgeColor},
+                {"Juez",            State.JudgeColor},
                 {"Impostor",		State.ImpostorColor},
-                {"Shapeshifter",	State.ShapeshifterColor},
-                {"Phantom",			State.PhantomColor},
-                {"Viper",			State.ViperColor},
+                {"Metamorfo",		State.ShapeshifterColor},
+                {"Fantasma",		State.PhantomColor},
+                {"Víbora",			State.ViperColor},
             }; // needs to be updated every render
             ColorMapping GAMEENDREASONCOLORS[] = {
-                {"Crewmates (Votes)", State.CrewmateColor},
-                {"Crewmates (Tasks)", State.CrewmateColor},
-                {"Impostors (Votes)", State.ImpostorColor},
-                {"Impostors (Kill)", State.ImpostorColor},
-                {"Impostors (Sabotage)", State.ImpostorColor},
+                {"Tripulantes (Votos)", State.CrewmateColor},
+                {"Tripulantes (Tareas)", State.CrewmateColor},
+                {"Impostores (Votos)", State.ImpostorColor},
+                {"Impostores (Asesinato)", State.ImpostorColor},
+                {"Impostores (Sabotaje)", State.ImpostorColor},
                 {"D/C (Imp)", State.ImpostorColor},
-                {"D/C (Crew)", State.CrewmateColor},
-                {"Timer (HNS)", State.CrewmateColor},
-                {"Kill (HNS)", State.ImpostorColor},
+                {"D/C (Trip)", State.CrewmateColor},
+                {"Tiempo (HNS)", State.CrewmateColor},
+                {"Asesinato (HNS)", State.ImpostorColor},
             }; // same here
 
             ImGui::SameLine(100 * State.dpiScale);
@@ -171,24 +171,24 @@ namespace HostTab {
                 ImGui::BeginChild("###HostButtons", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
 
             ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-            if (TabGroup("Utils", openUtils)) {
+            if (TabGroup("Utilidades", openUtils)) {
                 CloseOtherGroups(Groups::Utils);
             }
             if (GameOptions().HasOptions()) {
                 ImGui::SameLine();
-                if (TabGroup("Settings", openSettings)) {
+                if (TabGroup("Ajustes", openSettings)) {
                     CloseOtherGroups(Groups::Settings);
                 }
             }
             if (State.TournamentMode) {
                 ImGui::SameLine();
-                if (TabGroup("Tournaments", openTournaments)) {
+                if (TabGroup("Torneos", openTournaments)) {
                     CloseOtherGroups(Groups::Tournaments);
                 }
             }
             if (State.Mod_EnableModeration) {
                 ImGui::SameLine();
-                if (TabGroup("Moderation", openModeration)) {
+                if (TabGroup("Moderación", openModeration)) {
                     CloseOtherGroups(Groups::Moderation);
                 }
             }
@@ -199,7 +199,7 @@ namespace HostTab {
                     ImGui::Dummy(ImVec2(0, 2) * State.dpiScale);
                     ImGui::BeginChild("host#list", ImVec2(200, 0) * State.dpiScale, true, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
                     if (!State.DisableRoleManager && (!hideRolesList || !State.TournamentMode)) {
-                        bool shouldEndListBox = ImGui::ListBoxHeader("Choose Roles", ImVec2(200, 290) * State.dpiScale);
+                        bool shouldEndListBox = ImGui::ListBoxHeader("Elegir Roles", ImVec2(200, 290) * State.dpiScale);
                         auto allPlayers = GetAllPlayerData();
                         auto playerAmount = allPlayers.size();
                         auto maxImpostorAmount = GetMaxImpostorAmount((int)playerAmount);
@@ -312,10 +312,10 @@ namespace HostTab {
                             ImGui::ListBoxFooter();
                     }
                     if (!State.DisableRoleManager) ImGui::Dummy(ImVec2(2, 2) * State.dpiScale);
-                    ToggleButton("Disable Role Selection", &State.DisableRoleManager);
+                    ToggleButton("Desactivar Selección de Rol", &State.DisableRoleManager);
 
                     if (State.TournamentMode) {
-                        if (AnimatedButton("Randomize Roles")) {
+                        if (AnimatedButton("Aleatorizar Roles")) {
                             std::vector<Game::PlayerId> playerIds = {};
                             std::vector<Game::PlayerId> impostorIds = {};
                             for (auto p : GetAllPlayerControl()) {
@@ -332,11 +332,11 @@ namespace HostTab {
                             for (auto i : playerIds)
                                 State.assignedRoles[i] = RoleType::Crewmate;
                         }
-                        ToggleButton("Hide Roles List", &hideRolesList);
+                        ToggleButton("Ocultar Lista de Roles", &hideRolesList);
                     }
 
                     if (!State.DisableRoleManager) {
-                        if (ToggleButton("Always", &State.AutoHostRole)) {
+                        if (ToggleButton("Siempre", &State.AutoHostRole)) {
                             State.Save();
 
                             if (!State.AutoHostRole) {
@@ -393,12 +393,12 @@ namespace HostTab {
 
                             if (State.HostRoleToSet == RoleType::Impostor || State.HostRoleToSet == RoleType::Shapeshifter || State.HostRoleToSet == RoleType::Phantom || State.HostRoleToSet == RoleType::Viper) {
                                 if (sumOfImpostorRoles > maxImpostors) {
-                                    ImGui::TextWrapped("Role will not be assigned due to role assignment limits.");
+                                    ImGui::TextWrapped("El rol no se asignará debido a los límites de asignación de roles.");
                                 }
                             }
                             else {
                                 if (sumOfCrewmateRoles > (int)GetAllPlayerData().size() - maxImpostors) {
-                                    ImGui::TextWrapped("Role will not be assigned due to role assignment limits.");
+                                    ImGui::TextWrapped("El rol no se asignará debido a los límites de asignación de roles.");
                                 }
                             }
                         }
@@ -409,11 +409,11 @@ namespace HostTab {
                 ImGui::BeginChild("host#actions", ImVec2(IsInGame() ? 500.f : 300.f, 0.f) * State.dpiScale, true, ImGuiWindowFlags_NoBackground);
 
                 if (!State.DisableRoleManager && IsInLobby()) {
-                    if (ToggleButton("Custom Impostor Amount", &State.CustomImpostorAmount))
+                    if (ToggleButton("Cantidad Personalizada de Impostores", &State.CustomImpostorAmount))
                         State.Save();
                     State.ImpostorCount = std::clamp(State.ImpostorCount, 0, int(Game::MAX_PLAYERS));
                     if (State.CustomImpostorAmount) {
-                        ImGui::InputInt("Impostor Count", &State.ImpostorCount);
+                        ImGui::InputInt("Cantidad de Impostores", &State.ImpostorCount);
                     }
                 }
 
@@ -421,7 +421,7 @@ namespace HostTab {
                 const int32_t minPlayers = 4, maxAllowedPlayers = static_cast<int32_t>(Game::MAX_PLAYERS);
                 int32_t newMaxPlayers = std::clamp(currentMaxPlayers, minPlayers, maxAllowedPlayers);
 #define LocalInLobby (((*Game::pAmongUsClient)->fields._.NetworkMode == NetworkModes__Enum::LocalGame) && ((*Game::pAmongUsClient)->fields._.GameState == InnerNetClient_GameStates__Enum::Joined))
-                if ((LocalInLobby || !State.SafeMode) && IsInLobby() && ImGui::InputInt("Max Players", &newMaxPlayers)) {
+                if ((LocalInLobby || !State.SafeMode) && IsInLobby() && ImGui::InputInt("Jugadores Máximos", &newMaxPlayers)) {
                     newMaxPlayers = std::clamp(newMaxPlayers, minPlayers, maxAllowedPlayers);
                     GameOptions().SetInt(app::Int32OptionNames__Enum::MaxPlayers, newMaxPlayers);
                     SyncAllSettings();
@@ -431,43 +431,43 @@ namespace HostTab {
                 /*if (IsInLobby() && ToggleButton("Flip Skeld", &State.FlipSkeld))
                     State.Save();*/ //to be fixed later
                 if (IsInLobby()) ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
-                if (IsInLobby() && AnimatedButton("Force Start of Game")) {
+                if (IsInLobby() && AnimatedButton("Forzar Inicio de Partida")) {
                     app::AmongUsClient_KickNotJoinedPlayers(*Game::pAmongUsClient, NULL);
                     app::InnerNetClient_SendStartGame((InnerNetClient*)(*Game::pAmongUsClient), NULL);
                 }
                 if (IsInLobby() && State.IsStartCountdownActive &&
-                    ColoredButton(ImVec4(1.f, 0.f, 0.f, 1.f), "Cancel Start of Game")) {
+                    ColoredButton(ImVec4(1.f, 0.f, 0.f, 1.f), "Cancelar Inicio de Partida")) {
                     State.CancelingStartGame = true;
                 }
 
-                if (ToggleButton("Enable Moderation System", &State.Mod_EnableModeration))
+                if (ToggleButton("Habilitar Sistema de Moderación", &State.Mod_EnableModeration))
                     State.Save();
 
-                if (ToggleButton("Always Allow Start Button", &State.AlwaysAllowStart))
+                if (ToggleButton("Siempre Permitir Botón de Inicio", &State.AlwaysAllowStart))
                     State.Save();
 
-                if (ToggleButton("Modify Start Countdown", &State.ModifyStartCountdown))
+                if (ToggleButton("Modificar Cuenta Regresiva de Inicio", &State.ModifyStartCountdown))
                     State.Save();
 
-                if (State.ModifyStartCountdown && ImGui::InputInt("Time", &State.StartCountdown)) {
+                if (State.ModifyStartCountdown && ImGui::InputInt("Tiempo", &State.StartCountdown)) {
                     State.StartCountdown = std::clamp(State.StartCountdown, 1, !State.SafeMode ? 127 : 5);
                 }
 
-                if (ToggleButton("Disable Meetings", &State.DisableMeetings))
+                if (ToggleButton("Desactivar Reuniones", &State.DisableMeetings))
                     State.Save();
 
-                if (ToggleButton("Disable Sabotages", &State.DisableSabotages))
+                if (ToggleButton("Desactivar Sabotajes", &State.DisableSabotages))
                     State.Save();
 
-                if (ToggleButton("Disable All Votekicks", &State.DisableAllVotekicks))
+                if (ToggleButton("Desactivar Todos los Votekicks", &State.DisableAllVotekicks))
                     State.Save();
 
                 {
-                    std::vector<const char*> GAMEMODES = { "Default", "Task Speedrun" };
-                    if (State.DisableHostAnticheat) GAMEMODES = { "Default", "Task Speedrun", "Battle Royale" };
+                    std::vector<const char*> GAMEMODES = { "Por Defecto", "Speedrun de Tareas" };
+                    if (State.DisableHostAnticheat) GAMEMODES = { "Por Defecto", "Speedrun de Tareas", "Battle Royale" };
                     int maxIndex = State.DisableHostAnticheat ? 2 : 1;
                     State.GameMode = std::clamp(State.GameMode, 0, maxIndex);
-                    if (IsInLobby() && CustomListBoxInt("Game Mode", &State.GameMode, GAMEMODES, 100 * State.dpiScale)) {
+                    if (IsInLobby() && CustomListBoxInt("Modo de Juego", &State.GameMode, GAMEMODES, 100 * State.dpiScale)) {
                         State.TaskSpeedrun = (State.GameMode == 1);
                         State.BattleRoyale = (State.DisableHostAnticheat && State.GameMode == 2);
                         State.Save();
@@ -475,25 +475,25 @@ namespace HostTab {
 
                     if (State.GameMode != 0) {
                         ImGui::SetNextItemWidth(100 * State.dpiScale);
-                        if (ImGui::InputInt("Game Duration", &State.GameModeDuration)) {
+                        if (ImGui::InputInt("Duración de Partida", &State.GameModeDuration)) {
                             State.GameModeDuration = std::clamp(State.GameModeDuration, 100, 500);
                         }
                     }
                 }
 
-                if (ToggleButton("Spectator Mode", &State.SpectatorMode))
+                if (ToggleButton("Modo Espectador", &State.SpectatorMode))
                     State.Save();
 
-                if (ToggleButton("Show Lobby Timer", &State.ShowLobbyTimer))
+                if (ToggleButton("Mostrar Temporizador de Sala", &State.ShowLobbyTimer))
                     State.Save();
 
-                if (ToggleButton("Auto Start Game", &State.AutoStartGame))
+                if (ToggleButton("Auto-Iniciar Partida", &State.AutoStartGame))
                     State.Save();
 
                 if (State.AutoStartGame) {
-                    ImGui::Text("Start After");
+                    ImGui::Text("Iniciar Después de");
                     ImGui::SameLine();
-                    ImGui::InputInt("sec", &State.AutoStartTimer);
+                    ImGui::InputInt("seg", &State.AutoStartTimer);
                 }
 
                 /*if (ToggleButton("Auto Start Game (By Player Count)", &State.AutoStartGamePlayers))
@@ -523,46 +523,46 @@ namespace HostTab {
                         State.Save();
                     }*/
 
-                if ((State.mapType == Settings::MapType::Airship) && IsInGame() && AnimatedButton("Switch Moving Platform Side"))
+                if ((State.mapType == Settings::MapType::Airship) && IsInGame() && AnimatedButton("Cambiar Lado de Plataforma Móvil"))
                 {
                     State.rpcQueue.push(new RpcUsePlatform());
                 }
 
                 if ((State.mapType == Settings::MapType::Airship) && IsInGame()) {
-                    if (ToggleButton("Spam Moving Platform", &State.SpamMovingPlatform)) {
+                    if (ToggleButton("Spam de Plataforma Móvil", &State.SpamMovingPlatform)) {
                         State.Save();
                     }
                 }
 
-                if (State.InMeeting && AnimatedButton("End Meeting")) {
+                if (State.InMeeting && AnimatedButton("Terminar Reunión")) {
                     State.rpcQueue.push(new RpcEndMeeting());
                     State.InMeeting = false;
                 }
 
                 if (State.CurrentScene.compare("Tutorial") || IsInLobby()) { //lobby isn't possible in freeplay
-                    if (ToggleButton("Disable Game Ending", &State.NoGameEnd)) {
+                    if (ToggleButton("Desactivar Fin de Partida", &State.NoGameEnd)) {
                         State.Save();
                     }
 
                     if (IsInGame()) {
-                        CustomListBoxIntColored("Reason", &State.SelectedGameEndReasonId, GAMEENDREASON, 120.0f * State.dpiScale, ImVec4(0.f, 0.f, 0.f, 0.f), 0, "", GAMEENDREASONCOLORS, IM_ARRAYSIZE(GAMEENDREASONCOLORS));
+                        CustomListBoxIntColored("Razón", &State.SelectedGameEndReasonId, GAMEENDREASON, 120.0f * State.dpiScale, ImVec4(0.f, 0.f, 0.f, 0.f), 0, "", GAMEENDREASONCOLORS, IM_ARRAYSIZE(GAMEENDREASONCOLORS));
 
                         ImGui::SameLine();
 
-                        if (AnimatedButton("End Game")) {
+                        if (AnimatedButton("Terminar Partida")) {
                             State.rpcQueue.push(new RpcEndGame(GameOverReason__Enum(std::clamp(State.SelectedGameEndReasonId, 0, 8))));
                         }
                     }
                 }
 
-                CustomListBoxIntColored("Select Color", &State.HostSelectedColorId, HOSTCOLORS, 85.0f * State.dpiScale, ImVec4(0.f, 0.f, 0.f, 0.f), 0, "", COLOR_NAMES_COLOR, IM_ARRAYSIZE(COLOR_NAMES_COLOR));
+                CustomListBoxIntColored("Seleccionar Color", &State.HostSelectedColorId, HOSTCOLORS, 85.0f * State.dpiScale, ImVec4(0.f, 0.f, 0.f, 0.f), 0, "", COLOR_NAMES_COLOR, IM_ARRAYSIZE(COLOR_NAMES_COLOR));
 
-                if (ToggleButton("Force Color for Everyone", &State.ForceColorForEveryone)) {
+                if (ToggleButton("Forzar Color para Todos", &State.ForceColorForEveryone)) {
                     State.Save();
                 }
 
                 if (IsInGame() || IsInLobby()) {
-                    if (AnimatedButton("Set Color for Everyone")) {
+                    if (AnimatedButton("Fijar Color para Todos")) {
                         for (auto p : GetAllPlayerControl()) {
                             if (IsInGame())
                                 State.rpcQueue.push(new RpcForceColor(p, State.HostSelectedColorId));
@@ -571,7 +571,7 @@ namespace HostTab {
                         }
                     }
 
-                    if (AnimatedButton("Randomize Colors for Everyone")) {
+                    if (AnimatedButton("Color Aleatorio para Todos")) {
                         for (auto p : GetAllPlayerControl()) {
                             if (IsInGame())
                                 State.rpcQueue.push(new RpcForceColor(p, GetRandomColorId()));
@@ -581,15 +581,15 @@ namespace HostTab {
                     }
                 }
 
-				if (ToggleButton("Allow Players Joining with Preferred Colors", &State.AllowPreferredColor)) {
+				if (ToggleButton("Permitir Jugadores con Colores Preferidos", &State.AllowPreferredColor)) {
                     State.Save();
                 }
 
                 if (!State.SafeMode) {
-                    if (ToggleButton("Force Name for Everyone", &State.ForceNameForEveryone)) {
+                    if (ToggleButton("Forzar Nombre para Todos", &State.ForceNameForEveryone)) {
                         State.Save();
                     }
-                    InputString("Username", &State.hostUserName);
+                    InputString("Nombre de Usuario", &State.hostUserName);
                 }
 
                 /*if (IsHost() && IsInGame() && GetPlayerData(*Game::pLocalPlayer)->fields.IsDead && AnimatedButton("Revive Yourself"))
@@ -604,11 +604,11 @@ namespace HostTab {
                     }
                 }*/
 
-                if (ToggleButton("Unlock Kill Button", &State.UnlockKillButton)) {
+                if (ToggleButton("Desbloquear Botón Asesinar", &State.UnlockKillButton)) {
                     State.Save();
                 }
 
-                if (ToggleButton("Kill While Vanished", &State.KillInVanish)) {
+                if (ToggleButton("Asesinar en Desvanecimiento", &State.KillInVanish)) {
                     State.Save();
                 }
 
@@ -616,7 +616,7 @@ namespace HostTab {
                     State.Save();
                 }*/
 
-                if (ToggleButton("Bypass Guardian Angel Protections", &State.BypassAngelProt)) {
+                if (ToggleButton("Evadir Protección de Ángel Guardián", &State.BypassAngelProt)) {
                     State.Save();
                 }
 
@@ -637,12 +637,12 @@ namespace HostTab {
 
 #define LocalInGame (((*Game::pAmongUsClient)->fields._.NetworkMode == NetworkModes__Enum::LocalGame) && ((*Game::pAmongUsClient)->fields._.GameState == InnerNetClient_GameStates__Enum::Started))
                 if (GetAllPlayerControl().size() == 1 && IsInMultiplayerGame() && !LocalInGame) { \
-                    if (!State.farmLoop && AnimatedButton(std::format("Level Farm ({} Kills)", 5000 * maxPackedRpcs).c_str())) {
+                    if (!State.farmLoop && AnimatedButton(std::format("Farmear Nivel ({} Bajas)", 5000 * maxPackedRpcs).c_str())) {
                         State.rpcQueue.push(new RpcSetRole(*Game::pLocalPlayer, RoleTypes__Enum::ImpostorGhost));
                         State.farmCount = 5000; //controls how many times the player is to be murdered
                         State.farmLoop = true;
                     }
-                    if (State.farmLoop && AnimatedButton("Stop Level Farm")) {
+                    if (State.farmLoop && AnimatedButton("Detener Farmeo de Nivel")) {
                         State.farmLoop = false;
                         State.farmCount = 0;
                         /*State.rpcQueue.push(new RpcSetRole(*Game::pLocalPlayer, RoleTypes__Enum::Impostor));
@@ -651,16 +651,16 @@ namespace HostTab {
                     }
                     if (State.farmLoop) {
                         ImGui::SameLine();
-                        ImGui::Text("(%d Kills)", (5000 - State.farmCount) * maxPackedRpcs);
+                        ImGui::Text("(%d Bajas)", (5000 - State.farmCount) * maxPackedRpcs);
                     }
                     else {
                         ImGui::SameLine();
-                        if (AnimatedButton("Set Impostor Role")) {
+                        if (AnimatedButton("Fijar Rol Impostor")) {
                             State.rpcQueue.push(new RpcSetRole(*Game::pLocalPlayer, RoleTypes__Enum::Impostor));
                             State.rpcQueue.push(new SetRole(RoleTypes__Enum::Impostor));
                         }
                         ImGui::SameLine();
-                        if (AnimatedButton("End Game (Impostor Win)")) {
+                        if (AnimatedButton("Terminar Partida (Victoria Impostor)")) {
                             State.rpcQueue.push(new RpcEndGame(GameOverReason__Enum::ImpostorsByKill));
                         }
                     }
@@ -671,13 +671,13 @@ namespace HostTab {
 
             if (openSettings) {
                 ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-                if (ImGui::CollapsingHeader("Disable Sabotages", ImGuiTreeNodeFlags_DefaultOpen)) {
+                if (ImGui::CollapsingHeader("Desactivar Sabotajes", ImGuiTreeNodeFlags_DefaultOpen)) {
                     SabotageTab::RenderDisableSabotages();
                 }
                 ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-                if (ImGui::CollapsingHeader("Host Presets", ImGuiTreeNodeFlags_DefaultOpen)) {
+                if (ImGui::CollapsingHeader("Perfiles de Host", ImGuiTreeNodeFlags_DefaultOpen)) {
                     ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-                    if (ToggleButton("Auto Apply on Host", &State.AutoApplyHostPreset))
+                    if (ToggleButton("Auto-aplicar en Host", &State.AutoApplyHostPreset))
                         State.Save();
 
                     ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
@@ -688,19 +688,19 @@ namespace HostTab {
                         for (auto& p : State.HostPresets) presetNames.push_back(p.Name.c_str());
                         CustomListBoxInt("##presetselect", &State.SelectedHostPreset, presetNames, 200.0f * State.dpiScale, ImVec4(0, 0, 0, 0), 0);
                         ImGui::SameLine();
-                        if (AnimatedButton("Apply")) {
+                        if (AnimatedButton("Aplicar")) {
                             int idx = std::clamp(State.SelectedHostPreset, 0, (int)State.HostPresets.size() - 1);
                             RequestApplyHostPreset(idx);
                         }
                         ImGui::SameLine();
-                        if (AnimatedButton("Update##preset")) {
+                        if (AnimatedButton("Actualizar##preset")) {
                             int idx = std::clamp(State.SelectedHostPreset, 0, (int)State.HostPresets.size() - 1);
                             if (CaptureHostPreset(State.HostPresets[idx])) {
                                 State.Save();
                             }
                         }
                         ImGui::SameLine();
-                        if (AnimatedButton("Delete##preset")) {
+                        if (AnimatedButton("Eliminar##preset")) {
                             int idx = std::clamp(State.SelectedHostPreset, 0, (int)State.HostPresets.size() - 1);
                             State.HostPresets.erase(State.HostPresets.begin() + idx);
                             if (State.HostPresets.size() != 0)
@@ -709,19 +709,19 @@ namespace HostTab {
                         }
                     }
                     else {
-                        ImGui::TextDisabled("No presets saved.");
+                        ImGui::TextDisabled("No hay perfiles guardados.");
                     }
 
                     ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
                     // Save new preset
-                    static std::string newPresetName = "My Preset";
+                    static std::string newPresetName = "Mi Perfil";
                     ImGui::SetNextItemWidth(160 * State.dpiScale);
-                    InputString("Preset Name", &newPresetName);
+                    InputString("Nombre de Perfil", &newPresetName);
                     ImGui::SameLine();
-                    if (AnimatedButton("Save Current##preset")) {
+                    if (AnimatedButton("Guardar Actual##preset")) {
                         Settings::HostPreset p;
-                        p.Name = newPresetName.empty() ? "Preset" : newPresetName;
+                        p.Name = newPresetName.empty() ? "Perfil" : newPresetName;
                         if (CaptureHostPreset(p)) {
                             State.HostPresets.push_back(p);
                             State.SelectedHostPreset = (int)State.HostPresets.size() - 1;
@@ -736,7 +736,7 @@ namespace HostTab {
                 /*if (State.mapHostChoice > 3)
                     State.mapHostChoice--;*/
                 State.mapHostChoice = std::clamp(State.mapHostChoice, 0, (int)MAP_NAMES.size() - 1);
-                if (IsInLobby() && CustomListBoxIntColored("Map", &State.mapHostChoice, MAP_NAMES, 75 * State.dpiScale, ImVec4(1.f, 1.f, 1.f, 0.f), 0, "", MAP_NAMES_COLOR, IM_ARRAYSIZE(MAP_NAMES_COLOR))) {
+                if (IsInLobby() && CustomListBoxIntColored("Mapa", &State.mapHostChoice, MAP_NAMES, 75 * State.dpiScale, ImVec4(1.f, 1.f, 1.f, 0.f), 0, "", MAP_NAMES_COLOR, IM_ARRAYSIZE(MAP_NAMES_COLOR))) {
                     //if (!IsInGame()) {
                         // disable flip
                     if (State.mapHostChoice == 3) {
@@ -790,15 +790,15 @@ namespace HostTab {
                     static bool ejects = false, anonVotes = false, visualTasks = false;
 
 #pragma region General
-                    MakeBool("Confirm Ejects", ejects, BoolOptionNames__Enum::ConfirmImpostor);
-                    MakeInt("# Emergency Meetings", emergencyMeetings, Int32OptionNames__Enum::NumEmergencyMeetings);
-                    MakeBool("Anonymous Votes", anonVotes, BoolOptionNames__Enum::AnonymousVotes);
-                    MakeInt("Emergency Cooldown", emergencyCooldown, Int32OptionNames__Enum::EmergencyCooldown);
-                    MakeInt("Discussion Time", discussionTime, Int32OptionNames__Enum::DiscussionTime);
-                    MakeInt("Voting Time", votingTime, Int32OptionNames__Enum::VotingTime);
+                    MakeBool("Confirmar Expulsiones", ejects, BoolOptionNames__Enum::ConfirmImpostor);
+                    MakeInt("# Reuniones de Emergencia", emergencyMeetings, Int32OptionNames__Enum::NumEmergencyMeetings);
+                    MakeBool("Votos Anónimos", anonVotes, BoolOptionNames__Enum::AnonymousVotes);
+                    MakeInt("Enfriamiento de Emergencia", emergencyCooldown, Int32OptionNames__Enum::EmergencyCooldown);
+                    MakeInt("Tiempo de Discusión", discussionTime, Int32OptionNames__Enum::DiscussionTime);
+                    MakeInt("Tiempo de Votación", votingTime, Int32OptionNames__Enum::VotingTime);
                     // MakeFloat("Player Speed", playerSpeed, FloatOptionNames__Enum::PlayerSpeedMod);
                     // player speed can be between 0 (not included) and 3 (included) in classic mode due to the anticheat, so we separate this float input
-                    if (ImGui::InputFloat("Player Speed", &playerSpeed)) {
+                    if (ImGui::InputFloat("Velocidad del Jugador", &playerSpeed)) {
                         if (State.SafeMode) {
                             if (playerSpeed <= 0.f) playerSpeed = 0.000001f;
                             if (playerSpeed > 3.f) playerSpeed = 3.f;
@@ -812,23 +812,23 @@ namespace HostTab {
                     if (taskBarMode >= 0 && taskBarMode <= 2) {
                         switch (taskBarMode) {
                         case 0:
-                            taskBarInfo = " (Always)";
+                            taskBarInfo = " (Siempre)";
                             break;
                         case 1:
-                            taskBarInfo = " (Meetings)";
+                            taskBarInfo = " (Reuniones)";
                             break;
                         case 2:
-                            taskBarInfo = " (Never)";
+                            taskBarInfo = " (Nunca)";
                             break;
                         }
                     }
-                    MakeInt(("Task Bar Updates" + taskBarInfo).c_str(), taskBarMode, Int32OptionNames__Enum::TaskBarMode);
-                    MakeBool("Visual Tasks", visualTasks, BoolOptionNames__Enum::VisualTasks);
-                    MakeFloat("Crewmate Vision", crewVision, FloatOptionNames__Enum::CrewLightMod);
-                    MakeFloat("Impostor Vision", impVision, FloatOptionNames__Enum::ImpostorLightMod);
+                    MakeInt(("Actualizaciones de Barra de Tareas" + taskBarInfo).c_str(), taskBarMode, Int32OptionNames__Enum::TaskBarMode);
+                    MakeBool("Tareas Visuales", visualTasks, BoolOptionNames__Enum::VisualTasks);
+                    MakeFloat("Visión de Tripulante", crewVision, FloatOptionNames__Enum::CrewLightMod);
+                    MakeFloat("Visión de Impostor", impVision, FloatOptionNames__Enum::ImpostorLightMod);
                     // MakeFloat("Kill Cooldown", killCooldown, FloatOptionNames__Enum::KillCooldown);
                     // 0 or lesser kill cooldown leads to the impostors not being able to kill
-                    if (ImGui::InputFloat("Kill Cooldown", &killCooldown)) {
+                    if (ImGui::InputFloat("Enfriamiento de Asesinato", &killCooldown)) {
                         if (killCooldown <= 0.f) killCooldown = 0.000001f;
                         options.SetFloat(FloatOptionNames__Enum::KillCooldown, killCooldown);
                         SyncAllSettings();
@@ -838,18 +838,18 @@ namespace HostTab {
                     if (killDistance >= 0 && killDistance <= 2) {
                         switch (killDistance) {
                         case 0:
-                            killDistInfo = " (Short)";
+                            killDistInfo = " (Corta)";
                             break;
                         case 1:
-                            killDistInfo = " (Medium)";
+                            killDistInfo = " (Media)";
                             break;
                         case 2:
-                            killDistInfo = " (Long)";
+                            killDistInfo = " (Larga)";
                             break;
                         }
                     }
 
-                    if (ImGui::InputInt(("Kill Distance" + killDistInfo).c_str(), &killDistance)) {
+                    if (ImGui::InputInt(("Distancia de Asesinato" + killDistInfo).c_str(), &killDistance)) {
                         if (State.SafeMode) killDistance = std::clamp(killDistance, 0, 2);
                         options.SetInt(Int32OptionNames__Enum::KillDistance, killDistance);
                         SyncAllSettings();
@@ -857,88 +857,88 @@ namespace HostTab {
                     else killDistance = options.GetInt(Int32OptionNames__Enum::KillDistance);
 
                     // MakeInt(("Kill Distance" + killDistInfo).c_str(), killDistance, Int32OptionNames__Enum::KillDistance);
-                    MakeInt("# Short Tasks", shortTasks, Int32OptionNames__Enum::NumShortTasks);
-                    MakeInt("# Common Tasks", commonTasks, Int32OptionNames__Enum::NumCommonTasks);
-                    MakeInt("# Long Tasks", longTasks, Int32OptionNames__Enum::NumLongTasks);
+                    MakeInt("# Tareas Cortas", shortTasks, Int32OptionNames__Enum::NumShortTasks);
+                    MakeInt("# Tareas Comunes", commonTasks, Int32OptionNames__Enum::NumCommonTasks);
+                    MakeInt("# Tareas Largas", longTasks, Int32OptionNames__Enum::NumLongTasks);
 #pragma endregion
 #pragma region Scientist
-                    ImGui::Text("Scientist");
+                    ImGui::Text("Científico");
                     static float vitalsCooldown = 1.f, batteryDuration = 1.f;
 
-                    MakeFloat("Vitals Display Cooldown", vitalsCooldown, FloatOptionNames__Enum::ScientistCooldown);
-                    MakeFloat("Battery Duration", batteryDuration, FloatOptionNames__Enum::ScientistBatteryCharge);
+                    MakeFloat("Enfriamiento de Signos Vitales", vitalsCooldown, FloatOptionNames__Enum::ScientistCooldown);
+                    MakeFloat("Duración de Batería", batteryDuration, FloatOptionNames__Enum::ScientistBatteryCharge);
 #pragma endregion
 #pragma region Engineer
-                    ImGui::Text("Engineer");
+                    ImGui::Text("Ingeniero");
                     static float ventCooldown = 1.f, ventDuration = 1.f;
 
-                    MakeFloat("Vent Use Cooldown", ventCooldown, FloatOptionNames__Enum::EngineerCooldown);
-                    MakeFloat("Max Time in Vents", ventDuration, FloatOptionNames__Enum::EngineerInVentMaxTime);
+                    MakeFloat("Enfriamiento de Uso de Ventilación", ventCooldown, FloatOptionNames__Enum::EngineerCooldown);
+                    MakeFloat("Tiempo Máximo en Ventilaciones", ventDuration, FloatOptionNames__Enum::EngineerInVentMaxTime);
 #pragma endregion
 #pragma region Guardian Angel
-                    ImGui::Text("Guardian Angel");
+                    ImGui::Text("Ángel Guardián");
                     static float protectCooldown = 1.f, protectDuration = 1.f;
                     static bool protectVisible = false;
 
-                    MakeFloat("Protect Cooldown", protectCooldown, FloatOptionNames__Enum::GuardianAngelCooldown);
-                    MakeFloat("Protection Duration", protectDuration, FloatOptionNames__Enum::ProtectionDurationSeconds);
-                    MakeBool("Protect Visible to Impostors", protectVisible, BoolOptionNames__Enum::ImpostorsCanSeeProtect);
+                    MakeFloat("Enfriamiento de Protección", protectCooldown, FloatOptionNames__Enum::GuardianAngelCooldown);
+                    MakeFloat("Duración de Protección", protectDuration, FloatOptionNames__Enum::ProtectionDurationSeconds);
+                    MakeBool("Protección Visible para Impostores", protectVisible, BoolOptionNames__Enum::ImpostorsCanSeeProtect);
 #pragma endregion
 #pragma region Shapeshifter
-                    ImGui::Text("Shapeshifter");
+                    ImGui::Text("Metamorfo");
                     static float shapeshiftDuration = 1.f, shapeshiftCooldown = 1.f;
                     static bool shapeshiftEvidence = false;
 
-                    MakeFloat("Shapeshift Duration", shapeshiftDuration, FloatOptionNames__Enum::ShapeshifterDuration);
-                    MakeFloat("Shapeshift Cooldown", shapeshiftCooldown, FloatOptionNames__Enum::ShapeshifterCooldown);
-                    MakeBool("Leave Shapeshifting Evidence", shapeshiftEvidence, BoolOptionNames__Enum::ShapeshifterLeaveSkin);
+                    MakeFloat("Duración de Metamorfosis", shapeshiftDuration, FloatOptionNames__Enum::ShapeshifterDuration);
+                    MakeFloat("Enfriamiento de Metamorfosis", shapeshiftCooldown, FloatOptionNames__Enum::ShapeshifterCooldown);
+                    MakeBool("Dejar Rastro de Metamorfosis", shapeshiftEvidence, BoolOptionNames__Enum::ShapeshifterLeaveSkin);
 #pragma endregion
 #pragma region Noisemaker
-                    ImGui::Text("Noisemaker");
+                    ImGui::Text("Ruidoso");
                     static float alertDuration = 1.f;
                     static bool alertImps = false;
 
-                    MakeFloat("Alert Duration", alertDuration, FloatOptionNames__Enum::NoisemakerAlertDuration);
-                    MakeBool("Noisemakers Alert Impostors", alertImps, BoolOptionNames__Enum::NoisemakerImpostorAlert);
+                    MakeFloat("Duración de Alerta", alertDuration, FloatOptionNames__Enum::NoisemakerAlertDuration);
+                    MakeBool("Ruidoso Alerta a Impostores", alertImps, BoolOptionNames__Enum::NoisemakerImpostorAlert);
 #pragma endregion
 #pragma region Tracker
-                    ImGui::Text("Tracker");
+                    ImGui::Text("Rastreador");
                     static float trackerDuration = 1.f, trackerCooldown = 1.f, trackerDelay = 1.f;
 
-                    MakeFloat("Tracker Duration", trackerDuration, FloatOptionNames__Enum::TrackerDuration);
-                    MakeFloat("Tracker Cooldown", trackerCooldown, FloatOptionNames__Enum::TrackerCooldown);
-                    MakeFloat("Tracker Delay", trackerDelay, FloatOptionNames__Enum::TrackerDelay);
+                    MakeFloat("Duración de Rastreo", trackerDuration, FloatOptionNames__Enum::TrackerDuration);
+                    MakeFloat("Enfriamiento de Rastreo", trackerCooldown, FloatOptionNames__Enum::TrackerCooldown);
+                    MakeFloat("Retraso de Rastreo", trackerDelay, FloatOptionNames__Enum::TrackerDelay);
 #pragma endregion
 #pragma region Phantom
-                    ImGui::Text("Phantom");
+                    ImGui::Text("Fantasma");
                     static float phantomDuration = 1.f, phantomCooldown = 1.f;
 
-                    MakeFloat("Phantom Duration", phantomDuration, FloatOptionNames__Enum::PhantomDuration);
-                    MakeFloat("Phantom Cooldown", phantomCooldown, FloatOptionNames__Enum::PhantomCooldown);
+                    MakeFloat("Duración de Fantasma", phantomDuration, FloatOptionNames__Enum::PhantomDuration);
+                    MakeFloat("Enfriamiento de Fantasma", phantomCooldown, FloatOptionNames__Enum::PhantomCooldown);
 #pragma endregion
 #pragma region Detective
                     ImGui::Text("Detective");
                     static float detectiveSuspectLimit = 1.f;
 
-                    MakeFloat("Detective Suspect Limit", detectiveSuspectLimit, FloatOptionNames__Enum::DetectiveSuspectLimit);
+                    MakeFloat("Límite de Sospechosos del Detective", detectiveSuspectLimit, FloatOptionNames__Enum::DetectiveSuspectLimit);
 #pragma endregion
 #pragma region Viper
-                    ImGui::Text("Viper");
+                    ImGui::Text("Víbora");
                     static float viperDissolveTime = 1.f;
 
-                    MakeFloat("Viper Dissolve Time", viperDissolveTime, FloatOptionNames__Enum::ViperDissolveTime);
+                    MakeFloat("Tiempo de Disolución de Víbora", viperDissolveTime, FloatOptionNames__Enum::ViperDissolveTime);
 #pragma endregion
 #pragma region Judge
-                    ImGui::Text("Judge");
+                    ImGui::Text("Juez");
                     static float judgeTaskRequirement = 50.f;
 
-                    MakeFloat("Tasks Required %", judgeTaskRequirement, FloatOptionNames__Enum::JudgeTaskRequirementPercentage);
+                    MakeFloat("% de Tareas Requeridas", judgeTaskRequirement, FloatOptionNames__Enum::JudgeTaskRequirementPercentage);
 #pragma endregion
 #pragma region SpiritGuide
                     ImGui::Text("Influencer");
                     static float influencerMessageCooldown = 50.f;
 
-                    MakeFloat("Influencer Message Cooldown", influencerMessageCooldown, FloatOptionNames__Enum::SpiritGuideCooldownSeconds);
+                    MakeFloat("Enfriamiento de Mensaje de Influencer", influencerMessageCooldown, FloatOptionNames__Enum::SpiritGuideCooldownSeconds);
 #pragma endregion
                 }
 #pragma region Hide and Seek
@@ -951,9 +951,9 @@ namespace HostTab {
 
                     static bool flashlight = false, seekMap = false, hidePings = false, showNames = false;
 
-                    MakeFloat("Hider Vision", crewVision, FloatOptionNames__Enum::CrewLightMod);
-                    MakeFloat("Seeker Vision", impVision, FloatOptionNames__Enum::ImpostorLightMod);
-                    if (ImGui::InputFloat("Kill Cooldown", &killCooldown)) {
+                    MakeFloat("Visión de Escondido", crewVision, FloatOptionNames__Enum::CrewLightMod);
+                    MakeFloat("Visión de Buscador", impVision, FloatOptionNames__Enum::ImpostorLightMod);
+                    if (ImGui::InputFloat("Enfriamiento de Asesinato", &killCooldown)) {
                         if (killCooldown <= 0.f) killCooldown = 0.000001f;
                         options.SetFloat(FloatOptionNames__Enum::KillCooldown, killCooldown);
                         SyncAllSettings();
@@ -964,39 +964,39 @@ namespace HostTab {
                     if (killDistance >= 0 && killDistance <= 2) {
                         switch (killDistance) {
                         case 0:
-                            killDistInfo = " (Short)";
+                            killDistInfo = " (Corta)";
                             break;
                         case 1:
-                            killDistInfo = " (Medium)";
+                            killDistInfo = " (Media)";
                             break;
                         case 2:
-                            killDistInfo = " (Long)";
+                            killDistInfo = " (Larga)";
                             break;
                         }
                     }
 
-                    MakeInt(("Kill Distance" + killDistInfo).c_str(), killDistance, Int32OptionNames__Enum::KillDistance);
-                    MakeInt("# Short Tasks", shortTasks, Int32OptionNames__Enum::NumShortTasks);
-                    MakeInt("# Common Tasks", commonTasks, Int32OptionNames__Enum::NumCommonTasks);
-                    MakeInt("# Long Tasks", longTasks, Int32OptionNames__Enum::NumLongTasks);
-                    MakeFloat("Player Speed", playerSpeed, FloatOptionNames__Enum::PlayerSpeedMod);
-                    MakeFloat("Hiding Time", hidingTime, FloatOptionNames__Enum::EscapeTime);
-                    MakeFloat("Final Hide Time", finalHideTime, FloatOptionNames__Enum::FinalEscapeTime);
-                    MakeInt("Max Vent Uses", maxVents, Int32OptionNames__Enum::CrewmateVentUses);
-                    MakeFloat("Max Time in Vent", ventTime, FloatOptionNames__Enum::CrewmateTimeInVent);
-                    MakeBool("Flashlight Mode", flashlight, BoolOptionNames__Enum::UseFlashlight);
-                    MakeFloat("Hider Flashlight Size", crewLight, FloatOptionNames__Enum::CrewmateFlashlightSize);
-                    MakeFloat("Seeker Flashlight Size", impLight, FloatOptionNames__Enum::ImpostorFlashlightSize);
-                    MakeFloat("Final Hide Seeker Speed", finalImpSpeed, FloatOptionNames__Enum::SeekerFinalSpeed);
-                    MakeBool("Final Hide Seeker Map", seekMap, BoolOptionNames__Enum::SeekerFinalMap);
-                    MakeBool("Final Hide Pings", hidePings, BoolOptionNames__Enum::SeekerPings);
-                    MakeFloat("Ping Interval", pingInterval, FloatOptionNames__Enum::MaxPingTime);
-                    MakeBool("Show Names", showNames, BoolOptionNames__Enum::ShowCrewmateNames);
+                    MakeInt(("Distancia de Asesinato" + killDistInfo).c_str(), killDistance, Int32OptionNames__Enum::KillDistance);
+                    MakeInt("# Tareas Cortas", shortTasks, Int32OptionNames__Enum::NumShortTasks);
+                    MakeInt("# Tareas Comunes", commonTasks, Int32OptionNames__Enum::NumCommonTasks);
+                    MakeInt("# Tareas Largas", longTasks, Int32OptionNames__Enum::NumLongTasks);
+                    MakeFloat("Velocidad del Jugador", playerSpeed, FloatOptionNames__Enum::PlayerSpeedMod);
+                    MakeFloat("Tiempo para Esconderse", hidingTime, FloatOptionNames__Enum::EscapeTime);
+                    MakeFloat("Tiempo Final de Escondite", finalHideTime, FloatOptionNames__Enum::FinalEscapeTime);
+                    MakeInt("Usos Máximos de Ventilación", maxVents, Int32OptionNames__Enum::CrewmateVentUses);
+                    MakeFloat("Tiempo Máximo en Ventilación", ventTime, FloatOptionNames__Enum::CrewmateTimeInVent);
+                    MakeBool("Modo Linterna", flashlight, BoolOptionNames__Enum::UseFlashlight);
+                    MakeFloat("Tamaño de Linterna de Escondido", crewLight, FloatOptionNames__Enum::CrewmateFlashlightSize);
+                    MakeFloat("Tamaño de Linterna de Buscador", impLight, FloatOptionNames__Enum::ImpostorFlashlightSize);
+                    MakeFloat("Velocidad Final del Buscador", finalImpSpeed, FloatOptionNames__Enum::SeekerFinalSpeed);
+                    MakeBool("Mapa Final del Buscador", seekMap, BoolOptionNames__Enum::SeekerFinalMap);
+                    MakeBool("Pings Finales del Buscador", hidePings, BoolOptionNames__Enum::SeekerPings);
+                    MakeFloat("Intervalo de Ping", pingInterval, FloatOptionNames__Enum::MaxPingTime);
+                    MakeBool("Mostrar Nombres", showNames, BoolOptionNames__Enum::ShowCrewmateNames);
                 }
 #pragma endregion
             }
             if (openTournaments && State.TournamentMode) {
-                if (AnimatedButton("Copy All Data") && State.tournamentFriendCodes.size() != 0) {
+                if (AnimatedButton("Copiar Todos los Datos") && State.tournamentFriendCodes.size() != 0) {
                     std::string data = "";
                     for (auto i : State.tournamentFriendCodes) {
                         float points = State.tournamentPoints[i], win = State.tournamentWinPoints[i],
@@ -1008,7 +1008,7 @@ namespace HostTab {
                     ClipboardHelper_PutClipboardString(convert_to_string(data.substr(1)), NULL);
                 }
                 ImGui::SameLine();
-                if (ColoredButton(ImVec4(1.f, 0.f, 0.f, 1.f), "Clear All Data")) {
+                if (ColoredButton(ImVec4(1.f, 0.f, 0.f, 1.f), "Limpiar Todos los Datos")) {
                     State.tournamentPoints.clear();
                     State.tournamentKillCaps.clear();
                     State.tournamentWinPoints.clear();
@@ -1021,7 +1021,7 @@ namespace HostTab {
                         callout = State.tournamentCalloutPoints[i], death = State.tournamentEarlyDeathPoints[i];
                     std::string text = std::format("{}: {} Normal, {} +SV", i, DisplayScore(points), DisplayScore(callout)/*,
                             DisplayScore(win), DisplayScore(death)).c_str()*/); // +W, +D are not required anymore
-                    if (IsInLobby() && State.ChatCooldown >= 3.f && text.size() <= 120 && AnimatedButton("Send")) {
+                    if (IsInLobby() && State.ChatCooldown >= 3.f && text.size() <= 120 && AnimatedButton("Enviar")) {
                         //in ideal conditions a message longer than 120 characters should not be possible
                         State.lobbyRpcQueue.push(new RpcSendChat(*Game::pLocalPlayer, text));
                         State.MessageSent = true;
@@ -1048,12 +1048,12 @@ namespace HostTab {
                     static bool isRoleDeleted = false;
 
                     if (isRoleDeleted) isRoleDeleted = false;
-                    ImGui::Text("Create Role:");
+                    ImGui::Text("Crear Rol:");
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(140.0f * State.dpiScale);
                     InputString("##NewRoleName", &newRoleName, ImGuiInputTextFlags_EnterReturnsTrue);
                     ImGui::SameLine();
-                    if (AnimatedButton("Add Role")) {
+                    if (AnimatedButton("Agregar Rol")) {
                         if (!newRoleName.empty()) {
                             State.Mod_RoleNames.push_back(newRoleName);
                             State.Mod_RoleMembers.push_back({});
@@ -1075,7 +1075,7 @@ namespace HostTab {
                         selectedRole = std::clamp(selectedRole, 0, (int)State.Mod_RoleNames.size() - 1);
                         std::vector<const char*> roleVector(State.Mod_RoleNames.size(), nullptr);
                         for (size_t i = 0; i < State.Mod_RoleNames.size(); i++) roleVector[i] = State.Mod_RoleNames[i].c_str();
-                        ImGui::Text("Select Role:");
+                        ImGui::Text("Seleccionar Rol:");
                         ImGui::SameLine();
                         CustomListBoxInt(" ", &selectedRole, roleVector, 150.0f * State.dpiScale, ImVec4(0, 0, 0, 0), ImGuiComboFlags_None);
                         if (selectedRole != 0) {
@@ -1085,13 +1085,13 @@ namespace HostTab {
                                 if (State.Mod_RoleRank[selectedRole] < 0) State.Mod_RoleRank[selectedRole] = 0;
                             }
                             ImGui::SameLine();
-                            if (AnimatedButton("Set Rank")) {
+                            if (AnimatedButton("Fijar Rango")) {
                                 State.Save();
                             }
                         }
                     }
                     else {
-                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No roles created yet.");
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "No hay roles creados todavía.");
                     }
 
                     if (!State.Mod_RoleNames.empty()) {
@@ -1099,7 +1099,7 @@ namespace HostTab {
                         ImGui::SetNextItemWidth(150.0f * State.dpiScale);
                         InputString("##RenameRole", &renameBuf, ImGuiInputTextFlags_EnterReturnsTrue);
                         ImGui::SameLine();
-                        if (AnimatedButton("Rename Role")) {
+                        if (AnimatedButton("Renombrar Rol")) {
                             if (!renameBuf.empty()) {
                                 State.Mod_RoleNames[selectedRole] = renameBuf;
                                 renameBuf = "";
@@ -1108,7 +1108,7 @@ namespace HostTab {
                         }
                         if (selectedRole != 0) {
                             ImGui::SameLine();
-                            if (AnimatedButton("Delete Role")) {
+                            if (AnimatedButton("Eliminar Rol")) {
                                 State.Mod_RoleNames.erase(State.Mod_RoleNames.begin() + selectedRole);
                                 State.Mod_RoleMembers.erase(State.Mod_RoleMembers.begin() + selectedRole);
                                 State.Mod_RolePermissions.erase(State.Mod_RolePermissions.begin() + selectedRole);
@@ -1120,7 +1120,7 @@ namespace HostTab {
 
                         if (!isRoleDeleted) {
                             ImGui::Dummy(ImVec2(0, 6) * State.dpiScale);
-                            ImGui::Text("Permissions for %s:", State.Mod_RoleNames[selectedRole].c_str());
+                            ImGui::Text("Permisos para %s:", State.Mod_RoleNames[selectedRole].c_str());
                             ImVec4 themeCol = State.RgbMenuTheme ? State.RgbColor : (State.GradientMenuTheme ? State.MenuGradientColor : State.MenuThemeColor);
                             ImVec4 themeColDark = ImVec4(themeCol.x * 0.7f, themeCol.y * 0.7f, themeCol.z * 0.7f, themeCol.w);
                             ImVec4 themeColDarker = ImVec4(themeCol.x * 0.5f, themeCol.y * 0.5f, themeCol.z * 0.5f, themeCol.w);
@@ -1140,14 +1140,14 @@ namespace HostTab {
                             ImGui::Columns(1);
                             ImGui::Dummy(ImVec2(0, 6) * State.dpiScale);
                             if (selectedRole == 0) {
-                                ImGui::TextDisabled("Applies to every player automatically - no members needed.");
+                                ImGui::TextDisabled("Se aplica a todos los jugadores automáticamente; no requiere miembros.");
                             }
                             else {
-                                ImGui::Text("Members:");
+                                ImGui::Text("Miembros:");
                                 ImGui::SetNextItemWidth(150.0f * State.dpiScale);
                                 InputString("##NewMemberCode", &newMemberCode, ImGuiInputTextFlags_EnterReturnsTrue);
                                 ImGui::SameLine();
-                                if (AnimatedButton("Add (friendcode)##RoleMember")) {
+                                if (AnimatedButton("Agregar (código de amigo)##RoleMember")) {
                                     if (!newMemberCode.empty()) {
                                         SetFriendCodeInRole(newMemberCode, selectedRole, true); 
                                         newMemberCode = "";
@@ -1161,7 +1161,7 @@ namespace HostTab {
                                 for (size_t i = 0; i < members.size(); i++) memberVector[i] = members[i].c_str();
                                 CustomListBoxInt("  ", &selectedMemberIndex, memberVector, 150.0f * State.dpiScale, ImVec4(0, 0, 0, 0), ImGuiComboFlags_None);
                                 ImGui::SameLine();
-                                if (AnimatedButton("Remove##RoleMember")) {
+                                if (AnimatedButton("Eliminar##RoleMember")) {
                                     members.erase(members.begin() + selectedMemberIndex);
                                     State.Save();
                                 }

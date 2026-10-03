@@ -18,24 +18,24 @@ namespace DebugTab {
 		ImGui::BeginChild("###Debug", ImVec2(500, 0) * State.dpiScale, true, ImGuiWindowFlags_NoBackground);
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 #ifndef _VERSION
-		if (AnimatedButton("Unload DLL"))
+		if (AnimatedButton("Descargar DLL"))
 		{
 			SetEvent(hUnloadEvent);
 		}
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 #endif
-		ToggleButton("Enable Occlusion Culling", &State.OcclusionCulling);
+		ToggleButton("Activar Eliminación de Oclusión", &State.OcclusionCulling);
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
-		if (AnimatedButton("Force Load Settings"))
+		if (AnimatedButton("Forzar Carga de Ajustes"))
 		{
 			State.Load();
 		}
-		if (AnimatedButton("Force Save Settings"))
+		if (AnimatedButton("Forzar Guardado de Ajustes"))
 		{
 			State.Save();
 		}
-		if (AnimatedButton("Clear RPC Queues"))
+		if (AnimatedButton("Limpiar Colas RPC"))
 		{
 			State.rpcQueue = std::queue<RPCInterface*>();
 			State.lobbyRpcQueue = std::queue<RPCInterface*>();
@@ -43,32 +43,32 @@ namespace DebugTab {
 
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
-		if (ToggleButton("Log Unity Debug Messages", &State.ShowUnityLogs)) State.Save();
-		if (ToggleButton("Log Hook Debug Messages", &State.ShowHookLogs)) State.Save();
+		if (ToggleButton("Registrar Mensajes de Depuración de Unity", &State.ShowUnityLogs)) State.Save();
+		if (ToggleButton("Registrar Mensajes de Depuración de Hooks", &State.ShowHookLogs)) State.Save();
 
 		static int toastCount = 0;
-		if (AnimatedButton("Show Example Toast")) {
-			Toasts::AddToast("SickoMenu", std::format("Hello from a toast! ({})", toastCount).c_str());
+		if (AnimatedButton("Mostrar Toast de Ejemplo")) {
+			Toasts::AddToast("SickoMenu", std::format("¡Hola desde una notificación toast! ({})", toastCount).c_str());
 			toastCount++;
 		}
 		ImGui::SameLine();
-		if (AnimatedButton("Show Example Toast (Long Message)")) {
-			Toasts::AddToast("SickoMenu", std::format("Software is made to be used. It very often comes with some form of user interface. You, as a user, are meant to explore this user interface to familiarize yourself with the software you've installed on your computer... hint: it will likely be a menu named 'exclusions' or 'whitelist'... ({})", toastCount).c_str());
+		if (AnimatedButton("Mostrar Toast de Ejemplo (Mensaje Largo)")) {
+			Toasts::AddToast("SickoMenu", std::format("El software está hecho para ser utilizado. A menudo viene con alguna forma de interfaz de usuario. Tú, como usuario, debes explorar esta interfaz para familiarizarte con el software instalado en tu equipo... pista: probablemente será un menú llamado 'exclusiones' o 'lista blanca'... ({})", toastCount).c_str());
 			toastCount++;
 		}
 
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
-		if (ImGui::CollapsingHeader("Experiments##debug")) {
-			ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "These features are in development and can break at any time.");
-			ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Use these at your own risk.");
-			if (ToggleButton("Point System (Only for Hosting)", &State.TournamentMode)) State.Save();
-			if (ToggleButton("April Fools' Mode", &State.AprilFoolsMode)) State.Save();
+		if (ImGui::CollapsingHeader("Experimentos##debug")) {
+			ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Estas funciones están en desarrollo y pueden fallar en cualquier momento.");
+			ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Úsalas bajo tu propio riesgo.");
+			if (ToggleButton("Sistema de Puntos (Solo para Anfitrión)", &State.TournamentMode)) State.Save();
+			if (ToggleButton("Modo Día de los Inocentes", &State.AprilFoolsMode)) State.Save();
 			/*static float timer = 0.0f;
 			static bool SafeModeNotification = false;*/
 			static bool safeModeWarnState = false;
 
-			if (!safeModeWarnState && ToggleButton("Safe Mode", &State.SafeMode)) {
+			if (!safeModeWarnState && ToggleButton("Modo Seguro", &State.SafeMode)) {
 				if (!State.SafeMode) {
 					safeModeWarnState = true;
 					State.SafeMode = true;
@@ -78,19 +78,19 @@ namespace DebugTab {
 			}
 
 			if (safeModeWarnState) {
-				BoldText("Warning", ImVec4(1.f, 0.f, 0.f, 1.f));
-				ImGui::Text("By turning off Safe Mode, you can unlock functions");
-				ImGui::Text("that are usually detected by the anticheat.");
+				BoldText("Advertencia", ImVec4(1.f, 0.f, 0.f, 1.f));
+				ImGui::Text("Al desactivar el Modo Seguro, puedes desbloquear funciones");
+				ImGui::Text("que usualmente son detectadas por el antitrampas.");
 				ImGui::Text(" ");
-				ImGui::Text("However, you NEED to ensure that the lobby host has a reduced");
-				ImGui::Text("anticheat (host authority), so the other functions work.");
+				ImGui::Text("Sin embargo, DEBES asegurarte de que el anfitrión de la sala tenga");
+				ImGui::Text("un antitrampas reducido (autoridad de host), para que las otras funciones funcionen.");
 				ImGui::Text(" ");
-				ImGui::Text("Otherwise, you will get banned from the lobby by the anticheat!");
-				ImGui::Text("NOTE: The developers will NOT be held responsible for this.");
+				ImGui::Text("De lo contrario, ¡serás expulsado o baneado por el antitrampas!");
+				ImGui::Text("NOTA: Los desarrolladores NO se harán responsables de esto.");
 				ImGui::Text(" ");
-				ImGui::Text("Are you sure that you want to turn it off?");
+				ImGui::Text("¿Estás seguro de que deseas desactivarlo?");
 
-				if (ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), "Yes")) {
+				if (ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), "Sí")) {
 					safeModeWarnState = false;
 					State.SafeMode = false;
 				}
@@ -120,25 +120,25 @@ namespace DebugTab {
 
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
-		if (ImGui::CollapsingHeader("Replay##debug"))
+		if (ImGui::CollapsingHeader("Repetición##debug"))
 		{
 			synchronized(Replay::replayEventMutex) {
 				size_t numWalkPoints = 0;
 				for (const auto& pair : State.replayWalkPolylineByPlayer) {
 					numWalkPoints += pair.second.pendingPoints.size() + pair.second.simplifiedPoints.size();
 				}
-				ImGui::Text("Num Walk Points: %d", numWalkPoints);
-				ImGui::Text("Num Live Replay Events: %d", State.liveReplayEvents.size());
-				ImGui::Text("Num Live Console Events: %d", State.liveConsoleEvents.size());
+				ImGui::Text("Puntos de Ruta: %d", numWalkPoints);
+				ImGui::Text("Eventos de Repetición en Vivo: %d", State.liveReplayEvents.size());
+				ImGui::Text("Eventos de Consola en Vivo: %d", State.liveConsoleEvents.size());
 			}
 
-			ImGui::Text("ReplayMatchStart: %s", std::format("{:%OH:%OM:%OS}", State.MatchStart).c_str());
-			ImGui::Text("ReplayMatchCurrent: %s", std::format("{:%OH:%OM:%OS}", State.MatchCurrent).c_str());
-			ImGui::Text("ReplayMatchLive: %s", std::format("{:%OH:%OM:%OS}", std::chrono::system_clock::now()).c_str());
-			ImGui::Text("ReplayIsLive: %s", (State.Replay_IsLive) ? "True" : "False");
-			ImGui::Text("ReplayIsPlaying: %s", (State.Replay_IsPlaying) ? "True" : "False");
+			ImGui::Text("Inicio de Partida Repetición: %s", std::format("{:%OH:%OM:%OS}", State.MatchStart).c_str());
+			ImGui::Text("Momento Actual de Repetición: %s", std::format("{:%OH:%OM:%OS}", State.MatchCurrent).c_str());
+			ImGui::Text("Repetición en Vivo: %s", std::format("{:%OH:%OM:%OS}", std::chrono::system_clock::now()).c_str());
+			ImGui::Text("Repetición Es En Vivo: %s", (State.Replay_IsLive) ? "Sí" : "No");
+			ImGui::Text("Repetición Reproduciendo: %s", (State.Replay_IsPlaying) ? "Sí" : "No");
 
-			if (AnimatedButton("Re-simplify polylines (check console)"))
+			if (AnimatedButton("Re-simplificar polilíneas (ver consola)"))
 			{
 				SYNCHRONIZED(Replay::replayEventMutex);
 				for (auto& playerPolylinePair : State.replayWalkPolylineByPlayer)
@@ -153,7 +153,7 @@ namespace DebugTab {
 			}
 		}
 
-		if (ImGui::CollapsingHeader("Colors##debug"))
+		if (ImGui::CollapsingHeader("Colores##debug"))
 		{
 			il2cpp::Array colArr = app::Palette__TypeInfo->static_fields->PlayerColors;
 			auto colArr_raw = colArr.begin();
@@ -162,14 +162,14 @@ namespace DebugTab {
 			{
 				const app::Color32& col = colArr_raw[i];
 				const ImVec4& conv_col = AmongUsColorToImVec4(col);
-				static constexpr std::array COLORS = { "Red", "Blue", "Green", "Pink", "Orange", "Yellow", "Black", "White", "Purple", "Brown", "Cyan", "Lime", "Maroon", "Rose", "Banana", "Gray", "Tan", "Coral", "Fortegreen" };
+				static constexpr std::array COLORS = { "Rojo", "Azul", "Verde", "Rosa", "Naranja", "Amarillo", "Negro", "Blanco", "Morado", "Marrón", "Cian", "Lima", "Granate", "Rosa Claro", "Plátano", "Gris", "Bronceado", "Coral", "Verde Fuerte" };
 				ImGui::TextColored(conv_col, "%s [%d]: (%d, %d, %d, %d)", COLORS.at(i), i, col.r, col.g, col.b, col.a);
 			}
 		}
 
-		if (ImGui::CollapsingHeader("Profiler##debug"))
+		if (ImGui::CollapsingHeader("Rendimiento##debug"))
 		{
-			if (AnimatedButton("Clear Stats"))
+			if (AnimatedButton("Limpiar Estadísticas"))
 			{
 				Profiler::ClearStats();
 			}
@@ -188,9 +188,9 @@ namespace DebugTab {
 			ImGui::TextUnformatted(statStream.str().c_str());
 		}
 
-		ImGui::Text(std::format("Active Scene: {}", State.CurrentScene).c_str());
+		ImGui::Text(std::format("Escena Activa: {}", State.CurrentScene).c_str());
 
-		ImGui::Text(std::format("Current FPS: {}", GetFps()).c_str());
+		ImGui::Text(std::format("FPS Actuales: {}", GetFps()).c_str());
 
 		ImGui::EndChild();
 	}
