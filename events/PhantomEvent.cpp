@@ -15,7 +15,7 @@ void PhantomEvent::Output()
 		ImGui::Text(("(" + GetColorName(source.colorId) + ")").c_str());
 	}
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void PhantomEvent::ColoredEventOutput()
@@ -26,7 +26,7 @@ void PhantomEvent::ColoredEventOutput()
 	ImVec4 color;
 	((action == PHANTOM_ACTIONS::PHANTOM_APPEAR) ? color = ImVec4(0.f, 1.f, 0.f, 1.f) : color = ImVec4(1.f, 0.f, 0.f, 1.f));
 
-	ImGui::TextColored(color, ((action == PHANTOM_ACTIONS::PHANTOM_APPEAR) ? "APPEAR" : "VANISH"));
+	ImGui::TextColored(color, ((action == PHANTOM_ACTIONS::PHANTOM_APPEAR) ? "APARECIÓ" : "DESAPARECIÓ"));
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

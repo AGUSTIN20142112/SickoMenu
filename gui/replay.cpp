@@ -505,19 +505,19 @@ namespace Replay
 		else
 			titleCol = State.GradientMenuTheme ? State.MenuGradientColor : State.MenuThemeColor;
 		titleCol.w = 1.f;
-		ImGui::TextColored(titleCol, "Replay");
+		ImGui::TextColored(titleCol, "Repetición");
 		ImGui::SameLine(ImGui::GetWindowWidth() - 20 * State.dpiScale);
 		if (ImGui::Button("-")) State.ShowReplay = false; //minimize button
 
 		ImGui::BeginChild("replay#filter", ImVec2(0, 20) * State.dpiScale, true, ImGuiWindowFlags_NoBackground);
-		ImGui::Text("Event Filter: ");
+		ImGui::Text("Filtro de eventos: ");
 		ImGui::SameLine();
-		CustomListBoxIntMultiple("Event Types", &Replay::event_filter, 100.f * State.dpiScale);
+		CustomListBoxIntMultiple("Tipos de eventos", &Replay::event_filter, 100.f * State.dpiScale);
 		if (IsInGame()) {
 			ImGui::SameLine(0.f * State.dpiScale, 5.f * State.dpiScale);
-			ImGui::Text("Player Filter: ");
+			ImGui::Text("Filtro de jugadores: ");
 			ImGui::SameLine();
-			CustomListBoxPlayerSelectionMultiple("Players", &Replay::player_filter, 150.f * State.dpiScale);
+			CustomListBoxPlayerSelectionMultiple("Jugadores", &Replay::player_filter, 150.f * State.dpiScale);
 		}
 		ImGui::EndChild();
 		ImGui::Separator();
@@ -594,7 +594,7 @@ namespace Replay
 		
 		SliderChrono("##replay_slider", &State.MatchCurrent, &State.MatchStart, &State.MatchLive, fmt, ImGuiSliderFlags_None);
 		ImGui::SameLine();
-		if (AnimatedButton("Clear All Data"))
+		if (AnimatedButton("Borrar todos los datos"))
 			Replay::Reset(true);
 
 		ImGui::EndChild();

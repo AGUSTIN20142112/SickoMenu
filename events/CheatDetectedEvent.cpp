@@ -15,15 +15,15 @@ void CheatDetectedEvent::Output() {
 	ImGui::SameLine();
 	ImGui::Text(">");
 	ImGui::SameLine();
-	ImGui::Text("Cheat detected: %s", CHEAT_ACTION_NAMES[(int)this->action]);
+	ImGui::Text("Trampa detectada: %s", CHEAT_ACTION_NAMES[(int)this->action]);
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void CheatDetectedEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "CHEAT");
+	ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "TRAMPA");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

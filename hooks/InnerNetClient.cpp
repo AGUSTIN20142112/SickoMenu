@@ -787,10 +787,10 @@ void dInnerNetClient_Update(InnerNetClient* __this, MethodInfo* method) {
                                 if (!whitelisted || !State.AutoKickSlackersIgnoreWhitelist) {
                                     std::string playerName = convert_from_string(NetworkedPlayerInfo_get_PlayerName(pd, NULL));
                                     LOG_DEBUG("Task Enforcer: kicking " + playerName + " (" + std::to_string(pct) + "% tasks)");
-                                    std::string msg = std::format("{} was kicked by Task Enforcer ({}/{}% tasks)", playerName, pct, State.AutoKickSlackersThreshold);
+                                    std::string msg = std::format("{} fue expulsado por el Aplicador de Tareas ({}/{}% tareas)", playerName, pct, State.AutoKickSlackersThreshold);
                                     InnerNetClient_KickPlayer((InnerNetClient*)(*Game::pAmongUsClient), pc->fields._.OwnerId, false, NULL);
                                     
-                                    Toasts::AddToast("Task Enforcer", msg, ImVec4(0.f, 1.f, 0.f, 1.f));
+                                    Toasts::AddToast("Aplicador de Tareas", msg, ImVec4(0.f, 1.f, 0.f, 1.f));
                                 }
                             }
                         }
@@ -1054,11 +1054,11 @@ void dInnerNetClient_Update(InnerNetClient* __this, MethodInfo* method) {
 
                 app::InnerNetClient_KickPlayer((InnerNetClient*)(*Game::pAmongUsClient), pc->fields._.OwnerId, false, NULL);
 
-                const std::string kickMsg = std::format("{} was detected by Name-Checker!", name);
-                Toasts::AddToast("Name-Checker", kickMsg, ImVec4(0.f, 1.f, 0.f, 1.f));
+                const std::string kickMsg = std::format("¡{} fue detectado por el Verificador de Nombres!", name);
+                Toasts::AddToast("Verificador de Nombres", kickMsg, ImVec4(0.f, 1.f, 0.f, 1.f));
 
                 if (State.ShowPDataByNC) {
-                    const std::string pdataMsg = std::format("<#ff033e><font=\"Barlow-Regular Outline\"><b>Name-Checker ~ Player Data:\n<voffset=-0.5>*</voffset> [<#FFF>{}</color>]\n\n<size=75%>Product User ID: <#FFF>{}</color>\nFriend Code: <#FFF>{}</b></font></size></color>", name, puid.empty() ? "<#F00>NONE</color>" : puid, fc.empty() ? "<#F00>NONE</color>" : fc);
+                    const std::string pdataMsg = std::format("<#ff033e><font=\"Barlow-Regular Outline\"><b>Verificador de Nombres ~ Datos del Jugador:\n<voffset=-0.5>*</voffset> [<#FFF>{}</color>]\n\n<size=75%>Product User ID: <#FFF>{}</color>\nCódigo de Amigo: <#FFF>{}</b></font></size></color>", name, puid.empty() ? "<#F00>NONE</color>" : puid, fc.empty() ? "<#F00>NONE</color>" : fc);
                     ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(pdataMsg), NULL);
                 }
             }
@@ -1190,9 +1190,9 @@ void dInnerNetClient_Update(InnerNetClient* __this, MethodInfo* method) {
 
                     State.NotifiedWarnedPlayers.insert(friendCode);
 
-                    std::string action = State.BanWarned ? "banned" : "kicked";
-                    std::string kickMsg = std::format("{} was {} for receiving {} warns", friendCode, action, State.MaxWarns);
-                    Toasts::AddToast(State.BanWarned ? "Ban by Warns" : "Kick by Warns", kickMsg, ImVec4(1.f, 0.f, 0.f, 1.f));
+                    std::string action = State.BanWarned ? "baneado" : "expulsado";
+                    std::string kickMsg = std::format("{} fue {} por recibir {} advertencias", friendCode, action, State.MaxWarns);
+                    Toasts::AddToast(State.BanWarned ? "Baneo por Advertencias" : "Expulsión por Advertencias", kickMsg, ImVec4(1.f, 0.f, 0.f, 1.f));
 
                     if (State.BanWarned) {
                         app::InnerNetClient_KickPlayer((InnerNetClient*)(*Game::pAmongUsClient), playerControl->fields._.OwnerId, true, NULL);
@@ -1754,9 +1754,9 @@ void dAmongUsClient_OnPlayerLeft(AmongUsClient* __this, ClientData* data, Discon
                     if (State.ShowConsoleEventsAsToasts &&
                         ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_DISCONNECT) &&
                         ConsoleGui::IsPlayerFiltered(playerInfo->fields.PlayerId)) {
-                        std::string toastContent = std::format("{} ({}) left the game!",
+                        std::string toastContent = std::format("¡{} ({}) abandonó la partida!",
                             source.playerName, GetColorName(source.colorId));
-                        Toasts::AddToast("Player Disconnected", toastContent, ImVec4(1.f, 1.f, 1.f, 1.f));
+                        Toasts::AddToast("Jugador Desconectado", toastContent, ImVec4(1.f, 1.f, 1.f, 1.f));
                     }
                 }
             }
@@ -2056,7 +2056,7 @@ void dVoteBanSystem_AddVote(VoteBanSystem* __this, int32_t srcClient, int32_t cl
         if (clientId == (*Game::pLocalPlayer)->fields._.OwnerId) {
             State.VoteKicks++;
             if (State.ShowVoteKicks) {
-                Toasts::AddToast("Votekick Alert", RemoveHtmlTags(sourceplayerName) + " attempted to votekick you!", ImVec4(1.f, 0.f, 0.f, 1.f));
+                Toasts::AddToast("Alerta de Voto-Kick", "¡" + RemoveHtmlTags(sourceplayerName) + " intentó votarte para expulsarte!", ImVec4(1.f, 0.f, 0.f, 1.f));
             }
         }
 

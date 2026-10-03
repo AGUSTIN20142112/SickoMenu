@@ -11,15 +11,15 @@ void DisconnectEvent::Output() {
 		ImGui::Text(("(" + GetColorName(source.colorId) + ")").c_str());
 	}
 	ImGui::SameLine();
-	ImGui::Text("has left the game");
+	ImGui::Text("ha abandonado la partida");
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void DisconnectEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1.f, 1.f, 1.f, 1.f), "DISCONNECT");
+	ImGui::TextColored(ImVec4(1.f, 1.f, 1.f, 1.f), "DESCONECTADO");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

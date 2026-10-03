@@ -677,24 +677,24 @@ void CompleteAllTasks(PlayerControl* player) {
 }
 
 const char* TranslateTaskTypes(TaskTypes__Enum taskType) {
-    static constexpr std::array TASK_TRANSLATIONS = { "Submit Scan", "Prime Shields", "Fuel Engines", "Chart Course", "Start Reactor", "Swipe Card", "Clear Asteroids", "Upload Data",
-        "Inspect Sample", "Empty Chute", "Empty Garbage", "Align Engine Output", "Fix Wiring", "Calibrate Distributor", "Divert Power", "Unlock Manifolds", "Stop Reactor Meltdown",
-        "Fix Lights", "Clean O2 Filter", "Fix Communications", "Restore Oxygen", "Stabilize Steering", "Assemble Artifact", "Sort Samples", "Measure Weather", "Enter ID Code",
-        "Buy Beverage", "Process Data", "Run Diagnostics", "Water Plants", "Monitor Oxygen", "Store Artifacts", "Fill Canisters", "Activate Weather Nodes", "Insert Keys",
-        "Reset Seismic Stabilizers", "Scan Boarding Pass", "Open Waterways", "Replace Water Jug", "Repair Drill", "Align Telescope", "Record Temperature", "Reboot Wifi",
-        "Polish Ruby", "Reset Breakers", "Decontaminate", "Make Burger", "Unlock Safe", "Sort Records", "Put Away Pistols", "Fix Shower", "Clean Toilet", "Dress Mannequin",
-        "Pick Up Towels", "Rewind Tapes", "Start Fans", "Develop Photos", "Get Biggol Sword", "Put Away Rifles", "Stop Charles", "Clean Vent", "None", "Build Sandcastle",
-        "Cook Fish", "Collect Shells", "Lift Weights", "Roast Marshmallow", "Throw Frisbee", "Collect Samples", "Prep Vegetables", "Hoist Supplies", "Mine Ores", "Polish Gem", "Replace Parts", "Help Critter",
-        "Crank Generator", "Fix Antenna", "Find Signal", "Activate Mushroom Mixup", "Extract Fuel", "Monitor Mushroom", "Play Video Game" };
+    static constexpr std::array TASK_TRANSLATIONS = { "Enviar Escaneo", "Activar Escudos", "Cargar Motores", "Trazar Curso", "Encender Reactor", "Pasar Tarjeta", "Destruir Asteroides", "Subir Datos",
+        "Inspeccionar Muestra", "Vaciar Conducto", "Vaciar Desechos", "Alinear Salida del Motor", "Reparar Cableado", "Calibrar Distribuidor", "Desviar Energía", "Desbloquear Colectores", "Detener Fusión del Reactor",
+        "Reparar Luces", "Limpiar Filtro O2", "Reparar Comunicaciones", "Restaurar Oxígeno", "Estabilizar Dirección", "Armar Artefacto", "Clasificar Muestras", "Medir Clima", "Ingresar Código ID",
+        "Comprar Bebida", "Procesar Datos", "Ejecutar Diagnóstico", "Regar Plantas", "Monitorear Oxígeno", "Almacenar Artefactos", "Llenar Botes", "Activar Nodos de Clima", "Insertar Llaves",
+        "Restablecer Estabilizadores", "Escanear Pase de Abordar", "Abrir Vías Fluviales", "Reemplazar Jarra de Agua", "Reparar Taladro", "Alinear Telescopio", "Registrar Temperatura", "Reiniciar Wifi",
+        "Pulir Rubí", "Restablecer Disyuntores", "Descontaminar", "Preparar Hamburguesa", "Abrir Caja Fuerte", "Ordenar Archivos", "Guardar Pistolas", "Reparar Ducha", "Limpiar Inodoro", "Vestir Maniquí",
+        "Recoger Toallas", "Rebobinar Cintas", "Encender Ventiladores", "Revelar Fotos", "Obtener Espada Biggol", "Guardar Rifles", "Detener a Charles", "Limpiar Ventilación", "Ninguna", "Construir Castillo de Arena",
+        "Cocinar Pescado", "Recolectar Conchas", "Levantar Pesas", "Asar Malvavisco", "Lanzar Frisbee", "Recolectar Muestras", "Preparar Verduras", "Izar Suministros", "Minar Minerales", "Pulir Gema", "Reemplazar Piezas", "Ayudar a la Criatura",
+        "Girar Generador", "Reparar Antena", "Buscar Señal", "Activar Confusión de Setas", "Extraer Combustible", "Monitorear Seta", "Jugar Videojuego" };
     return TASK_TRANSLATIONS.at(static_cast<size_t>(taskType));
 }
 
 const char* TranslateSystemTypes(SystemTypes__Enum systemType) {
-    static constexpr std::array SYSTEM_TRANSLATIONS = { "Hallway", "Storage", "Cafeteria", "Reactor", "Upper Engine", "Navigation", "Admin", "Electrical", "Oxygen", "Shields",
-        "MedBay", "Security", "Weapons", "Lower Engine", "Communications", "Ship Tasks", "Doors", "Sabotage", "Decontamination", "Launchpad", "Locker Room", "Laboratory",
-        "Balcony", "Office", "Greenhouse", "Dropship", "Decontamination", "Outside", "Specimen Room", "Boiler Room", "Vault Room", "Cockpit", "Armory", "Kitchen", "Viewing Deck",
-        "Hall Of Portraits", "Cargo Bay", "Ventilation", "Showers", "Engine Room", "The Brig", "Meeting Room", "Records", "Lounge Room", "Gap Room", "Main Hall", "Medical",
-        "Decontamination", "Zipline", "Mining Pit", "Dock", "Splash Zone", "Lookout", "Beach", "Highlands", "Jungle", "The Dorm", "Activate Mushroom Mixup", "Heli Sabotage" };
+    static constexpr std::array SYSTEM_TRANSLATIONS = { "Pasillo", "Almacén", "Cafetería", "Reactor", "Motor Superior", "Navegación", "Administración", "Electricidad", "Oxígeno", "Escudos",
+        "Ala Médica", "Seguridad", "Armería", "Motor Inferior", "Comunicaciones", "Tareas de la Nave", "Puertas", "Sabotaje", "Descontaminación", "Plataforma de Lanzamiento", "Vestuario", "Laboratorio",
+        "Balcón", "Oficina", "Invernadero", "Nave de Descenso", "Descontaminación", "Exterior", "Sala de Especímenes", "Sala de Calderas", "Cámara Acorazada", "Cabina", "Armería", "Cocina", "Cubierta de Observación",
+        "Galería de Retratos", "Bahía de Carga", "Ventilación", "Duchas", "Sala de Motores", "El Calabozo", "Sala de Reuniones", "Archivos", "Salón", "Sala del Abismo", "Vestíbulo Principal", "Médica",
+        "Descontaminación", "Tirolesa", "Fosa Minera", "Muelle", "Zona de Chapoteo", "Mirador", "Playa", "Tierras Altas", "Jungla", "El Dormitorio", "Activar Confusión de Setas", "Sabotaje de Helicóptero" };
     return SYSTEM_TRANSLATIONS.at(static_cast<size_t>(systemType));
 }
 
@@ -1523,39 +1523,39 @@ std::string GetRoleName(RoleBehaviour* roleBehaviour, bool abbreviated /* = fals
     switch (roleBehaviour->fields.Role)
     {
     case RoleTypes__Enum::Engineer:
-        return (abbreviated ? "Eng" : (localized ? fullRoleName : "Engineer"));
+        return (abbreviated ? "Ing" : (localized ? fullRoleName : "Ingeniero"));
     case RoleTypes__Enum::GuardianAngel:
-        return (abbreviated ? "GA" : (localized ? fullRoleName : "Guardian Angel"));
+        return (abbreviated ? "AG" : (localized ? fullRoleName : "Ángel Guardián"));
     case RoleTypes__Enum::Impostor:
         return (abbreviated ? "Imp" : (localized ? fullRoleName : "Impostor"));
     case RoleTypes__Enum::Scientist:
-        return (abbreviated ? "Sci" : (localized ? fullRoleName : "Scientist"));
+        return (abbreviated ? "Cien" : (localized ? fullRoleName : "Científico"));
     case RoleTypes__Enum::Shapeshifter:
-        return (abbreviated ? "SS" : (localized ? fullRoleName : "Shapeshifter"));
+        return (abbreviated ? "Meta" : (localized ? fullRoleName : "Metamorfo"));
     case RoleTypes__Enum::Crewmate:
-        return (abbreviated ? "Crew" : (localized ? fullRoleName : "Crewmate"));
+        return (abbreviated ? "Trip" : (localized ? fullRoleName : "Tripulante"));
     case RoleTypes__Enum::CrewmateGhost:
-        return (abbreviated ? "CG" : "Crewmate Ghost");
+        return (abbreviated ? "FT" : "Fantasma Tripulante");
     case RoleTypes__Enum::ImpostorGhost:
-        return (abbreviated ? "IG" : "Impostor Ghost");
+        return (abbreviated ? "FI" : "Fantasma Impostor");
     case RoleTypes__Enum::Noisemaker:
-        return (abbreviated ? "NM" : (localized ? fullRoleName : "Noisemaker"));
+        return (abbreviated ? "Rui" : (localized ? fullRoleName : "Ruidoso"));
     case RoleTypes__Enum::Tracker:
     case (RoleTypes__Enum)trackerRoleId:
-        return (abbreviated ? "Tra" : (localized ? fullRoleName : "Tracker"));
+        return (abbreviated ? "Rast" : (localized ? fullRoleName : "Rastreador"));
     case RoleTypes__Enum::Phantom:
-        return (abbreviated ? "Ph" : (localized ? fullRoleName : "Phantom"));
+        return (abbreviated ? "Fan" : (localized ? fullRoleName : "Fantasma"));
     case RoleTypes__Enum::Detective:
         return (abbreviated ? "Det" : (localized ? fullRoleName : "Detective"));
     case RoleTypes__Enum::Viper:
-        return (abbreviated ? "Vip" : (localized ? fullRoleName : "Viper"));
+        return (abbreviated ? "Víp" : (localized ? fullRoleName : "Víbora"));
     case RoleTypes__Enum::Judge:
-        return (abbreviated ? "Jdg" : (localized ? fullRoleName : "Judge"));
+        return (abbreviated ? "Juez" : (localized ? fullRoleName : "Juez"));
     case RoleTypes__Enum::SpiritGuide:
         return (abbreviated ? "Inf" : (localized ? fullRoleName : "Influencer"));
     default:
         // LOG_DEBUG(std::format("{}", (int)roleBehaviour->fields.Role));
-        return (abbreviated ? "Unk" : "Unknown");
+        return (abbreviated ? "Desc" : "Desconocido");
     }
 }
 
@@ -2014,9 +2014,9 @@ static std::string GetSMACCategoryForReason(const std::string& reason) {
 }
 
 std::string GetColorName(int32_t colorId) {
-    const std::vector<std::string> COLORS = { "Red", "Blue", "Green", "Pink", "Orange", "Yellow", "Black", "White", "Purple", "Brown", "Cyan", "Lime", "Maroon", "Rose", "Banana", "Gray", "Tan", "Coral" };
+    const std::vector<std::string> COLORS = { "Rojo", "Azul", "Verde", "Rosa", "Naranja", "Amarillo", "Negro", "Blanco", "Morado", "Marrón", "Cian", "Lima", "Granate", "Rosado", "Plátano", "Gris", "Canela", "Coral" };
 
-    return colorId >= 0 && colorId < (int32_t)COLORS.size() ? COLORS[colorId] : " Fortegreen";
+    return colorId >= 0 && colorId < (int32_t)COLORS.size() ? COLORS[colorId] : " Verde fuerte";
 }
 
 void SMAC_OnCheatDetected(PlayerControl* pCtrl, std::string reason) {
@@ -2035,7 +2035,7 @@ void SMAC_OnCheatDetected(PlayerControl* pCtrl, std::string reason) {
     auto pData = GetPlayerData(pCtrl);
     std::string name = RemoveHtmlTags(convert_from_string(GetPlayerOutfit(pData)->fields.PlayerName));
     if (name.empty()) name = convert_from_string(InnerNetClient_GetClientFromCharacter((InnerNetClient*)(*Game::pAmongUsClient), pCtrl, NULL)->fields.PlayerName);
-    if (name.empty()) name = "<#b0f>[Unknown]</color>";
+    if (name.empty()) name = "<#b0f>[Desconocido]</color>";
 
     std::string fc = convert_from_string(pData->fields.FriendCode);
     auto it = std::find(State.WhitelistFriendCodes.begin(), State.WhitelistFriendCodes.end(), fc);
@@ -2062,7 +2062,7 @@ void SMAC_OnCheatDetected(PlayerControl* pCtrl, std::string reason) {
 
     switch (punishment) {
     case 0:
-        LOG_INFO((name + " has been detected by SickoMenu Anticheat! Reason: " + reason).c_str());
+        LOG_INFO((name + " ha sido detectado por el Anti-trampas de SickoMenu! Motivo: " + reason).c_str());
         break;
     case 1:
     {
@@ -2078,18 +2078,18 @@ void SMAC_OnCheatDetected(PlayerControl* pCtrl, std::string reason) {
             IsColorBlindMode() ? (realOutfit->fields.ColorId >= 0 && realOutfit->fields.ColorId < (int32_t)COLORS.size() ?
                 " (" + COLORS[realOutfit->fields.ColorId] + ")" : " (Fortegreen)") : "", reason);*/
 
-        std::string cheaterMessage = std::format("Player {}{} has done an unauthorized action:\n{}",
+        std::string cheaterMessage = std::format("¡El jugador {}{} ha realizado una acción no autorizada:\n{}",
             name,
             IsColorBlindMode() ? (" (" + GetColorName(realOutfit->fields.ColorId) + ")") : "", reason);
 
         // ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(cheaterMessage), NULL);
-        Toasts::AddToast("SMAC Detected " + name + "!", cheaterMessage, ImVec4(1.f, 0.f, 0.f, 1.f));
+        Toasts::AddToast("¡SMAC detectó a " + name + "!", cheaterMessage, ImVec4(1.f, 0.f, 0.f, 1.f));
         break;
     }
     case 2:
     case 3:
     {
-        String* newName = convert_to_string(name + " <#fff>has been kicked by <#ff006c>SickoMenu</color> <#9ef>Anticheat</color>! Reason: </color><#f00><b>" + reason + "</b></color><size=0>");
+        String* newName = convert_to_string(name + " <#fff>ha sido " + (punishment == 3 ? "baneado" : "expulsado") + " por el <#ff006c>Anti-trampas</color> de <#9ef>SickoMenu</color>! Motivo: </color><#f00><b>" + reason + "</b></color><size=0>");
 
         notifier->fields.spacingY = spacingBackup += 0.05f;
         NotificationPopper_AddDisconnectMessage(notifier, newName, nullptr);

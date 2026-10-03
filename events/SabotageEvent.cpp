@@ -16,7 +16,7 @@ void SabotageEvent::Output() {
 	ImGui::SameLine();
 	ImGui::Text("(%s)", TranslateSystemTypes(systemType));
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void SabotageEvent::ColoredEventOutput() {
@@ -26,7 +26,7 @@ void SabotageEvent::ColoredEventOutput() {
 	ImVec4 color;
 	((action == SABOTAGE_ACTIONS::SABOTAGE_FIX) ? color = ImVec4(0.f, 1.f, 0.f, 1.f) : color = ImVec4(1.f, 0.f, 0.f, 1.f));
 
-	ImGui::TextColored(color, ((action == SABOTAGE_ACTIONS::SABOTAGE_CALL) ? "SABOTAGE" : "REPAIR"));
+	ImGui::TextColored(color, ((action == SABOTAGE_ACTIONS::SABOTAGE_CALL) ? "SABOTAJE" : "REPARACIÓN"));
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

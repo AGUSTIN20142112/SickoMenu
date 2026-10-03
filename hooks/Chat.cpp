@@ -119,7 +119,7 @@ void SendPrivateWarnMessage(PlayerControl* toPlayer, const std::string& reason, 
 	if (!*Game::pLocalPlayer) return;
 
 	if (IsHost() && State.ChatCooldown >= 3.f) /* <- In order not to look ridiculous where we are not host :sob: */ {
-		std::string message = std::format("You were warned by Reason: {}\n\nTotal warns: {}", reason, totalWarns);
+		std::string message = std::format("Fuiste advertido por Motivo: {}\n\nTotal de advertencias: {}", reason, totalWarns);
 		if (message.length() > 120) {
 			message = message.substr(0, 120);
 		}
@@ -377,7 +377,7 @@ static bool HandleChatCommand(PlayerControl* actor, const std::string& message) 
 					if (State.ShowConsoleEventsAsToasts &&
 						ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_MODERATION) &&
 						ConsoleGui::IsPlayerFiltered(actor->fields.PlayerId)) {
-						Toasts::AddToast("Moderation", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
+						Toasts::AddToast("Moderación", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
 					}
 				}
 			}
@@ -421,7 +421,7 @@ static bool HandleChatCommand(PlayerControl* actor, const std::string& message) 
 					if (State.ShowConsoleEventsAsToasts &&
 						ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_MODERATION) &&
 						ConsoleGui::IsPlayerFiltered(actor->fields.PlayerId)) {
-						Toasts::AddToast("Moderation", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
+						Toasts::AddToast("Moderación", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
 					}
 				}
 			}
@@ -437,13 +437,13 @@ static bool HandleChatCommand(PlayerControl* actor, const std::string& message) 
 				auto sourceEvt = GetEventPlayerControl(actor);
 				auto targetEvt = GetEventPlayerControl(target);
 				if (sourceEvt.has_value() && targetEvt.has_value()) {
-					std::string msg = sourceEvt->playerName + (isBan ? " banned " : " kicked ") + targetEvt->playerName;
+					std::string msg = sourceEvt->playerName + (isBan ? " baneó a " : " expulsó a ") + targetEvt->playerName;
 					State.liveConsoleEvents.emplace_back(std::make_unique<ModerationEvent>(sourceEvt.value(), msg));
 
 					if (State.ShowConsoleEventsAsToasts &&
 						ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_MODERATION) &&
 						ConsoleGui::IsPlayerFiltered(actor->fields.PlayerId)) {
-						Toasts::AddToast("Moderation", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
+						Toasts::AddToast("Moderación", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
 					}
 				}
 			}
@@ -483,16 +483,16 @@ static bool HandleChatCommand(PlayerControl* actor, const std::string& message) 
 							State.WarnReasons[targetFc].push_back(warnReason);
 							State.Save();
 							if (State.NotifyWarned) SendPrivateWarnMessage(target, warnReason, State.WarnedFriendCodes[targetFc]);
-							PlayerControl_RpcSendChat(*Game::pLocalPlayer, convert_to_string(targetName + " has been warned: " + warnReason), NULL);
+							PlayerControl_RpcSendChat(*Game::pLocalPlayer, convert_to_string(targetName + " ha sido advertido: " + warnReason), NULL);
 							auto sourceEvt = GetEventPlayerControl(actor);
 							if (sourceEvt.has_value()) {
-								std::string msg = sourceEvt->playerName + " warned " + targetName + ": " + warnReason;
+								std::string msg = sourceEvt->playerName + " advirtió a " + targetName + ": " + warnReason;
 								State.liveConsoleEvents.emplace_back(std::make_unique<ModerationEvent>(sourceEvt.value(), msg));
 
 								if (State.ShowConsoleEventsAsToasts &&
 									ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_MODERATION) &&
 									ConsoleGui::IsPlayerFiltered(actor->fields.PlayerId)) {
-									Toasts::AddToast("Moderation", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
+									Toasts::AddToast("Moderación", msg, ImVec4(1.f, 0.65f, 0.f, 1.f));
 								}
 							}
 						}
@@ -1208,7 +1208,7 @@ void dChatController_SendFreeChat(ChatController* __this, MethodInfo* method) {
 		if (State.ExtraCommands) {
 
 			if (chatTextLower == "/add" || chatTextLower == "/add ") {
-				std::string msg = "<#aaaaaa><size=-0.24><font=\"Barlow-Regular Masked\"><b>Usage: /add <FriendCode></b></font></color>";
+				std::string msg = "<#aaaaaa><size=-0.24><font=\"Barlow-Regular Masked\"><b>Uso: /add <CodigoAmigo></b></font></color>";
 				ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(msg), NULL);
 				return;
 			}
@@ -1219,11 +1219,11 @@ void dChatController_SendFreeChat(ChatController* __this, MethodInfo* method) {
 					if (std::find(State.WhitelistFriendCodes.begin(), State.WhitelistFriendCodes.end(), fc) == State.WhitelistFriendCodes.end()) {
 						State.WhitelistFriendCodes.push_back(fc);
 
-						std::string msg = std::format("<#5cff83><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Added to Whitelist.</b></font></color>", fc);
+						std::string msg = std::format("<#5cff83><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Añadido a la lista blanca.</b></font></color>", fc);
 						ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(msg), NULL);
 					}
 					else {
-						std::string msg = std::format("<#ffd93d><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Already in Whitelist.</b></font></color>", fc);
+						std::string msg = std::format("<#ffd93d><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Ya está en la lista blanca.</b></font></color>", fc);
 						ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(msg), NULL);
 					}
 				}
@@ -1233,7 +1233,7 @@ void dChatController_SendFreeChat(ChatController* __this, MethodInfo* method) {
 
 
 			if (chatTextLower == "/remove" || chatTextLower == "/remove ") {
-				std::string msg = "<#aaaaaa><size=-0.24><font=\"Barlow-Regular Masked\"><b>Usage: /remove <FriendCode></b></font></color>";
+				std::string msg = "<#aaaaaa><size=-0.24><font=\"Barlow-Regular Masked\"><b>Uso: /remove <CodigoAmigo></b></font></color>";
 				ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(msg), NULL);
 				return;
 			}
@@ -1244,11 +1244,11 @@ void dChatController_SendFreeChat(ChatController* __this, MethodInfo* method) {
 				if (it != State.WhitelistFriendCodes.end()) {
 					State.WhitelistFriendCodes.erase(it);
 
-					std::string msg = std::format("<#ff5c5c><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Removed from Whitelist.</b></font></color>", fc);
+					std::string msg = std::format("<#ff5c5c><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Eliminado de la lista blanca.</b></font></color>", fc);
 					ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(msg), NULL);
 				}
 				else {
-					std::string msg = std::format("<#ff0000><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" Not found in Whitelist.</b></font></color>", fc);
+					std::string msg = std::format("<#ff0000><size=-0.24><font=\"Barlow-Regular Masked\"><b>\"{}\" No encontrado en la lista blanca.</b></font></color>", fc);
 					ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string(msg), NULL);
 				}
 				return;
@@ -1287,7 +1287,7 @@ void dChatController_SendFreeChat(ChatController* __this, MethodInfo* method) {
 		// this was done to avoid repeating (State.WasPreviousMessageCommand = true) before every return statement
 
 		if (State.CurrentChatMode == QuickChatModes__Enum::QuickChatOnly) {
-			ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string("Free chat is not allowed!"), NULL);
+			ChatController_AddChatWarning(Game::HudManager.GetInstance()->fields.Chat, convert_to_string("¡El chat libre no está permitido!"), NULL);
 			return;
 		}
 

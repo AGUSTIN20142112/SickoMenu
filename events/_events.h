@@ -9,20 +9,20 @@
 using namespace app;
 
 #define ALL_EVENTS \
-	ADD_EVENT (KILL, "Kill"), \
-	ADD_EVENT (VENT, "Vent"), \
-	ADD_EVENT (TASK, "Task"), \
-	ADD_EVENT (REPORT, "Report"), \
-	ADD_EVENT (MEETING, "Meeting"), \
-	ADD_EVENT (VOTE, "Vote"), \
-	ADD_EVENT (CHEAT, "Cheat"), \
-	ADD_EVENT (DISCONNECT, "Disconnect"), \
-	ADD_EVENT (SHAPESHIFT, "Shapeshift"), \
-	ADD_EVENT (PROTECTPLAYER, "Protect"), \
-	ADD_EVENT (PHANTOM, "Phantom"), \
-	ADD_EVENT (SABOTAGE, "Sabotage"), \
-	ADD_EVENT (WALK, "Walk"), \
-	ADD_EVENT (MODERATION, "Moderation")
+	ADD_EVENT (KILL, "Asesinato"), \
+	ADD_EVENT (VENT, "Ventilación"), \
+	ADD_EVENT (TASK, "Tarea"), \
+	ADD_EVENT (REPORT, "Reporte"), \
+	ADD_EVENT (MEETING, "Reunión"), \
+	ADD_EVENT (VOTE, "Voto"), \
+	ADD_EVENT (CHEAT, "Trampa"), \
+	ADD_EVENT (DISCONNECT, "Desconexión"), \
+	ADD_EVENT (SHAPESHIFT, "Metamorfosis"), \
+	ADD_EVENT (PROTECTPLAYER, "Proteger"), \
+	ADD_EVENT (PHANTOM, "Fantasma"), \
+	ADD_EVENT (SABOTAGE, "Sabotaje"), \
+	ADD_EVENT (WALK, "Caminar"), \
+	ADD_EVENT (MODERATION, "Moderación")
 
 enum class EVENT_TYPES {
 #define ADD_EVENT(name, desc) EVENT_ ## name
@@ -51,7 +51,7 @@ enum class SABOTAGE_ACTIONS {
 	SABOTAGE_FIX
 };
 
-const std::vector<const char*> CHEAT_ACTION_NAMES = { "Teleporting", "Killed abnormally" };
+const std::vector<const char*> CHEAT_ACTION_NAMES = { "Teletransportándose", "Asesinato anormal" };
 
 struct EVENT_PLAYER {
 	Game::PlayerId playerId;
@@ -156,11 +156,11 @@ public:
 		switch (this->action)
 		{
 		case VENT_ACTIONS::VENT_ENTER:
-			return std::string("Enter");
+			return std::string("Entró");
 			break;
 
 		case VENT_ACTIONS::VENT_EXIT:
-			return std::string("Exit");
+			return std::string("Salió");
 			break;
 
 		default:
@@ -181,28 +181,28 @@ public:
 	std::string GetSystemType() {
 		switch (this->systemType) {
 		case SystemTypes__Enum::Electrical:
-			return "Lights";
+			return "Luces";
 			break;
 		case SystemTypes__Enum::Reactor:
 			return "Reactor";
 			break;
 		case SystemTypes__Enum::Laboratory:
-			return "Seismic Stabilizers";
+			return "Estabilizadores Sísmicos";
 			break;
 		case SystemTypes__Enum::HeliSabotage:
-			return "Crash Course";
+			return "Rumbo de Colisión";
 			break;
 		case SystemTypes__Enum::LifeSupp:
-			return "Oxygen";
+			return "Oxígeno";
 			break;
 		case SystemTypes__Enum::MushroomMixupSabotage:
-			return "Mushroom Mixup";
+			return "Confusión de Setas";
 			break;
 		case SystemTypes__Enum::Comms:
-			return "Comms";
+			return "Comunicaciones";
 			break;
 		default:
-			return "Unknown";
+			return "Desconocido";
 			break;
 		}
 	}

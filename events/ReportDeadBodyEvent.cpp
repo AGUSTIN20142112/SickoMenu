@@ -29,13 +29,13 @@ void ReportDeadBodyEvent::Output() {
 	}
 	ImGui::Text("(%s)", TranslateSystemTypes(systemType));
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void ReportDeadBodyEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored((target) ? ImVec4(1.f, 0.5f, 0.f, 1.f) : ImVec4(1.f, 1.f, 0, 1.f), (target.has_value()) ? "REPORT" : "MEETING");
+	ImGui::TextColored((target) ? ImVec4(1.f, 0.5f, 0.f, 1.f) : ImVec4(1.f, 1.f, 0, 1.f), (target.has_value()) ? "REPORTE" : "REUNIÓN");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

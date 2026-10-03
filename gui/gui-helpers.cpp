@@ -118,7 +118,7 @@ bool CustomListBoxIntColored(const char* label, int* value, const std::vector<co
 
 bool CustomListBoxIntMultiple(const char* label, std::vector<std::pair<const char*, bool>>* list, float width, bool resetButton, ImGuiComboFlags flags) {
 	auto comboLabel = "##" + std::string(label);
-	auto buttonLabel = "Reset##" + std::string(label);
+	auto buttonLabel = "Restablecer##" + std::string(label);
 	ImGuiStyle& style = GetStyle();
 	float spacing = style.ItemInnerSpacing.x;
 	PushItemWidth(width);
@@ -130,8 +130,8 @@ bool CustomListBoxIntMultiple(const char* label, std::vector<std::pair<const cha
 	}
 	std::string preview;
 	if (countSelected > 0) {
-		char buf[32] = { 0 };
-		sprintf_s(buf, "%zu item(s) selected", countSelected);
+		char buf[64] = { 0 };
+		sprintf_s(buf, "%zu elemento(s) seleccionado(s)", countSelected);
 		preview = buf;
 	}
 	else
@@ -172,7 +172,7 @@ bool CustomListBoxPlayerSelectionMultiple(const char* label, std::array<std::pai
 	if (!IsInGame()) return false; // works only ingame
 
 	auto comboLabel = "##" + std::string(label);
-	auto buttonLabel = "Reset##" + std::string(label);
+	auto buttonLabel = "Restablecer##" + std::string(label);
 	ImGuiStyle& style = GetStyle();
 	float spacing = style.ItemInnerSpacing.x;
 	PushItemWidth(width);
@@ -184,8 +184,8 @@ bool CustomListBoxPlayerSelectionMultiple(const char* label, std::array<std::pai
 	}
 	std::string preview;
 	if (countSelected > 0) {
-		char buf[32] = { 0 };
-		sprintf_s(buf, "%zu player(s) selected", countSelected);
+		char buf[64] = { 0 };
+		sprintf_s(buf, "%zu jugador(es) seleccionado(s)", countSelected);
 		preview = buf;
 	}
 	else
@@ -396,7 +396,7 @@ bool SliderChrono(const char* label, void* p_data, const void* p_min, const void
 		liveColor,
 		radius * State.RoundingRadiusMultiplier);
 	SameLine(0.0f * State.dpiScale, 18.f * State.dpiScale);
-	Text("Live");
+	Text("En Vivo");
 
 
 	IMGUI_TEST_ENGINE_ITEM_INFO(id, label, window->DC.ItemFlags);
@@ -408,7 +408,7 @@ bool HotKey(uint8_t& key)
 {
 	Text("[ %s ]", KeyBinds::ToString(key));
 
-	if (IsItemHovered()) SetTooltip("Press any key while clicking on the keybind to change it, ESC to reset");
+	if (IsItemHovered()) SetTooltip("Presiona cualquier tecla mientras haces clic en el atajo para cambiarlo, ESC para restablecer");
 
 	if (!ImGui::IsMouseDown(ImGuiMouseButton_Left) || !IsItemHovered())
 		return false;

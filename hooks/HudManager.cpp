@@ -162,7 +162,7 @@ void dHudManager_Update(HudManager* __this, MethodInfo* method) {
                 }
                 if (!State.CanChangeOutfit && IsInLobby() && !State.PanicMode && State.confuser && State.confuseOnJoin) {
                     ControlAppearance(true);
-                    Toasts::AddToast("Confuser", "Randomized your outfit as you joined the lobby!", ImVec4(0.f, 1.f, 1.f, 1.f));
+                    Toasts::AddToast("Confusor", "¡Tu atuendo fue aleatorizado al entrar a la sala!", ImVec4(0.f, 1.f, 1.f, 1.f));
                 }
                 State.CanChangeOutfit = true;
                 if (State.ProGamer) {
@@ -538,7 +538,7 @@ void* dShhhBehaviour_PlayAnimation(ShhhBehaviour* __this, MethodInfo* method) {
     if (!State.PanicMode) {
         if (State.confuser && State.confuseOnStart) {
             ControlAppearance(true);
-            Toasts::AddToast("Confuser", "Randomized your outfit as the game started!", ImVec4(0.f, 1.f, 1.f, 1.f));
+            Toasts::AddToast("Confusor", "¡Tu atuendo fue aleatorizado al iniciar la partida!", ImVec4(0.f, 1.f, 1.f, 1.f));
         }
 
         if (State.RandomSpawns) {

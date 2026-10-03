@@ -46,11 +46,11 @@ void dPlayerControl_CompleteTask(PlayerControl* __this, uint32_t idx, MethodInfo
             if (State.ShowConsoleEventsAsToasts &&
                 ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_TASK) &&
                 ConsoleGui::IsPlayerFiltered(__this->fields.PlayerId)) {
-                std::string toastContent = std::format("{} ({}) completed {} in {}!",
+                std::string toastContent = std::format("{} ({}) completó {} en {}!",
                     source.playerName, GetColorName(source.colorId),
                     (taskType.has_value()) ? TranslateTaskTypes(*taskType) : "UNKNOWN",
                     TranslateSystemTypes(GetSystemTypes(pos)));
-                Toasts::AddToast("Task Completed", toastContent, ImVec4(0.f, 1.f, 0.f, 1.f));
+                Toasts::AddToast("Tarea Completada", toastContent, ImVec4(0.f, 1.f, 0.f, 1.f));
             }
         }
     }
@@ -874,9 +874,9 @@ void dPlayerControl_FixedUpdate(PlayerControl* __this, MethodInfo* method) {
                         std::string nickname = RemoveHtmlTags(convert_from_string(GetPlayerOutfit(playerData2)->fields.PlayerName));
                         int secondsLeft = static_cast<int>(std::clamp(remainingTime, 0.0f, State.NotificationTimeWarn)) + 1;
 
-                        std::string warning = std::format("{} will be kicked in {} seconds due to inactivity!", nickname, secondsLeft);
+                        std::string warning = std::format("{} será expulsado en {} segundos por inactividad!", nickname, secondsLeft);
 
-                        Toasts::AddToast("Kick AFK Players", warning, ImVec4(1.f, 0.5f, 0.5f, 1.f));
+                        Toasts::AddToast("Expulsar Inactivos", warning, ImVec4(1.f, 0.5f, 0.5f, 1.f));
                     }
 
                     if (elapsed > State.TimerAFK) {
@@ -981,10 +981,10 @@ void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, M
             app::PlayerControl_MurderPlayer(__this, target, resultFlags, method);
 
             if (!State.PanicMode && State.KillImmunity && target == *Game::pLocalPlayer) {
-                std::string killNotif = std::format("{} tried to kill you, but failed!",
+                std::string killNotif = std::format("{} intentó matarte, pero falló!",
                     convert_from_string(GetPlayerOutfit(GetPlayerData(__this))->fields.PlayerName));
 
-                Toasts::AddToast("Kill Immunity", killNotif, ImVec4(1.f, 0.f, 0.f, 1.f));
+                Toasts::AddToast("Inmunidad de Asesinato", killNotif, ImVec4(1.f, 0.f, 0.f, 1.f));
 
                 PlayerControl_ShowFailedMurder(*Game::pLocalPlayer, NULL);
             }
@@ -1010,9 +1010,9 @@ void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, M
                     if (State.ShowConsoleEventsAsToasts &&
                         ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_CHEAT) &&
                         ConsoleGui::IsPlayerFiltered(killerData->fields.PlayerId)) {
-                        std::string toastContent = std::format("Cheat detected from {} ({}): Killed abnormally",
+                        std::string toastContent = std::format("Trampa detectada de {} ({}): Asesinato anormal",
                             source.playerName, GetColorName(source.colorId));
-                        Toasts::AddToast("Cheat Detected", toastContent, ImVec4(1.f, 0.f, 0.f, 1.f));
+                        Toasts::AddToast("Trampa Detectada", toastContent, ImVec4(1.f, 0.f, 0.f, 1.f));
                     }
                 }
                 /*if (State.SafeMode && State.Enable_SMAC && State.SMAC_CheckMurder)
@@ -1025,11 +1025,11 @@ void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, M
                 if (State.ShowConsoleEventsAsToasts &&
                     ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_KILL) &&
                     ConsoleGui::IsPlayerFiltered(killerData->fields.PlayerId)) {
-                    std::string toastContent = std::format("{} ({}) killed {} ({}){}!",
+                    std::string toastContent = std::format("{} ({}) asesinó a {} ({}){}!",
                         source.playerName, GetColorName(source.colorId),
                         victim.value().playerName, GetColorName(victim.value().colorId),
-                        victim.value().isProtected ? " [Protected]" : "");
-                    Toasts::AddToast("Player Killed", toastContent, ImVec4(1.f, 0.f, 0.f, 1.f));
+                        victim.value().isProtected ? " [Protegido]" : "");
+                    Toasts::AddToast("Jugador Asesinado", toastContent, ImVec4(1.f, 0.f, 0.f, 1.f));
                 }
                 State.replayDeathTimePerPlayer[target->fields.PlayerId] = std::chrono::system_clock::now();
             }
@@ -1083,7 +1083,7 @@ void dPlayerControl_MurderPlayer(PlayerControl* __this, PlayerControl* target, M
         } while (false);
         if (__this == *Game::pLocalPlayer && State.confuser && State.confuseOnKill) {
             ControlAppearance(true);
-            Toasts::AddToast("Confuser", "Randomized your outfit as you killed someone!", ImVec4(0.f, 1.f, 1.f, 1.f));
+            Toasts::AddToast("Confusor", "¡Tu atuendo fue aleatorizado al asesinar a alguien!", ImVec4(0.f, 1.f, 1.f, 1.f));
         }
     }
     catch (...) {
@@ -1227,9 +1227,9 @@ void dPlayerControl_StartMeeting(PlayerControl* __this, NetworkedPlayerInfo* tar
                 ConsoleGui::IsPlayerFiltered(__this->fields.PlayerId)) {
                 std::string toastContent = std::format("{} ({}) {}!",
                     source.playerName, GetColorName(source.colorId),
-                    tgt.has_value() ? "reported the dead body of " + tgt->playerName + " (" + GetColorName(tgt->colorId) + ")" :
-                    "called a meeting");
-                Toasts::AddToast(tgt.has_value() ? "Dead Body Reported" : "Meeting Called", toastContent,
+                    tgt.has_value() ? "reportó el cadáver de " + tgt->playerName + " (" + GetColorName(tgt->colorId) + ")" :
+                    "convocó una reunión");
+                Toasts::AddToast(tgt.has_value() ? "Cadáver Reportado" : "Reunión Convocada", toastContent,
                     tgt.has_value() ? ImVec4(1.f, 0.5f, 0.f, 1.f) : ImVec4(1.f, 1.f, 0, 1.f));
             }
         }
@@ -1424,9 +1424,9 @@ void dPlayerControl_Shapeshift(PlayerControl* __this, PlayerControl* target, boo
 
                 std::string toastContent = std::format("{} ({}) {}!",
                     source.playerName, GetColorName(source.colorId),
-                    isShifting ? "shapeshifted into " + tgt.playerName + " (" + GetColorName(tgt.colorId) + ")" :
-                    "unshifted");
-                Toasts::AddToast(isShifting ? "Player Shapeshifted" : "Player Unshifted", toastContent, ImVec4(1.f, 0.5f, 0.f, 1.f));
+                    isShifting ? "se transformó en " + tgt.playerName + " (" + GetColorName(tgt.colorId) + ")" :
+                    "volvió a su forma normal");
+                Toasts::AddToast(isShifting ? "Jugador Transformado" : "Jugador Destransformado", toastContent, ImVec4(1.f, 0.5f, 0.f, 1.f));
             }
         }
     }
@@ -1447,10 +1447,10 @@ void dPlayerControl_ProtectPlayer(PlayerControl* __this, PlayerControl* target, 
             if (State.ShowConsoleEventsAsToasts &&
                 ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_PROTECTPLAYER) &&
                 ConsoleGui::IsPlayerFiltered(__this->fields.PlayerId)) {
-                std::string toastContent = std::format("{} ({}) protected {} ({})!",
+                std::string toastContent = std::format("{} ({}) protegió a {} ({})!",
                     source.playerName, GetColorName(source.colorId),
                     tgt.playerName, GetColorName(tgt.colorId));
-                Toasts::AddToast("Player Protected", toastContent, ImVec4(0.1f, 0.75f, 0.75f, 1.f));
+                Toasts::AddToast("Jugador Protegido", toastContent, ImVec4(0.1f, 0.75f, 0.75f, 1.f));
             }
         }
         /*else {
@@ -1715,8 +1715,8 @@ void dPlayerControl_SetRoleInvisibility(PlayerControl* __this, bool isActive, bo
             ConsoleGui::IsPlayerFiltered(__this->fields.PlayerId)) {
             std::string toastContent = std::format("{} ({}) {}!",
                 source.playerName, GetColorName(source.colorId),
-                isActive ? "vanished" : "appeared");
-            Toasts::AddToast(isActive ? "Player Vanished" : "Player Appeared", toastContent,
+                isActive ? "desapareció" : "apareció");
+            Toasts::AddToast(isActive ? "Jugador Desaparecido" : "Jugador Aparecido", toastContent,
                 isActive ? ImVec4(1.f, 0.f, 0.f, 1.f) : ImVec4(0.f, 1.f, 0.f, 1.f));
         }
     }

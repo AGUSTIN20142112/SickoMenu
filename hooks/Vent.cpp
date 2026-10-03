@@ -48,15 +48,15 @@ void dVent_EnterVent(Vent* __this, PlayerControl* pc, MethodInfo * method) {
 			if (State.ShowConsoleEventsAsToasts &&
 				ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_VENT) &&
 				ConsoleGui::IsPlayerFiltered(pc->fields.PlayerId)) {
-				std::string toastContent = std::format("{} ({}) vented in {}!",
+				std::string toastContent = std::format("¡{} ({}) entró a una ventilación en {}!",
 					source.playerName, GetColorName(source.colorId),
 					TranslateSystemTypes(GetSystemTypes(ventVector2D)));
-				Toasts::AddToast("Player Vented", toastContent, ImVec4(0.f, 1.f, 0.f, 1.f));
+				Toasts::AddToast("Jugador en Ventilación", toastContent, ImVec4(0.f, 1.f, 0.f, 1.f));
 			}
 		}
 		if (State.confuser && State.confuseOnVent && pc == *Game::pLocalPlayer) {
 			ControlAppearance(true);
-			Toasts::AddToast("Confuser", "Randomized your outfit as you entered a vent!", ImVec4(0.f, 1.f, 1.f, 1.f));
+			Toasts::AddToast("Confusor", "¡Tu atuendo fue aleatorizado al entrar a una ventilación!", ImVec4(0.f, 1.f, 1.f, 1.f));
 		}
 	}
 	Vent_EnterVent(__this, pc, method);
@@ -75,10 +75,10 @@ void* dVent_ExitVent(Vent* __this, PlayerControl* pc, MethodInfo* method) {
 			if (State.ShowConsoleEventsAsToasts &&
 				ConsoleGui::IsEventFiltered(EVENT_TYPES::EVENT_VENT) &&
 				ConsoleGui::IsPlayerFiltered(pc->fields.PlayerId)) {
-				std::string toastContent = std::format("{} ({}) vented out in {}!",
+				std::string toastContent = std::format("¡{} ({}) salió de una ventilación en {}!",
 					source.playerName, GetColorName(source.colorId),
 					TranslateSystemTypes(GetSystemTypes(ventVector2D)));
-				Toasts::AddToast("Player Exited Vent", toastContent, ImVec4(1.f, 0.f, 0.f, 1.f));
+				Toasts::AddToast("Jugador Salió de Ventilación", toastContent, ImVec4(1.f, 0.f, 0.f, 1.f));
 			}
 		}
 	}
@@ -121,7 +121,7 @@ void dVentilationSystem_UpdateSystem(VentilationSystem* __this, PlayerControl* p
 		msgReader->fields.readHead = head;
 
 		if (!State.PanicMode && State.AntiExploit_AttemptToBan && ventOp == VentilationSystem_Operation__Enum::BootImpostors) {
-			std::string killNotif = std::format("{} attempted to ban you, but failed!",
+			std::string killNotif = std::format("¡{} intentó banearte, pero falló!",
 				convert_from_string(GetPlayerOutfit(GetPlayerData(player))->fields.PlayerName));
 			
 			Toasts::AddToast("Anti-Exploit", killNotif, ImVec4(1.f, 0.f, 0.f, 1.f));

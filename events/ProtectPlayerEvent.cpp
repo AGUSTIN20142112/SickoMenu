@@ -21,13 +21,13 @@ void ProtectPlayerEvent::Output() {
 		ImGui::Text(("(" + GetColorName(target.colorId) + ")").c_str());
 	}
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void ProtectPlayerEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(0.1f, 0.75f, 0.75f, 1.f), "PROTECT");
+	ImGui::TextColored(ImVec4(0.1f, 0.75f, 0.75f, 1.f), "PROTECCIÓN");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

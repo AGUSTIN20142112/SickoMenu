@@ -38,35 +38,35 @@ namespace ConsoleGui
 	const char* getEventString(EVENT_TYPES eventType) {
 		switch (eventType) {
 		case EVENT_TYPES::EVENT_KILL:
-			return "Kill";
+			return "Asesinato";
 		case EVENT_TYPES::EVENT_VENT:
-			return "Vent";
+			return "Ventilación";
 		case EVENT_TYPES::EVENT_TASK:
-			return "Task";
+			return "Tarea";
 		case EVENT_TYPES::EVENT_REPORT:
-			return "Report";
+			return "Reporte";
 		case EVENT_TYPES::EVENT_MEETING:
-			return "Meeting";
+			return "Reunión";
 		case EVENT_TYPES::EVENT_VOTE:
-			return "Vote";
+			return "Voto";
 		case EVENT_TYPES::EVENT_CHEAT:
-			return "Cheat";
+			return "Trampa";
 		case EVENT_TYPES::EVENT_DISCONNECT:
-			return "Disconnect";
+			return "Desconexión";
 		case EVENT_TYPES::EVENT_SHAPESHIFT:
-			return "Shapeshift";
+			return "Metamorfosis";
 		case EVENT_TYPES::EVENT_PROTECTPLAYER:
-			return "Protect";
+			return "Proteger";
 		case EVENT_TYPES::EVENT_PHANTOM:
-			return "Phantom";
+			return "Fantasma";
 		case EVENT_TYPES::EVENT_SABOTAGE:
-			return "Sabotage";
+			return "Sabotaje";
 		case EVENT_TYPES::EVENT_WALK:
-			return "Walk";
+			return "Caminar";
 		case EVENT_TYPES::EVENT_MODERATION:
-			return "Moderation";
+			return "Moderación";
 		}
-		return "Unknown";
+		return "Desconocido";
 	}
 
 	// helper methods for showing appropriate toasts based on selected filters
@@ -118,20 +118,20 @@ namespace ConsoleGui
 		else
 			titleCol = State.GradientMenuTheme ? State.MenuGradientColor : State.MenuThemeColor;
 		titleCol.w = 1.f;
-		ImGui::TextColored(titleCol, "Console");
+		ImGui::TextColored(titleCol, "Consola");
 		ImGui::SameLine(ImGui::GetWindowWidth() - 20 * State.dpiScale);
 		if (ImGui::Button("-")) State.ShowConsole = false; //minimize button
 		ImGui::BeginChild("console#filter", ImVec2(520, 40) * State.dpiScale, true, ImGuiWindowFlags_NoBackground);
-		ImGui::Text("Event Filter: ");
+		ImGui::Text("Filtro de eventos: ");
 		ImGui::SameLine();
-		CustomListBoxIntMultiple("Event Types", &ConsoleGui::event_filter, 100.f * State.dpiScale);
+		CustomListBoxIntMultiple("Tipos de eventos", &ConsoleGui::event_filter, 100.f * State.dpiScale);
 		if (IsInGame() || IsInLobby()) {
 			ImGui::SameLine(0.f * State.dpiScale, 5.f * State.dpiScale);
-			ImGui::Text("Player Filter: ");
+			ImGui::Text("Filtro de jugadores: ");
 			ImGui::SameLine();
-			CustomListBoxPlayerSelectionMultiple("Players", &ConsoleGui::player_filter, 150.f * State.dpiScale);
+			CustomListBoxPlayerSelectionMultiple("Jugadores", &ConsoleGui::player_filter, 150.f * State.dpiScale);
 		}
-		if (AnimatedButton("Clear Console")) {
+		if (AnimatedButton("Limpiar consola")) {
 			synchronized(Replay::replayEventMutex) {
 				State.liveConsoleEvents.clear();
 			}

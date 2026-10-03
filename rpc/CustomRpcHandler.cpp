@@ -41,9 +41,9 @@ void HandleRpc(PlayerControl* player, uint8_t callId, MessageReader* reader) {
 					State.Rpc101OverloadTimestamps[playerId] = now;
 
 					std::string name = RemoveHtmlTags(convert_from_string(GetPlayerOutfit(GetPlayerData(player))->fields.PlayerName));
-					std::string actionMessage = std::format("{} has exceeded the rate-limit of SickoChat!", name);
+					std::string actionMessage = std::format("¡{} ha superado el límite de velocidad de SickoChat!", name);
 
-					Toasts::AddToast("SickoChat Rate-Limit", actionMessage, ImVec4(1.f, 0.f, 0.f, 1.f));
+					Toasts::AddToast("Límite de SickoChat", actionMessage, ImVec4(1.f, 0.f, 0.f, 1.f));
 				}
 			}
 			return;

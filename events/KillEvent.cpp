@@ -29,18 +29,18 @@ void KillEvent::Output() {
 		ImGui::SameLine();
 		ImGui::Text("[");
 		ImGui::SameLine(0.f, 0.f);
-		ImGui::TextColored(ImVec4(0.1f, 0.75f, 0.75f, 1.f), "Protected");
+		ImGui::TextColored(ImVec4(0.1f, 0.75f, 0.75f, 1.f), "Protegido");
 		ImGui::SameLine(0.f, 0.f);
 		ImGui::Text("]");
 	}
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void KillEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "KILL");
+	ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "ASESINATO");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

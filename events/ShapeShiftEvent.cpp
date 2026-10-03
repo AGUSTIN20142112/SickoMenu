@@ -23,13 +23,13 @@ void ShapeShiftEvent::Output() {
 		}
 		ImGui::SameLine();
 	}
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void ShapeShiftEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1.f, 0.5f, 0.f, 1.f), source.playerId == target.playerId ? "UNSHIFT" : "SHAPESHIFT");
+	ImGui::TextColored(ImVec4(1.f, 0.5f, 0.f, 1.f), source.playerId == target.playerId ? "REVERTIR" : "METAMORFOSIS");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

@@ -239,9 +239,9 @@ void dShipStatus_UpdateSystem(ShipStatus* __this, SystemTypes__Enum systemType, 
                     ConsoleGui::IsPlayerFiltered(player->fields.PlayerId)) {
                     std::string toastContent = std::format("{} ({}) {} {}!",
                         source.playerName, GetColorName(source.colorId),
-                        isSabotage ? "sabotaged" : "repaired",
+                        isSabotage ? "saboteó" : "reparó",
                         TranslateSystemTypes(systemType));
-                    Toasts::AddToast(isSabotage ? "Player Sabotaged" : "Player Fixed Sabotage", toastContent,
+                    Toasts::AddToast(isSabotage ? "Sabotaje de Jugador" : "Sabotaje Reparado", toastContent,
                         isSabotage ? ImVec4(1.f, 0.f, 0.f, 1.f) : ImVec4(0.f, 1.f, 0.f, 1.f));
                 }
             }

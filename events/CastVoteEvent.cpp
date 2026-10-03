@@ -22,15 +22,15 @@ void CastVoteEvent::Output() {
 			ImGui::Text(("(" + GetColorName(target->colorId) + ")").c_str());
 		}
 	}
-	else ImGui::Text("Skipped");
+	else ImGui::Text("Saltó");
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void CastVoteEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(0.3f, 0.4f, 1.f, 1.f), "VOTE");
+	ImGui::TextColored(ImVec4(0.3f, 0.4f, 1.f, 1.f), "VOTO");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

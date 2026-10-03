@@ -15,15 +15,15 @@ void TaskCompletedEvent::Output() {
 		ImGui::Text(("(" + GetColorName(source.colorId) + ")").c_str());
 	}
 	ImGui::SameLine();
-	ImGui::Text("> %s (%s)", (taskType.has_value()) ? TranslateTaskTypes(*taskType) : "UNKNOWN" , TranslateSystemTypes(systemType));
+	ImGui::Text("> %s (%s)", (taskType.has_value()) ? TranslateTaskTypes(*taskType) : "DESCONOCIDA" , TranslateSystemTypes(systemType));
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void TaskCompletedEvent::ColoredEventOutput() {
 	ImGui::Text("[");
 	ImGui::SameLine();
-	ImGui::TextColored(ImVec4(0.f, 1.f, 0.f, 1.f), "TASK");
+	ImGui::TextColored(ImVec4(0.f, 1.f, 0.f, 1.f), "TAREA");
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

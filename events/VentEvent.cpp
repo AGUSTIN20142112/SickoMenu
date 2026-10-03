@@ -17,17 +17,17 @@ void VentEvent::Output() {
 	ImGui::SameLine();
 	ImGui::Text("(%s)", TranslateSystemTypes(systemType));
 	ImGui::SameLine();
-	ImGui::Text("[%s ago]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
+	ImGui::Text("[hace %s]", std::format("{:%OM:%OS}", (std::chrono::system_clock::now() - this->timestamp)).c_str());
 }
 
 void VentEvent::ColoredEventOutput() {
-	ImGui::Text("[ VENT");
+	ImGui::Text("[ VENTILACIÓN");
 	ImGui::SameLine();
 
 	ImVec4 color;
 	((action == VENT_ACTIONS::VENT_ENTER) ? color = ImVec4(0.f, 1.f, 0.f, 1.f) : color = ImVec4(1.f, 0.f, 0.f, 1.f));
 
-	ImGui::TextColored(color, ((action == VENT_ACTIONS::VENT_ENTER) ? "IN" : "OUT"));
+	ImGui::TextColored(color, ((action == VENT_ACTIONS::VENT_ENTER) ? "ENTRÓ" : "SALIÓ"));
 	ImGui::SameLine();
 	ImGui::Text("]");
 }

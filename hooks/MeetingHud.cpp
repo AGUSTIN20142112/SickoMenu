@@ -109,7 +109,7 @@ void dMeetingHud_Awake(MeetingHud* __this, MethodInfo* method) {
         voteSpreaderType = app::Type_GetType(convert_to_string(strVoteSpreaderType), nullptr);
         if (State.confuser && State.confuseOnMeeting && !State.PanicMode) {
             ControlAppearance(true);
-            Toasts::AddToast("Confuser", "Randomized your outfit as a meeting was called!", ImVec4(0.f, 1.f, 1.f, 1.f));
+            Toasts::AddToast("Confusor", "¡Tu atuendo fue aleatorizado al convocarse una reunión!", ImVec4(0.f, 1.f, 1.f, 1.f));
         }
 
         UpdateJudgeRoleAbilities();
@@ -423,9 +423,9 @@ void dMeetingHud_Update(MeetingHud* __this, MethodInfo* method) {
                             ConsoleGui::IsPlayerFiltered(playerData->fields.PlayerId)) {
                             std::string toastContent = std::format("{} ({}) {}!",
                                 source.playerName, GetColorName(source.colorId),
-                                target.has_value() ? "voted for " + target->playerName + " (" + GetColorName(target->colorId) + ")" :
-                                "skipped the vote");
-                            Toasts::AddToast(target.has_value() ? "Player Voted" : "Player Skipped Vote", toastContent, ImVec4(0.3f, 0.4f, 1.f, 1.f));
+                                target.has_value() ? "votó por " + target->playerName + " (" + GetColorName(target->colorId) + ")" :
+                                "saltó el voto");
+                            Toasts::AddToast(target.has_value() ? "Jugador Votó" : "Jugador Saltó el Voto", toastContent, ImVec4(0.3f, 0.4f, 1.f, 1.f));
                         }
                     }
                     State.voteMonitor[playerData->fields.PlayerId] = playerVoteArea->fields._VotedForId_k__BackingField.Value;

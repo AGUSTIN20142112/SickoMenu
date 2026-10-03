@@ -13,7 +13,7 @@ void ModerationEvent::Output() {
 	long long totalSeconds = elapsed.count();
 	long long minutes = totalSeconds / 60;
 	long long seconds = totalSeconds % 60;
-	ImGui::Text("[%02lld:%02lld ago]", minutes, seconds);
+	ImGui::Text("[hace %02lld:%02lld]", minutes, seconds);
 }
 
 void ModerationEvent::ColoredEventOutput() {
