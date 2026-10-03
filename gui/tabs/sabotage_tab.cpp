@@ -98,7 +98,7 @@ namespace SabotageTab {
         ImGui::BeginChild("###Sabotage", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
         ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
-        if (IsHost() && ToggleButton("Disable Sabotages", &State.DisableSabotages)) {
+        if (IsHost() && ToggleButton("Desactivar Sabotajes", &State.DisableSabotages)) {
             ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
             ImGui::Separator();
             ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);

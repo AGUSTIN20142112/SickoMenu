@@ -42,7 +42,7 @@ std::string GetCRC32(std::filesystem::path filePath) {
     { \
         if (!cctor_finished(c##__TypeInfo->_0.klass)) { \
             if (MessageBox(NULL, \
-                L"SickoMenu does not support Among Us versions past v16.0.5 as of now!\n\nMake sure you downgrade your Among Us instance to v16.0.0 / v16.0.2 and use SickoMenu. If you're wondering about playing with players on the latest version, your game's version will automatically be spoofed so you can play with them!\n\nClick OK to exit the game. Your browser will then open a downgrading guide.", \
+                L"¡SickoMenu no es compatible con versiones de Among Us posteriores a v16.0.5 por ahora!\n\nAsegúrate de bajar tu versión de Among Us a v16.0.0 / v16.0.2 y usar SickoMenu. Si te preocupa jugar con personas en la última versión, la versión de tu juego se suplantará automáticamente para que puedas jugar con ellos.\n\nHaz clic en Aceptar para salir del juego. Tu navegador abrirá una guía para bajar de versión.", \
                 L"SickoMenu", MB_ICONINFORMATION)) { \
                 OpenLink("https://textbin.net/rruqqrlgaw"); \
                 ExitProcess(0); \

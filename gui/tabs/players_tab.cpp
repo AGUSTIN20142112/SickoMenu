@@ -95,7 +95,7 @@ namespace PlayersTab {
 
     std::string GetPlatformString(PlayerControl* playerCtrl, app::ClientData* client, uint64_t& outPsn, uint64_t& outXbox, std::string& platformName) {
         if (client == NULL || client->fields.PlatformData == NULL || playerCtrl->fields._.OwnerId != client->fields.Id) {
-            return "Unknown";
+            return "Desconocido";
         }
 
         outPsn = client->fields.PlatformData->fields.PsnPlatformId;
@@ -116,17 +116,17 @@ namespace PlayersTab {
         case Platforms__Enum::StandaloneItch:
             return "itch.io (PC)";
         case Platforms__Enum::IPhone:
-            return "iOS/iPadOS (Mobile)";
+            return "iOS/iPadOS (Movil)";
         case Platforms__Enum::Android:
-            return "Android (Mobile)";
+            return "Android (Movil)";
         case Platforms__Enum::Switch:
-            return "Nintendo Switch (Console)";
+            return "Nintendo Switch (Consola)";
         case Platforms__Enum::Xbox:
-            return "Xbox (Console)";
+            return "Xbox (Consola)";
         case Platforms__Enum::Playstation:
-            return "Playstation (Console)";
+            return "PlayStation (Consola)";
         default:
-            return "Unknown";
+            return "Desconocido";
         }
     }
 
@@ -135,27 +135,27 @@ namespace PlayersTab {
 
         if ((IsInGame() || IsInLobby())) {
             ColorMapping FAKEROLE_NAMES_COLOR[] = {
-                {"Crewmate",		State.CrewmateColor},
+                {"Tripulante",		State.CrewmateColor},
                 {"Impostor",		State.ImpostorColor},
-                {"Scientist",		State.ScientistColor},
-                {"Engineer",		State.EngineerColor},
-                {"Guardian Angel",	State.GuardianAngelColor},
-                {"Shapeshifter",	State.ShapeshifterColor},
-                {"Crewmate Ghost",  State.CrewmateGhostColor},
-                {"Impostor Ghost",	State.ImpostorGhostColor},
-                {"Noisemaker",		State.NoisemakerColor},
-                {"Phantom",			State.PhantomColor},
-                {"Tracker",			State.TrackerColor},
+                {"Cientifico",		State.ScientistColor},
+                {"Ingeniero",		State.EngineerColor},
+                {"Angel Guardian",	State.GuardianAngelColor},
+                {"Metamorfo",	State.ShapeshifterColor},
+                {"Fantasma Tripulante",  State.CrewmateGhostColor},
+                {"Fantasma Impostor",	State.ImpostorGhostColor},
+                {"Bocina",		State.NoisemakerColor},
+                {"Fantasma",			State.PhantomColor},
+                {"Rastreador",			State.TrackerColor},
                 {"Detective",		State.DetectiveColor},
-                {"Viper",			State.ViperColor},
-                {"Judge",           State.JudgeColor},
+                {"Vibora",			State.ViperColor},
+                {"Juez",           State.JudgeColor},
                 {"Influencer",      State.InfluencerColor},
             }; // needs to be updated every render
 
             ColorMapping GHOSTROLE_NAMES_COLOR[] = {
-                {"Guardian Angel",	State.GuardianAngelColor},
-                {"Crewmate Ghost",  State.CrewmateGhostColor},
-                {"Impostor Ghost",	State.ImpostorGhostColor},
+                {"Angel Guardian",	State.GuardianAngelColor},
+                {"Fantasma Tripulante",  State.CrewmateGhostColor},
+                {"Fantasma Impostor",	State.ImpostorGhostColor},
                 {"Influencer",	    State.InfluencerColor},
 
             }; // this too

@@ -13,7 +13,7 @@ namespace GameTab {
 	const std::vector<const char*> PBVENTS = { "Seguridad", "Electricidad", "O2", "Comunicaciones", "Oficina", "Admin", "Laboratorio", "Piscina de Lava", "Almacén", "Sísmico Derecho", "Sísmico Izquierdo", "Fuera de Admin" };
 	const std::vector<const char*> AIRSHIPVENTS = { "Bóveda", "Cabina", "Mirador", "Motor", "Cocina", "Sala Principal Inferior", "Sala Principal Superior", "Habitación de Brecha Derecha", "Habitación de Brecha Izquierda", "Duchas", "Archivos", "Bahía de Carga" };
 	const std::vector<const char*> FUNGLEVENTS = { "Comunicaciones", "Cocina", "Mirador", "Fuera de Dormitorios", "Laboratorio", "Reactor", "Jungla (Laboratorio)", "Jungla (Invernadero)", "Zona de Salpicaduras", "Cafetería" };
-	const std::vector<std::string> PLATFORM_FILTERS = { "Epic Games (PC)", "Steam (PC)", "Mac", "Microsoft Store (PC)", "itch.io (PC)", "iOS/iPadOS (Mobile)", "Android (Mobile)", "Nintendo Switch (Console)", "Xbox (Console)", "Playstation (Console)", "Unknown" };
+	const std::vector<std::string> PLATFORM_FILTERS = { "Epic Games (PC)", "Steam (PC)", "Mac", "Microsoft Store (PC)", "itch.io (PC)", "iOS/iPadOS (Movil)", "Android (Movil)", "Nintendo Switch (Consola)", "Xbox (Consola)", "PlayStation (Consola)", "Desconocido" };
 	const std::vector<const char*> COLORS = { "Rojo", "Azul", "Verde", "Rosa", "Naranja", "Amarillo", "Negro", "Blanco", "Morado", "Marrón", "Cian", "Lima", "Granate", "Rosa Claro", "Plátano", "Gris", "Canela", "Coral" };
 	const std::vector<const char*> HOSTCOLORS = { "Rojo", "Azul", "Verde", "Rosa", "Naranja", "Amarillo", "Negro", "Blanco", "Morado", "Marrón", "Cian", "Lima", "Granate", "Rosa Claro", "Plátano", "Gris", "Canela", "Coral", "Verde Fuerte" };
 	const ColorMapping COLOR_NAMES_COLOR[] = {

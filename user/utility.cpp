@@ -856,18 +856,18 @@ std::string ToString(__maybenull PlayerControl* player) {
             return ToString(data);
         return std::format("<#{}>", +player->fields.PlayerId);
     }
-    return "<Unknown>";
+    return "<Desconocido>";
 }
 
 std::string ToString(__maybenull NetworkedPlayerInfo* data) {
     if (data) {
         if (const auto outfit = GetPlayerOutfit(data)) {
-            return std::format("<#{} {}> (Friend Code: {}, PUID: {})", +data->fields.PlayerId, convert_from_string(outfit->fields.PlayerName),
+            return std::format("<#{} {}> (Codigo de Amigo: {}, PUID: {})", +data->fields.PlayerId, convert_from_string(outfit->fields.PlayerName),
                 convert_from_string(data->fields.FriendCode), convert_from_string(data->fields.Puid));
         }
         return std::format("<#{}>", +data->fields.PlayerId);
     }
-    return "<Unknown>";
+    return "<Desconocido>";
 }
 
 #define ADD_QUOTES_HELPER(s) #s
@@ -2837,7 +2837,7 @@ void TrackPlayers()
         }
         if (exists) continue;
 
-        std::string platform = "Unknown";
+        std::string platform = "Desconocido";
         auto client = app::InnerNetClient_GetClientFromCharacter((InnerNetClient*)(*Game::pAmongUsClient), p, NULL);
         if (client && client->fields.PlatformData && p->fields._.OwnerId == client->fields.Id) {
             switch (client->fields.PlatformData->fields.Platform) {
@@ -2851,17 +2851,17 @@ void TrackPlayers()
                 break;
             case Platforms__Enum::StandaloneItch: platform = "itch.io (PC)";
                 break;
-            case Platforms__Enum::IPhone: platform = "iOS/iPadOS (Mobile)";
+            case Platforms__Enum::IPhone: platform = "iOS/iPadOS (Movil)";
                 break;
-            case Platforms__Enum::Android: platform = "Android (Mobile)";
+            case Platforms__Enum::Android: platform = "Android (Movil)";
                 break;
-            case Platforms__Enum::Switch: platform = "Nintendo Switch (Console)";
+            case Platforms__Enum::Switch: platform = "Nintendo Switch (Consola)";
                 break;
-            case Platforms__Enum::Xbox: platform = "Xbox (Console)";
+            case Platforms__Enum::Xbox: platform = "Xbox (Consola)";
                 break;
-            case Platforms__Enum::Playstation: platform = "Playstation (Console)";
+            case Platforms__Enum::Playstation: platform = "PlayStation (Consola)";
                 break;
-            default: platform = "Unknown";
+            default: platform = "Desconocido";
                 break;
             }
         }
@@ -2965,142 +2965,142 @@ void GeneratePlatformId() {
 std::string GetDisconnectReasonString(DisconnectReasons__Enum reason) {
     switch (reason) {
     case DisconnectReasons__Enum::ExitGame:
-        return "ExitGame";
+        return "Salir del Juego";
 
     case DisconnectReasons__Enum::GameFull:
-        return "GameFull";
+        return "Partida Llena";
 
     case DisconnectReasons__Enum::GameStarted:
-        return "GameStarted";
+        return "Partida Iniciada";
 
     case DisconnectReasons__Enum::GameNotFound:
-        return "GameNotFound";
+        return "Partida No Encontrada";
 
     case DisconnectReasons__Enum::IncorrectVersion:
-        return "IncorrectVersion";
+        return "Version Incorrecta";
 
     case DisconnectReasons__Enum::Banned:
-        return "Banned";
+        return "Baneado";
 
     case DisconnectReasons__Enum::Kicked:
-        return "Kicked";
+        return "Expulsado";
 
     case DisconnectReasons__Enum::Custom:
-        return "Custom";
+        return "Personalizado";
 
     case DisconnectReasons__Enum::InvalidName:
-        return "InvalidName";
+        return "Nombre Invalido";
 
     case DisconnectReasons__Enum::Hacking:
-        return "Hacking";
+        return "Trampas (Hacking)";
 
     case DisconnectReasons__Enum::NotAuthorized:
-        return "NotAuthorized";
+        return "No Autorizado";
 
     case DisconnectReasons__Enum::ConnectionLimit:
-        return "ConnectionLimit";
+        return "Limite de Conexiones";
 
     case DisconnectReasons__Enum::Destroy:
-        return "Destroy";
+        return "Destruido";
 
     case DisconnectReasons__Enum::Error:
         return "Error";
 
     case DisconnectReasons__Enum::IncorrectGame:
-        return "IncorrectGame";
+        return "Partida Incorrecta";
 
     case DisconnectReasons__Enum::ServerRequest:
-        return "ServerRequest";
+        return "Peticion del Servidor";
 
     case DisconnectReasons__Enum::ServerFull:
-        return "ServerFull";
+        return "Servidor Lleno";
 
     case DisconnectReasons__Enum::MismatchedVersion:
-        return "MismatchedVersion";
+        return "Version Desigual";
 
     case DisconnectReasons__Enum::InternalPlayerMissing:
-        return "InternalPlayerMissing";
+        return "Jugador Interno Ausente";
 
     case DisconnectReasons__Enum::InternalNonceFailure:
-        return "InternalNonceFailure";
+        return "Fallo de Nonce Interno";
 
     case DisconnectReasons__Enum::InternalConnectionToken:
-        return "InternalConnectionToken";
+        return "Token de Conexion Interno";
 
     case DisconnectReasons__Enum::PlatformLock:
-        return "PlatformLock";
+        return "Bloqueo de Plataforma";
 
     case DisconnectReasons__Enum::LobbyInactivity:
-        return "LobbyInactivity";
+        return "Inactividad en Sala";
 
     case DisconnectReasons__Enum::MatchmakerInactivity:
-        return "MatchmakerInactivity";
+        return "Inactividad en Emparejamiento";
 
     case DisconnectReasons__Enum::InvalidGameOptions:
-        return "InvalidGameOptions";
+        return "Opciones de Partida Invalidas";
 
     case DisconnectReasons__Enum::NoServersAvailable:
-        return "NoServersAvailable";
+        return "No Hay Servidores Disponibles";
 
     case DisconnectReasons__Enum::QuickmatchDisabled:
-        return "QuickmatchDisabled";
+        return "Partida Rapida Desactivada";
 
     case DisconnectReasons__Enum::TooManyGames:
-        return "TooManyGames";
+        return "Demasiadas Partidas";
 
     case DisconnectReasons__Enum::QuickchatLock:
-        return "QuickchatLock";
+        return "Bloqueo de Chat Rapido";
 
     case DisconnectReasons__Enum::MatchmakerFull:
-        return "MatchmakerFull";
+        return "Emparejador Lleno";
 
     case DisconnectReasons__Enum::Sanctions:
-        return "Sanctions";
+        return "Sanciones";
 
     case DisconnectReasons__Enum::ServerError:
-        return "ServerError";
+        return "Error del Servidor";
 
     case DisconnectReasons__Enum::SelfPlatformLock:
-        return "SelfPlatformLock";
+        return "Bloqueo de Plataforma Propia";
 
     case DisconnectReasons__Enum::DuplicateConnectionDetected:
-        return "DuplicateConnectionDetected";
+        return "Conexion Duplicada Detectada";
 
     case DisconnectReasons__Enum::TooManyRequests:
-        return "TooManyRequests";
+        return "Demasiadas Peticiones";
 
     case DisconnectReasons__Enum::FocusLostBackground:
-        return "FocusLostBackground";
+        return "Foco Perdido en Segundo Plano";
 
     case DisconnectReasons__Enum::IntentionalLeaving:
-        return "IntentionalLeaving";
+        return "Salida Intencional";
 
     case DisconnectReasons__Enum::FocusLost:
-        return "FocusLost";
+        return "Foco Perdido";
 
     case DisconnectReasons__Enum::NewConnection:
-        return "NewConnection";
+        return "Nueva Conexion";
 
     case DisconnectReasons__Enum::PlatformParentalControlsBlock:
-        return "PlatformParentalControlsBlock";
+        return "Bloqueo por Control Parental";
 
     case DisconnectReasons__Enum::PlatformUserBlock:
-        return "PlatformUserBlock";
+        return "Bloqueo de Usuario de Plataforma";
 
     case DisconnectReasons__Enum::PlatformFailedToGetUserBlock:
-        return "PlatformFailedToGetUserBlock";
+        return "Fallo al Obtener Bloqueo de Plataforma";
 
     case DisconnectReasons__Enum::ServerNotFound:
-        return "ServerNotFound";
+        return "Servidor No Encontrado";
 
     case DisconnectReasons__Enum::ClientTimeout:
-        return "ClientTimeout";
+        return "Tiempo de Espera del Cliente Agotado";
 
     case DisconnectReasons__Enum::ErrorAuthNonceFailure:
-        return "ErrorAuthNonceFailure";
+        return "Error de Autenticacion de Nonce";
 
     case DisconnectReasons__Enum::Unknown:
     default:
-        return "Unknown";
+        return "Desconocido";
     }
 }

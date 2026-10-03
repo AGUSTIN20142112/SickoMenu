@@ -430,33 +430,33 @@ namespace SelfTab {
                 ImGui::SameLine();
                 ImGui::InputFloat("Tamano de Letra", &State.NameSize);
 
-                if (ToggleButton("Indent", &State.IndentName)) {
+                if (ToggleButton("Sangria", &State.IndentName)) {
                     State.Save();
                 }
 
                 ImGui::SameLine();
-                ImGui::InputFloat("Name Indent", &State.NameIndent);
+                ImGui::InputFloat("Sangria del Nombre", &State.NameIndent);
 
-                ToggleButton("Cspace", &State.CspaceName);
-
-                ImGui::SameLine();
-                ImGui::InputFloat("Name Cspace", &State.NameCspace);
-
-                ToggleButton("Mspace", &State.MspaceName);
+                ToggleButton("Espaciado C", &State.CspaceName);
 
                 ImGui::SameLine();
-                ImGui::InputFloat("Name Mspace", &State.NameMspace);
+                ImGui::InputFloat("Espaciado C del Nombre", &State.NameCspace);
 
-                ToggleButton("Voffset", &State.VoffsetName);
+                ToggleButton("Espaciado M", &State.MspaceName);
 
                 ImGui::SameLine();
-                ImGui::InputFloat("Name Voffset", &State.NameVoffset);
-                if (ToggleButton("Rotate", &State.RotateName)) {
+                ImGui::InputFloat("Espaciado M del Nombre", &State.NameMspace);
+
+                ToggleButton("Desplazamiento V", &State.VoffsetName);
+
+                ImGui::SameLine();
+                ImGui::InputFloat("Desplazamiento V del Nombre", &State.NameVoffset);
+                if (ToggleButton("Rotar", &State.RotateName)) {
                     State.Save();
                 }
 
                 ImGui::SameLine();
-                ImGui::InputFloat("Rotation Angle", &State.NameRotate);
+                ImGui::InputFloat("Angulo de Rotacion", &State.NameRotate);
                 ImGui::Dummy(ImVec2(5, 5) * State.dpiScale);
             }
 
@@ -621,11 +621,11 @@ namespace SelfTab {
                 State.Save();
             }*/
 
-            if (ToggleButton("Better Chat Notifications", &State.BetterChatNotifications)) {
+            if (ToggleButton("Mejores Notificaciones de Chat", &State.BetterChatNotifications)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Better Lobby Code Input", &State.BetterLobbyCodeInput)) {
+            if (ToggleButton("Mejor Entrada de Codigo de Sala", &State.BetterLobbyCodeInput)) {
                 State.Save();
             }
             
@@ -746,20 +746,20 @@ namespace SelfTab {
             }
 
             ColorMapping FAKEROLE_NAMES_COLOR[] = {
-                {"Crewmate",		State.CrewmateColor},
+                {"Tripulante",		State.CrewmateColor},
                 {"Impostor",		State.ImpostorColor},
-                {"Scientist",		State.ScientistColor},
-                {"Engineer",		State.EngineerColor},
-                {"Guardian Angel",	State.GuardianAngelColor},
-                {"Shapeshifter",	State.ShapeshifterColor},
-                {"Crewmate Ghost",  State.CrewmateGhostColor},
-                {"Impostor Ghost",	State.ImpostorGhostColor},
-                {"Noisemaker",		State.NoisemakerColor},
-                {"Phantom",			State.PhantomColor},
-                {"Tracker",			State.TrackerColor},
+                {"Cientifico",		State.ScientistColor},
+                {"Ingeniero",		State.EngineerColor},
+                {"Angel Guardian",	State.GuardianAngelColor},
+                {"Metamorfo",	State.ShapeshifterColor},
+                {"Fantasma Tripulante",  State.CrewmateGhostColor},
+                {"Fantasma Impostor",	State.ImpostorGhostColor},
+                {"Bocina",		State.NoisemakerColor},
+                {"Fantasma",			State.PhantomColor},
+                {"Rastreador",			State.TrackerColor},
                 {"Detective",		State.DetectiveColor},
-                {"Viper",			State.ViperColor},
-                {"Judge",           State.JudgeColor},
+                {"Vibora",			State.ViperColor},
+                {"Juez",           State.JudgeColor},
                 {"Influencer",      State.InfluencerColor},
             }; // needs to be updated every render
 

@@ -799,11 +799,11 @@ void dInnerNetClient_Update(InnerNetClient* __this, MethodInfo* method) {
                 }
 
                 if (IsInGame() && (*Game::pShipStatus) != NULL) {
-                    const std::vector<const char*> SHIPVENTS = { "Admin", "Hallway", "Cafeteria", "Electrical", "Upper Engine", "Security", "Medbay", "Weapons", "Lower Reactor", "Lower Engine", "Shields", "Upper Reactor", "Upper Navigation", "Lower Navigation" };
-                    const std::vector<const char*> HQVENTS = { "Balcony", "Cafeteria", "Reactor", "Laboratory", "Office", "Admin", "Greenhouse", "Medbay", "Decontamination", "Locker Room", "Launchpad" };
-                    const std::vector<const char*> PBVENTS = { "Security", "Electrical", "O2", "Communications", "Office", "Admin", "Laboratory", "Lava Pool", "Storage", "Right Seismic", "Left Seismic", "Outside Admin" };
-                    const std::vector<const char*> AIRSHIPVENTS = { "Vault", "Cockpit", "Viewing Deck", "Engine", "Kitchen", "Lower Main Hall", "Upper Main Hall", "Right Gap Room", "Left Gap Room", "Showers", "Records", "Cargo Bay" };
-                    const std::vector<const char*> FUNGLEVENTS = { "Communications", "Kitchen", "Lookout", "Outside Dorm", "Laboratory", "Reactor", "Jungle (Laboratory)", "Jungle (Greenhouse)", "Splash Zone", "Cafeteria" };
+                    const std::vector<const char*> SHIPVENTS = { "Admin", "Pasillo", "Cafetería", "Electricidad", "Motor Superior", "Seguridad", "Ala Médica", "Armería", "Reactor Inferior", "Motor Inferior", "Escudos", "Reactor Superior", "Navegación Superior", "Navegación Inferior" };
+                    const std::vector<const char*> HQVENTS = { "Balcón", "Cafetería", "Reactor", "Laboratorio", "Oficina", "Admin", "Invernadero", "Ala Médica", "Descontaminación", "Vestidores", "Plataforma de Lanzamiento" };
+                    const std::vector<const char*> PBVENTS = { "Seguridad", "Electricidad", "O2", "Comunicaciones", "Oficina", "Admin", "Laboratorio", "Piscina de Lava", "Almacén", "Sísmico Derecho", "Sísmico Izquierdo", "Fuera de Admin" };
+                    const std::vector<const char*> AIRSHIPVENTS = { "Bóveda", "Cabina", "Mirador", "Motor", "Cocina", "Sala Principal Inferior", "Sala Principal Superior", "Habitación de Brecha Derecha", "Habitación de Brecha Izquierda", "Duchas", "Archivos", "Bahía de Carga" };
+                    const std::vector<const char*> FUNGLEVENTS = { "Comunicaciones", "Cocina", "Mirador", "Fuera de Dormitorios", "Laboratorio", "Reactor", "Jungla (Laboratorio)", "Jungla (Invernadero)", "Zona de Salpicaduras", "Cafetería" };
 
                     std::vector<const char*> allVents;
                     switch (State.mapType) {
@@ -1706,7 +1706,7 @@ void dAmongUsClient_OnPlayerLeft(AmongUsClient* __this, ClientData* data, Discon
             const std::string playerName = convert_from_string(data->fields.PlayerName);
             const std::string stringReason = GetDisconnectReasonString(reason);
 
-            Log.Debug(playerName + " left by reason: " + stringReason);
+            Log.Debug(playerName + " salio por motivo: " + stringReason);
 
             uint8_t playerId = data->fields.Character->fields.PlayerId;
 

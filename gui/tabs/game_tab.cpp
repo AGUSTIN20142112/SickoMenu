@@ -1557,22 +1557,22 @@ namespace GameTab {
                             platform = "itch.io (PC)";
                             break;
                         case Platforms__Enum::IPhone:
-                            platform = "iOS/iPadOS (Mobile)";
+                            platform = "iOS/iPadOS (Movil)";
                             break;
                         case Platforms__Enum::Android:
-                            platform = "Android (Mobile)";
+                            platform = "Android (Movil)";
                             break;
                         case Platforms__Enum::Switch:
-                            platform = "Nintendo Switch (Console)";
+                            platform = "Nintendo Switch (Consola)";
                             break;
                         case Platforms__Enum::Xbox:
-                            platform = "Xbox (Console)";
+                            platform = "Xbox (Consola)";
                             break;
                         case Platforms__Enum::Playstation:
-                            platform = "Playstation (Console)";
+                            platform = "PlayStation (Consola)";
                             break;
                         default:
-                            platform = "Unknown";
+                            platform = "Desconocido";
                             break;
                         }
                     }
