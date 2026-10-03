@@ -31,9 +31,9 @@ namespace SettingsTab {
 
 	void OpenSubGroup(const std::string& name) {
 		if (name == "General") CloseOtherGroups(Groups::General);
-		else if (name == "Spoofing") CloseOtherGroups(Groups::Spoofing);
-		else if (name == "Customization") CloseOtherGroups(Groups::Customization);
-		else if (name == "Keybinds") CloseOtherGroups(Groups::Keybinds);
+		else if (name == "Spoofing" || name == "Suplantar") CloseOtherGroups(Groups::Spoofing);
+		else if (name == "Customization" || name == "Personalizar") CloseOtherGroups(Groups::Customization);
+		else if (name == "Keybinds" || name == "Atajos") CloseOtherGroups(Groups::Keybinds);
 	}
 	void CheckKeybindEdit(bool hotKey) {
 		State.KeybindsBeingEdited = State.KeybindsBeingEdited || hotKey;
@@ -46,43 +46,43 @@ namespace SettingsTab {
 			CloseOtherGroups(Groups::General);
 		}
 		ImGui::SameLine();
-		if (TabGroup("Spoofing", openSpoofing)) {
+		if (TabGroup("Suplantar", openSpoofing)) {
 			CloseOtherGroups(Groups::Spoofing);
 		}
 		ImGui::SameLine();
-		if (TabGroup("Customization", openCustomization)) {
+		if (TabGroup("Personalizar", openCustomization)) {
 			CloseOtherGroups(Groups::Customization);
 		}
 		ImGui::SameLine();
-		if (TabGroup("Keybinds", openKeybinds)) {
+		if (TabGroup("Atajos", openKeybinds)) {
 			CloseOtherGroups(Groups::Keybinds);
 		}
 
 		ImGui::BeginChild("###Settings", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
 		if (openGeneral) {
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-			if (ToggleButton("Allow Activating Keybinds while Chatting", &State.KeybindsWhileChatting)) {
+			if (ToggleButton("Permitir Atajos mientras Escribes", &State.KeybindsWhileChatting)) {
 				State.Save();
 			}
 
-			if (ToggleButton("Allow Clicking Through Menu UIs", &State.ClickThroughMenuUI)) {
+			if (ToggleButton("Permitir Clics a traves del Menu", &State.ClickThroughMenuUI)) {
 				State.Save();
 			}
 
-			if (ToggleButton("Always Show Menu on Startup", &State.ShowMenuOnStartup)) {
+			if (ToggleButton("Mostrar Menu al Iniciar", &State.ShowMenuOnStartup)) {
 				State.Save();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("Panic Warning", &State.PanicWarning)) {
+			if (ToggleButton("Aviso de Panico", &State.PanicWarning)) {
 				State.Save();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("Extra Commands", &State.ExtraCommands)) {
+			if (ToggleButton("Comandos Extra", &State.ExtraCommands)) {
 				State.Save();
 			}
 
 			if (ImGui::IsItemHovered()) {
-				ImGui::SetTooltip("Type \"/help\" in chat to see all available commands.");
+				ImGui::SetTooltip("Escribe \"/help\" en el chat para ver todos los comandos disponibles.");
 			}
 			ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
 			ImGui::Separator();
@@ -138,21 +138,21 @@ namespace SettingsTab {
 			}*/
 #pragma endregion
 
-			InputString("Config Name", &State.selectedConfig);
+			InputString("Nombre de Configuracion", &State.selectedConfig);
 
-			if (CheckConfigExists(State.selectedConfig) && AnimatedButton("Load Config"))
+			if (CheckConfigExists(State.selectedConfig) && AnimatedButton("Cargar Config"))
 			{
 				State.SaveConfig();
 				State.Load();
 				State.Save(); //actually save the selected config
 			}
 			if (CheckConfigExists(State.selectedConfig)) ImGui::SameLine();
-			if (AnimatedButton("Save Config"))
+			if (AnimatedButton("Guardar Config"))
 			{
 				State.Save();
 			}
 			if (!CheckConfigExists(State.selectedConfig)) {
-				ImGui::Text("Config name not found!");
+				ImGui::Text("¡Configuracion no encontrada!");
 				ImGui::SameLine();
 			}
 
@@ -183,12 +183,12 @@ namespace SettingsTab {
 
 			ImGui::Dummy(ImVec2(1, 1) * State.dpiScale);
 
-			if (ToggleButton("Auto-Exit Due To Low FPS", &State.LeaveDueLFPS)) {
+			if (ToggleButton("Auto-Salir por Bajos FPS", &State.LeaveDueLFPS)) {
 				State.Save();
 			}
 			ImGui::SameLine();
 			ImGui::PushItemWidth(80 * State.dpiScale);
-			ImGui::InputInt("Minimum FPS", &State.minFpsThreshold);
+			ImGui::InputInt("FPS Minimos", &State.minFpsThreshold);
 			if (State.minFpsThreshold < 0)
 				State.minFpsThreshold = 0;
 			ImGui::PopItemWidth();
@@ -206,23 +206,23 @@ namespace SettingsTab {
 				if (InputString("Username", &State.userName)) State.Save();
 				ImGui::PopStyleColor();
 			}
-			else */InputString("Username", &State.userName);
+			else */InputString("Nombre de Usuario", &State.userName);
 
 			if (!IsNameValid(State.userName) && !IsHost() && State.SafeMode) {
 				if (State.userName == "")
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Empty username gets detected by anticheat. This name will be ignored.");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Nombre vacio detectado por anticheat.");
 				if (State.userName.length() > (size_t)10)
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Username is too long, gets detected by anticheat. This name will be ignored.");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Nombre demasiado largo (max 10).");
 				else if (!IsNameValid(State.userName))
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Username contains characters blocked by anticheat. This name will be ignored.");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Nombre contiene caracteres invalidos.");
 				else
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Username gets detected by anticheat. This name will be ignored.");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Nombre detectado por anticheat.");
 			}
 
 			// you can only join a lobby if you have the same name as what your requested name is, when trying to join it
 			if (IsNameValid(State.userName) && (!State.SafeMode ||
 				State.CurrentScene == "MatchMaking" || State.CurrentScene == "MainMenu" || State.CurrentScene == "Tutorial" || State.CurrentScene == "HowToPlay")) {
-				if (AnimatedButton("Set as Account Name")) {
+				if (AnimatedButton("Fijar como Nombre de Cuenta")) {
 					SetPlayerName(State.userName);
 					LOG_INFO("Successfully set account name to \"" + State.userName + "\"");
 				}
@@ -230,7 +230,7 @@ namespace SettingsTab {
 
 			if (/*IsNameValid(State.userName) || IsHost() || */!State.SafeMode) {
 				if (IsInGame() || IsInLobby()) ImGui::SameLine();
-				if ((IsInGame() || IsInLobby()) && AnimatedButton("Set Name")) {
+				if ((IsInGame() || IsInLobby()) && AnimatedButton("Fijar Nombre")) {
 					if (IsInGame())
 						State.rpcQueue.push(new RpcSetName(State.userName));
 					else if (IsInLobby())
@@ -238,18 +238,18 @@ namespace SettingsTab {
 					LOG_INFO("Successfully set in-game name to \"" + State.userName + "\"");
 				}
 				if (IsInGame() || IsInLobby()) ImGui::SameLine();
-				if (ToggleButton("Automatically Set Name", &State.SetName)) {
+				if (ToggleButton("Fijar Nombre Automaticamente", &State.SetName)) {
 					State.Save();
 				}
 			}
 
-			InputString("Custom Code", &State.customCode);
+			InputString("Codigo Personalizado", &State.customCode);
 
-			if (ToggleButton("Replace Streamer Mode Lobby Code", &State.HideCode)) {
+			if (ToggleButton("Reemplazar Codigo en Modo Streamer", &State.HideCode)) {
 				State.Save();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("RGB Lobby Code", &State.RgbLobbyCode)) {
+			if (ToggleButton("Codigo de Sala RGB", &State.RgbLobbyCode)) {
 				State.Save();
 			}
 
@@ -262,7 +262,7 @@ namespace SettingsTab {
 			static float timer = 0.0f;
 			static bool CosmeticsNotification = false;
 
-			if (ToggleButton("Unlock Cosmetics", &State.UnlockCosmetics)) {
+			if (ToggleButton("Desbloquear Cosmeticos", &State.UnlockCosmetics)) {
 				State.Save();
 				CosmeticsNotification = true;
 				timer = static_cast<float>(ImGui::GetTime());
@@ -273,9 +273,9 @@ namespace SettingsTab {
 				if (currentTime - timer < 5.0f) {
 					ImGui::SameLine();
 					if (State.UnlockCosmetics)
-						ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Cosmetics Are Unlocked!");
+						ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "¡Cosmeticos Desbloqueados!");
 					else
-						ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Cosmetics Are Locked!");
+						ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "¡Cosmeticos Bloqueados!");
 				}
 				else {
 					CosmeticsNotification = false;
@@ -285,11 +285,11 @@ namespace SettingsTab {
 			if (Achievements::IsSupported())
 			{
 				ImGui::SameLine();
-				if (AnimatedButton("Unlock All Achievements"))
+				if (AnimatedButton("Desbloquear Todos los Logros"))
 					State.unlockAllAchievements = true;
 			}
 
-			if (ToggleButton("Allow other mod users to see you're using SickoMenu", &State.ModDetection)) State.Save();
+			if (ToggleButton("Permitir que otros vean que usas SickoMenu", &State.ModDetection)) State.Save();
 			/*ImGui::SameLine();
 			if (CustomListBoxInt(" ", &State.BroadcastedMod, MODS, 100.f * State.dpiScale)) State.Save();*/
 		}
@@ -314,10 +314,10 @@ namespace SettingsTab {
 			/*if (AnimatedButton("Force Login as Guest")) {
 				State.ForceLoginAsGuest = true;
 			}*/
-			if (ToggleButton("Spoof Guest Account (Quick Chat ONLY)", &State.SpoofGuestAccount)) {
+			if (ToggleButton("Suplantar Cuenta de Invitado (Solo Chat Rapido)", &State.SpoofGuestAccount)) {
 				State.Save();
 			}
-			if (ToggleButton("Use Custom Friend Code (For New/Guest Account ONLY)", &State.UseNewFriendCode)) {
+			if (ToggleButton("Codigo de Amigo Personalizado (Solo Cuenta Nueva/Invitado)", &State.UseNewFriendCode)) {
 				State.Save();
 			}
 			if (State.UseNewFriendCode) {
@@ -325,82 +325,82 @@ namespace SettingsTab {
 
 				bool isFriendCodeValid = State.NewFriendCode.find(" ") == std::string::npos && State.NewFriendCode.length() <= 10;
 				if (!isFriendCodeValid) ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.5f, 0.f, 0.f, State.MenuThemeColor.w));
-				InputString("Friend Code (For New/Guest Account ONLY)", &State.NewFriendCode);
+				InputString("Codigo de Amigo", &State.NewFriendCode);
 				if (!isFriendCodeValid) ImGui::PopStyleColor();
 
-				auto friendCodeValidText = "This new friend code should be <= 10 characters long and cannot have spaces.\nLeave this blank to generate a random friend code.";
+				auto friendCodeValidText = "El codigo debe tener <= 10 caracteres y no tener espacios.\nDejalo vacio para generar uno aleatorio.";
 				if (isFriendCodeValid) ImGui::Text(friendCodeValidText);
 				else ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), friendCodeValidText);
 
 				if (State.SpoofGuestAccount)
-					ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Note: Other players cannot see your guest account's friend code in game.");
+					ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Nota: Otros jugadores no pueden ver tu codigo de invitado.");
 			}
-			if (ToggleButton("Spoof Level", &State.SpoofLevel)) {
+			if (ToggleButton("Suplantar Nivel", &State.SpoofLevel)) {
 				State.Save();
 			}
 			if (State.SpoofLevel) {
 				ImGui::SameLine();
 				ImGui::SetNextItemWidth(120.f * State.dpiScale);
-				ImGui::InputInt("Level", &State.FakeLevel);
+				ImGui::InputInt("Nivel", &State.FakeLevel);
 
 				if (State.SafeMode && (State.FakeLevel <= 0 || State.FakeLevel > 100001))
-					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Level will be detected by anticheat, your level will be between 0 and 100001.");
+					ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "El nivel debe estar entre 0 y 100001 para no ser detectado.");
 			}
 
-			if (ToggleButton("Spoof Platform", &State.SpoofPlatform)) {
+			if (ToggleButton("Suplantar Plataforma", &State.SpoofPlatform)) {
 				State.Save();
 			}
 			if (State.SpoofPlatform) {
 				ImGui::SameLine();
-				if (CustomListBoxIntColored("Platform", &State.FakePlatform, PLATFORMS, 225.0F, ImVec4(1.f, 1.f, 1.f, 0.f), 0, " ", PLATFORM_NAMES_COLOR, IM_ARRAYSIZE(PLATFORM_NAMES_COLOR)))
+				if (CustomListBoxIntColored("Plataforma", &State.FakePlatform, PLATFORMS, 225.0F, ImVec4(1.f, 1.f, 1.f, 0.f), 0, " ", PLATFORM_NAMES_COLOR, IM_ARRAYSIZE(PLATFORM_NAMES_COLOR)))
 					State.Save();
 			}
 
 			if (State.FakePlatform == 9) {
-				if (ToggleButton("Spoof PSN Platform ID", &State.SpoofPsnId)) {
+				if (ToggleButton("Suplantar ID de PlayStation (PSN)", &State.SpoofPsnId)) {
 					State.Save();
 				}
 				if (State.SpoofPsnId)
 				{
 					ImGui::SameLine();
 					ImGui::SetNextItemWidth(150 * State.dpiScale);
-					ImGui::InputScalar("Fake PSN ID", ImGuiDataType_U64, &State.FakePsnId);
+					ImGui::InputScalar("ID PSN Falsa", ImGuiDataType_U64, &State.FakePsnId);
 
-					if (AnimatedButton("Random PSN ID")) {
+					if (AnimatedButton("ID PSN Aleatoria")) {
 						GeneratePlatformId();
 					}
 				}
 			}
 
 			if (State.FakePlatform == 8) {
-				if (ToggleButton("Spoof Xbox Platform ID", &State.SpoofXboxId)) {
+				if (ToggleButton("Suplantar ID de Xbox", &State.SpoofXboxId)) {
 					State.Save();
 				}
 				if (State.SpoofXboxId)
 				{
 					ImGui::SameLine();
 					ImGui::SetNextItemWidth(150 * State.dpiScale);
-					ImGui::InputScalar("Fake Xbox ID", ImGuiDataType_U64, &State.FakeXboxId);
+					ImGui::InputScalar("ID Xbox Falsa", ImGuiDataType_U64, &State.FakeXboxId);
 
-					if (AnimatedButton("Random Xbox ID")) {
+					if (AnimatedButton("ID Xbox Aleatoria")) {
 						GeneratePlatformId();
 					}
 				}
 			}
 
-			if (ToggleButton("Spoof Platform Name", &State.SpoofPlName)) {
+			if (ToggleButton("Suplantar Nombre de Plataforma", &State.SpoofPlName)) {
 				State.Save();
 			}
 			if (State.SpoofPlName)
 			{
 				ImGui::SameLine();
 				ImGui::SetNextItemWidth(150 * State.dpiScale);
-				InputString("Platform Name", &State.FakePlName);
+				InputString("Nombre de Plataforma", &State.FakePlName);
 			}
 
 			static bool dhaWarnState = false;
 
-			if (!dhaWarnState && ToggleButton("Reduce Anticheat While Hosting (+25 Mode)", &State.DisableHostAnticheat)) {
+			if (!dhaWarnState && ToggleButton("Reducir Anticheat al ser Host (Modo +25)", &State.DisableHostAnticheat)) {
 				if (State.DisableHostAnticheat) {
 					dhaWarnState = true;
 					State.DisableHostAnticheat = false;
@@ -414,18 +414,17 @@ namespace SettingsTab {
 			}
 
 			if (dhaWarnState) {
-				BoldText("Warning", ImVec4(1.f, 0.f, 0.f, 1.f));
-				ImGui::Text("By turning on Reduce Anticheat While Hosting (+25 Mode),");
-				ImGui::Text("your lobby can ONLY be discovered by other users with mods,");
-				ImGui::Text("or users with the lobby code.");
+				BoldText("Advertencia", ImVec4(1.f, 0.f, 0.f, 1.f));
+				ImGui::Text("Al activar Reducir Anticheat al ser Host (Modo +25),");
+				ImGui::Text("tu sala SOLO podra ser vista por otros usuarios con mods,");
+				ImGui::Text("o con el codigo de la sala.");
 				ImGui::Text(" ");
-				ImGui::Text("Your lobby will now have a reduced anticheat for everyone,");
-				ImGui::Text("meaning anyone can perform most actions that are usually detected");
-				ImGui::Text("by the anticheat!");
+				ImGui::Text("Tu sala tendra anticheat reducido para todos,");
+				ImGui::Text("permitiendo acciones que normalmente serian bloqueadas.");
 				ImGui::Text(" ");
-				ImGui::Text("Are you sure that you want to turn it on?");
+				ImGui::Text("¿Estas seguro de activarlo?");
 
-				if (ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), "Yes")) {
+				if (ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), "Si")) {
 					dhaWarnState = false;
 					State.DisableHostAnticheat = true;
 					State.Save();
@@ -438,7 +437,7 @@ namespace SettingsTab {
 
 			static bool cssWarnState = false;
 
-			if (!cssWarnState && ToggleButton("Custom Server Settings", &State.UseCustomServer)) {
+			if (!cssWarnState && ToggleButton("Ajustes de Servidor Personalizado", &State.UseCustomServer)) {
 				if (State.UseCustomServer) {
 					cssWarnState = true;
 					State.UseCustomServer = false;
@@ -449,22 +448,11 @@ namespace SettingsTab {
 			}
 
 			if (cssWarnState) {
-				BoldText("Warning", ImVec4(1.f, 0.f, 0.f, 1.f));
-				ImGui::Text("\"Custom Server Settings\" feature forces all newly created lobbies");
-				ImGui::Text("to use specified Innersloth IP address and port of the server.");
-				ImGui::Text(" ");
-				ImGui::Text("Last 4 letters of the lobby code are automatically generated");
-				ImGui::Text("based on the IP address and port you set.");
-				ImGui::Text(" ");
-				ImGui::Text("While active, you cannot join other servers or use the");
-				ImGui::Text("\"Reduce Anticheat While Hosting (+25 Mode)\" feature.");
-				ImGui::Text(" ");
-				ImGui::Text("To find the required IP and port, enable \"Show Lobby Info\"");
-				ImGui::Text("and check lobbies in Matchmaking.");
-				ImGui::Text(" ");
-				ImGui::Text("Are you sure you want to enable this?");
+				BoldText("Advertencia", ImVec4(1.f, 0.f, 0.f, 1.f));
+				ImGui::Text("Fuerza a todas las salas nuevas a conectarse a una IP y puerto especificos.");
+				ImGui::Text("¿Estas seguro de activarlo?");
 
-				if (ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), "Yes")) {
+				if (ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), "Si")) {
 					cssWarnState = false;
 					State.UseCustomServer = true;
 					State.Save();
@@ -515,42 +503,42 @@ namespace SettingsTab {
 		}
 
 		if (openCustomization) {
-			if (ToggleButton("Hide Watermark", &State.HideWatermark)) {
+			if (ToggleButton("Ocultar Marca de Agua", &State.HideWatermark)) {
 				State.Save();
 				ReloadCurrentSceneIfNeeded();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("Hide Mod Stamp", &State.HideModStamp)) {
+			if (ToggleButton("Ocultar Sello de Mod", &State.HideModStamp)) {
 				State.Save();
 			}
 
 			if (!State.GradientMenuTheme) {
-				if (ImGui::ColorEdit3("Menu Theme Color", (float*)&State.MenuThemeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
+				if (ImGui::ColorEdit3("Color del Menu", (float*)&State.MenuThemeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
 					State.Save();
 				}
 			}
 			else {
-				if (ImGui::ColorEdit3("Gradient Color 1", (float*)&State.MenuGradientColor1, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
+				if (ImGui::ColorEdit3("Color Degradado 1", (float*)&State.MenuGradientColor1, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
 					State.Save();
 				}
 				ImGui::SameLine();
-				if (ImGui::ColorEdit3("Gradient Color 2", (float*)&State.MenuGradientColor2, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
+				if (ImGui::ColorEdit3("Color Degradado 2", (float*)&State.MenuGradientColor2, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
 					State.Save();
 				}
 			}
 			ImGui::SameLine();
-			if (ToggleButton("Gradient Theme", &State.GradientMenuTheme))
+			if (ToggleButton("Tema Degradado", &State.GradientMenuTheme))
 				State.Save();
 
-			if (ToggleButton("Match Background with Theme", &State.MatchBackgroundWithTheme)) {
+			if (ToggleButton("Fondo acorde al Tema", &State.MatchBackgroundWithTheme)) {
 				State.Save();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("RGB Menu Theme", &State.RgbMenuTheme)) {
+			if (ToggleButton("Tema del Menu RGB", &State.RgbMenuTheme)) {
 				State.Save();
 			}
 			ImGui::SameLine();
-			if (AnimatedButton("Reset Menu Theme"))
+			if (AnimatedButton("Restablecer Color"))
 			{
 				State.MenuThemeColor = ImVec4(1.f, 0.f, 0.424f, State.MenuThemeColor.w);
 				State.GradientMenuTheme = false;
@@ -559,31 +547,31 @@ namespace SettingsTab {
 				State.Save();
 			}
 
-			SteppedSliderFloat("Opacity", (float*)&State.MenuThemeColor.w, 0.1f, 1.f, 0.01f, "%.2f", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
+			SteppedSliderFloat("Opacidad", (float*)&State.MenuThemeColor.w, 0.1f, 1.f, 0.01f, "%.2f", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
-			if (ToggleButton("Dark Game Theme", &State.DarkMode)) {
+			if (ToggleButton("Tema Oscuro del Juego", &State.DarkMode)) {
 				State.Save();
 				State.MIG_ThemeChanged = true;
 				ReloadCurrentSceneIfNeeded();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("Custom Game Theme", &State.CustomGameTheme)) {
+			if (ToggleButton("Tema Personalizado del Juego", &State.CustomGameTheme)) {
 				State.Save();
 				State.MIG_ThemeChanged = true;
 			}
 
 			if (State.CustomGameTheme) {
-				if (ImGui::ColorEdit3("Background Color", (float*)&State.GameBgColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
+				if (ImGui::ColorEdit3("Color de Fondo", (float*)&State.GameBgColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview)) {
 					State.Save();
 					State.MIG_ThemeChanged = true;
 				}
 				ImGui::SameLine();
-				if (ImGui::ColorEdit3("Text Color", (float*)&State.GameTextColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview))
+				if (ImGui::ColorEdit3("Color de Texto", (float*)&State.GameTextColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview))
 					State.Save();
 			}
-			if (ToggleButton("Change Chat Font", &State.ChatFont)) {
+			if (ToggleButton("Cambiar Fuente de Chat", &State.ChatFont)) {
 				State.Save();
 			}
 			if (State.ChatFont) {
@@ -595,19 +583,19 @@ namespace SettingsTab {
 
 			ImGui::Dummy(ImVec2(4, 4)* State.dpiScale);
 
-			ImGui::Text("Show/Hide Next to Ping:");
-			if (ToggleButton("Show FPS", &State.ShowFps)) {
+			ImGui::Text("Mostrar junto al Ping:");
+			if (ToggleButton("Mostrar FPS", &State.ShowFps)) {
 				State.Save();
 			}
 			ImGui::SameLine();
-			if (ToggleButton("Show Time", &State.ShowTime)) {
+			if (ToggleButton("Mostrar Hora", &State.ShowTime)) {
 				State.Save();
 			}
 
 			if (State.ShowTime) {
 				static int hours = State.TimeOffsetMinutes / 60, minutes = State.TimeOffsetMinutes % 60;
 				static int timeOffsetChoice = State.NegativeTimeOffset;
-				ImGui::Text("Time Offset (from UTC)");
+				ImGui::Text("Diferencia Horaria (UTC)");
 				ImGui::SameLine();
 				if (CustomListBoxInt("  ", &timeOffsetChoice, TIME_OFFSETS, 20.f * State.dpiScale)) {
 					State.NegativeTimeOffset = (bool)timeOffsetChoice;
@@ -630,65 +618,65 @@ namespace SettingsTab {
 				}
 			}
 
-			if (ImGui::CollapsingHeader("Time Format")) {
-				ImGui::Text(("Time Preview: " +
+			if (ImGui::CollapsingHeader("Formato de Hora")) {
+				ImGui::Text(("Vista Previa: " +
 					GetTimeString(State.UseLeadingZeroForHours, State.ShowSeconds)).c_str());
 
-				if (ToggleButton("Use 12-Hour Format", &State.Use12HourFormat)) State.Save();
+				if (ToggleButton("Formato 12 Horas", &State.Use12HourFormat)) State.Save();
 
-				if (ToggleButton("Use Leading Zero for Hours", &State.UseLeadingZeroForHours)) State.Save();
+				if (ToggleButton("Cero a la Izquierda en Horas", &State.UseLeadingZeroForHours)) State.Save();
 
-				if (ToggleButton("Show Seconds", &State.ShowSeconds)) State.Save();
+				if (ToggleButton("Mostrar Segundos", &State.ShowSeconds)) State.Save();
 
 				if (State.Use12HourFormat) {
 					ImGui::SetNextItemWidth(100 * State.dpiScale);
-					InputString("AM String", &State.AmString);
+					InputString("AM", &State.AmString);
 					ImGui::SameLine();
 					ImGui::SetNextItemWidth(100 * State.dpiScale);
-					InputString("PM String", &State.PmString);
+					InputString("PM", &State.PmString);
 				}
 			}
 
 			ImGui::Dummy(ImVec2(4, 4)* State.dpiScale);
 
-			if (ImGui::CollapsingHeader("GUI")) {
-				if (ToggleButton("Light Mode", &State.LightMode)) State.Save();
+			if (ImGui::CollapsingHeader("Interfaz (GUI)")) {
+				if (ToggleButton("Modo Claro", &State.LightMode)) State.Save();
 				ImGui::SameLine();
-				if (ToggleButton("Show UI Borders", &State.ShowUiBorders)) State.Save();
+				if (ToggleButton("Mostrar Bordes de Interfaz", &State.ShowUiBorders)) State.Save();
 
 				ImGui::SetNextItemWidth(50 * State.dpiScale);
-				if (ImGui::InputFloat("Menu Scale", &State.dpiScale)) {
+				if (ImGui::InputFloat("Escala del Menu", &State.dpiScale)) {
 					State.dpiScale = std::clamp(State.dpiScale, 0.5f, 3.f);
 					State.dpiChanged = true;
 				}
-				if (ToggleButton("Disable Animations", &State.DisableAnimations))
+				if (ToggleButton("Desactivar Animaciones", &State.DisableAnimations))
 					State.Save();
-				if (ImGui::InputFloat("Animation Speed", &State.AnimationSpeed)) {
+				if (ImGui::InputFloat("Velocidad de Animacion", &State.AnimationSpeed)) {
 					if (State.AnimationSpeed <= 0) State.AnimationSpeed = 1.f;
 				}
-				SteppedSliderFloat("Rounding Radius Multiplier", &State.RoundingRadiusMultiplier, 0.f, 2.f, 0.01f, "%.2f", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
+				SteppedSliderFloat("Radio de Redondeo", &State.RoundingRadiusMultiplier, 0.f, 2.f, 0.01f, "%.2f", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
 
-				ImGui::Text("Toast Notification Alignment:");
+				ImGui::Text("Alineacion de Notificaciones:");
 				ImGui::SameLine();
 				static int toastsOnTopSelector = (int)State.ToastsOnTop;
-				if (CustomListBoxInt(" ", &toastsOnTopSelector, { "Bottom", "Top" }, 50.f * State.dpiScale)) {
+				if (CustomListBoxInt(" ", &toastsOnTopSelector, { "Abajo", "Arriba" }, 50.f * State.dpiScale)) {
 					State.ToastsOnTop = (bool)toastsOnTopSelector;
 					State.Save();
 				}
 				ImGui::SameLine();
-				if (CustomListBoxInt("  ", &State.ToastPositionX, { "Left", "Center", "Right" }, 50.f * State.dpiScale)) {
+				if (CustomListBoxInt("  ", &State.ToastPositionX, { "Izquierda", "Centro", "Derecha" }, 60.f * State.dpiScale)) {
 					State.Save();
 				}
 
 				ImGui::SetNextItemWidth(60.f * State.dpiScale);
-				if (ImGui::InputInt("Max Toasts to Show at Once", &State.MaxToasts)) {
+				if (ImGui::InputInt("Max Notificaciones", &State.MaxToasts)) {
 					State.MaxToasts = std::clamp(State.MaxToasts, 1, 6);
 				}
 
-				SteppedSliderFloat("Time to Show Toasts For", &State.ToastMaxDuration, 0.5f, 10.0f, 0.5f, "%.1f s", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
+				SteppedSliderFloat("Duracion de Notificaciones", &State.ToastMaxDuration, 0.5f, 10.0f, 0.5f, "%.1f s", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
 			}
 
-			if (ImGui::CollapsingHeader("Role Colors")) {
+			if (ImGui::CollapsingHeader("Colores de Roles")) {
 				ImGui::ColorEdit4("Crewmate", (float*)&State.CrewmateColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(150.f * State.dpiScale);
 				ImGui::ColorEdit4("Scientist", (float*)&State.ScientistColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
@@ -719,7 +707,7 @@ namespace SettingsTab {
 				ImGui::SameLine(300.f * State.dpiScale);
 				ImGui::ColorEdit4("Crewmate Ghost", (float*)&State.CrewmateGhostColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 
-				if (AnimatedButton("Reset Role Colors")) {
+				if (AnimatedButton("Restablecer Colores de Roles")) {
 					State.CrewmateGhostColor = ImVec4(0.482f, 0.741f, 0.580f, 0.5f);
 					State.CrewmateColor = ImVec4(0.071f, 0.984f, 0.996f, 1.f);
 					State.EngineerColor = ImVec4(0.043f, 0.506f, 0.780f, 1.f);
@@ -739,28 +727,28 @@ namespace SettingsTab {
 				}
 			}
 
-			if (ImGui::CollapsingHeader("Other Colors")) {
-				ImGui::ColorEdit4("Lobby Host", (float*)&State.HostColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+			if (ImGui::CollapsingHeader("Otros Colores")) {
+				ImGui::ColorEdit4("Anfitrion de la Sala", (float*)&State.HostColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(150.f * State.dpiScale);
-				ImGui::ColorEdit4("Player ID", (float*)&State.PlayerIdColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("ID de Jugador", (float*)&State.PlayerIdColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(300.f * State.dpiScale);
-				ImGui::ColorEdit4("Player Level", (float*)&State.LevelColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Nivel de Jugador", (float*)&State.LevelColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 
-				ImGui::ColorEdit4("Platform", (float*)&State.PlatformColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Plataforma", (float*)&State.PlatformColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(150.f * State.dpiScale);
-				ImGui::ColorEdit4("Mod Usage", (float*)&State.ModUsageColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Uso de Mod", (float*)&State.ModUsageColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(300.f * State.dpiScale);
-				ImGui::ColorEdit4("Name-Checker", (float*)&State.NameCheckerColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Verificador de Nombres", (float*)&State.NameCheckerColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 
-				ImGui::ColorEdit4("Friend Code", (float*)&State.FriendCodeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Codigo de Amigo", (float*)&State.FriendCodeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(150.f * State.dpiScale);
-				ImGui::ColorEdit4("Dater Names", (float*)&State.DaterNamesColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Nombres Marcados", (float*)&State.DaterNamesColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				ImGui::SameLine(300.f * State.dpiScale);
-				ImGui::ColorEdit4("Lobby Code", (float*)&State.LobbyCodeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Codigo de Sala", (float*)&State.LobbyCodeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 				
-				ImGui::ColorEdit4("Lobby Age", (float*)&State.AgeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
+				ImGui::ColorEdit4("Antiguedad de Sala", (float*)&State.AgeColor, ImGuiColorEditFlags__OptionsDefault | ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_AlphaPreview);
 
-				if (AnimatedButton("Reset Other Colors")) {
+				if (AnimatedButton("Restablecer Otros Colores")) {
 					State.HostColor = ImVec4(1.f, 0.73f, 0.f, 1.f);
 					State.PlayerIdColor = ImVec4(1.f, 0.f, 0.f, 1.f);
 					State.LevelColor = ImVec4(0.f, 1.f, 0.f, 1.f);
@@ -781,61 +769,61 @@ namespace SettingsTab {
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Menu));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Show/Hide Menu");
+			ImGui::Text("Mostrar/Ocultar Menu");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Console));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Show/Hide Console");
+			ImGui::Text("Mostrar/Ocultar Consola");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Radar));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Show/Hide Radar");
+			ImGui::Text("Mostrar/Ocultar Radar");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Replay));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Show/Hide Replay");
+			ImGui::Text("Mostrar/Ocultar Repeticion");
 
 			ImGui::Dummy(ImVec2(4, 4)* State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_ChatAlwaysActive));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Toggle Always Show Chat Button");
+			ImGui::Text("Alternar Boton de Chat Siempre Visible");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_ReadGhostMessages));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Read Ghost Messages");
+			ImGui::Text("Leer Mensajes de Fantasmas");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Sicko));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Panic Mode");
+			ImGui::Text("Modo Panico");
 
 			ImGui::Dummy(ImVec2(4, 4)* State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Leave_Game));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Leave Game");
+			ImGui::Text("Salir de la Partida");
 
 			ImGui::Dummy(ImVec2(4, 4)* State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Hud));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Enable/Disable HUD");
+			ImGui::Text("Activar/Desactivar HUD");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Freecam));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Freecam");
+			ImGui::Text("Camara Libre");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
@@ -847,7 +835,7 @@ namespace SettingsTab {
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Toggle_Noclip));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("NoClip");
+			ImGui::Text("Atravesar Paredes (NoClip)");
 
 			/*ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
@@ -859,43 +847,43 @@ namespace SettingsTab {
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Reset_Appearance));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Reset Appearance");
+			ImGui::Text("Restablecer Apariencia");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Randomize_Appearance));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Confuse Now");
+			ImGui::Text("Confundir Apariencia");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Repair_Sabotage));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Repair All Sabotages");
+			ImGui::Text("Reparar Todos los Sabotajes");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Close_All_Doors));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Close All Doors");
+			ImGui::Text("Cerrar Todas las Puertas");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Close_Current_Room_Door));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Close Current Room Door");
+			ImGui::Text("Cerrar Puerta de la Sala Actual");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Complete_Tasks));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Complete All Tasks");
+			ImGui::Text("Completar Todas las Tareas");
 
 			ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 
 			CheckKeybindEdit(HotKey(State.KeyBinds.Cancel_Start));
 			ImGui::SameLine(100 * State.dpiScale);
-			ImGui::Text("Cancel Start Game");
+			ImGui::Text("Cancelar Inicio de Partida");
 		}
 		ImGui::EndChild();
 		ImGui::EndChild();

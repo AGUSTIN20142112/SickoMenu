@@ -9,7 +9,7 @@ namespace RadarTab {
 		ImGui::SameLine(100 * State.dpiScale);
 		ImGui::BeginChild("###Radar", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-		if (ToggleButton("Show Radar", &State.ShowRadar)) {
+		if (ToggleButton("Mostrar Radar", &State.ShowRadar)) {
 			State.Save();
 		}
 
@@ -17,16 +17,16 @@ namespace RadarTab {
 		ImGui::Separator();
 		ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
 
-		if (ToggleButton("Show Dead Bodies", &State.ShowRadar_DeadBodies)) {
+		if (ToggleButton("Mostrar Cuerpos Muertos", &State.ShowRadar_DeadBodies)) {
 			State.Save();
 		}
-		if (ToggleButton("Show Ghosts", &State.ShowRadar_Ghosts)) {
+		if (ToggleButton("Mostrar Fantasmas", &State.ShowRadar_Ghosts)) {
 			State.Save();
 		}
-		if (ToggleButton("Right Click to Teleport", &State.ShowRadar_RightClickTP)) {
+		if (ToggleButton("Clic Derecho para Teletransportar", &State.ShowRadar_RightClickTP)) {
 			State.Save();
 		}
-		if (ToggleButton("(Shift + Left Click) to Close Room Door", &State.ShowRadar_ShiftLeftClickClosesRoomDoor)) {
+		if (ToggleButton("(Shift + Clic Izquierdo) Cerrar Puerta", &State.ShowRadar_ShiftLeftClickClosesRoomDoor)) {
 			State.Save();
 		}
 
@@ -34,10 +34,10 @@ namespace RadarTab {
 		ImGui::Separator();
 		ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
 
-		if (ToggleButton("Hide Radar During Meetings", &State.HideRadar_During_Meetings)) {
+		if (ToggleButton("Ocultar Radar en Reuniones", &State.HideRadar_During_Meetings)) {
 			State.Save();
 		}
-		if (ToggleButton("Draw Player Icons", &State.RadarDrawIcons)) {
+		if (ToggleButton("Dibujar Iconos de Jugadores", &State.RadarDrawIcons)) {
 			State.Save();
 		}
 		/*if (State.RadarDrawIcons && State.RevealRoles) {
@@ -47,13 +47,13 @@ namespace RadarTab {
 			}
 		}*/
 
-		if (ToggleButton("Lock Radar Position", &State.LockRadar)) {
+		if (ToggleButton("Bloquear Posicion del Radar", &State.LockRadar)) {
 			State.Save();
 		}
-		if (ToggleButton("Show Border", &State.RadarBorder)) {
+		if (ToggleButton("Mostrar Borde", &State.RadarBorder)) {
 			State.Save();
 		}
-		if (ImGui::ColorEdit4("Radar Color",
+		if (ImGui::ColorEdit4("Color del Radar",
 			(float*)&State.SelectedColor,
 			ImGuiColorEditFlags__OptionsDefault
 			| ImGuiColorEditFlags_NoInputs
@@ -63,12 +63,12 @@ namespace RadarTab {
 		}
 
 		ImGui::SetNextItemWidth(100.f * State.dpiScale);
-		if (ImGui::InputInt("Extra Width", &State.RadarExtraWidth)) {
+		if (ImGui::InputInt("Ancho Extra", &State.RadarExtraWidth)) {
 			State.RadarExtraWidth = abs(State.RadarExtraWidth); //prevent negatives
 		}
 		ImGui::SameLine();
 		ImGui::SetNextItemWidth(100.f * State.dpiScale);
-		if (ImGui::InputInt("Extra Height", &State.RadarExtraHeight)) {
+		if (ImGui::InputInt("Alto Extra", &State.RadarExtraHeight)) {
 			State.RadarExtraHeight = abs(State.RadarExtraHeight); //prevent negatives
 		}
 

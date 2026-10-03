@@ -9,27 +9,27 @@ namespace ReplayTab {
 		ImGui::SameLine(100 * State.dpiScale);
 		ImGui::BeginChild("###Replay", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
 		ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-		if (ToggleButton("Show Replay", &State.ShowReplay)) {
+		if (ToggleButton("Mostrar Repeticion", &State.ShowReplay)) {
 			State.Save();
 		}
-		if (ToggleButton("Show Only Last", &State.Replay_ShowOnlyLastSeconds))
+		if (ToggleButton("Solo Ultimos", &State.Replay_ShowOnlyLastSeconds))
 		{
 			State.Save();
 		}
 		ImGui::SameLine();
-		SliderIntV2("Seconds", &State.Replay_LastSecondsValue, 1, 1200, "%d", ImGuiSliderFlags_AlwaysClamp);
+		SliderIntV2("Segundos", &State.Replay_LastSecondsValue, 1, 1200, "%d", ImGuiSliderFlags_AlwaysClamp);
 
-		if (ToggleButton("Clear After Meeting", &State.Replay_ClearAfterMeeting))
+		if (ToggleButton("Limpiar tras Reunion", &State.Replay_ClearAfterMeeting))
 		{
 			State.Save();
 		}
 
-		if (ToggleButton("Draw Player Icons", &State.Replay_DrawIcons))
+		if (ToggleButton("Dibujar Iconos de Jugadores", &State.Replay_DrawIcons))
 		{
 			State.Save();
 		}
 
-		if (ImGui::ColorEdit4("Replay Map Color",
+		if (ImGui::ColorEdit4("Color del Mapa de Repeticion",
 			(float*)&State.SelectedReplayMapColor,
 			ImGuiColorEditFlags__OptionsDefault
 			| ImGuiColorEditFlags_NoInputs

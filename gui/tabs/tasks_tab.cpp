@@ -184,20 +184,20 @@ namespace TasksTab {
 				(tasks.size() != 0 || (IsHost() && gameFlowHns->fields.currentHideTime > 0.f))) {
 				GameOptions options;
 
-				if (options.GetGameMode() == GameModes__Enum::HideNSeek && AnimatedButton("Drain Hide Timer")) {
+				if (options.GetGameMode() == GameModes__Enum::HideNSeek && AnimatedButton("Vaciar Tiempo de Escondite")) {
 					DrainHideTimer();
 				}
 				ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 			}
 
 			if (tasks.size() != tasksCompleted) {
-				if (AnimatedButton("Complete All Tasks")) {
+				if (AnimatedButton("Completar Todas las Tareas")) {
 					CompleteAllTasks();
 				}
 				ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
 			}
 			if (!State.SafeMode) ImGui::SameLine();
-			if (!State.SafeMode && AnimatedButton("Complete Everyone's Tasks")) {
+			if (!State.SafeMode && AnimatedButton("Completar Tareas de Todos")) {
 				for (auto player : GetAllPlayerControl()) {
 					CompleteAllTasks(player);
 				}
@@ -208,11 +208,11 @@ namespace TasksTab {
 
 			for (size_t i = 0; i < tasks.size(); ++i) {
 				auto task = tasks[i];
-				if (!NormalPlayerTask_get_IsComplete(task, NULL) && AnimatedButton(("Complete##" + std::to_string(task->fields._._Id_k__BackingField)).c_str())) {
+				if (!NormalPlayerTask_get_IsComplete(task, NULL) && AnimatedButton(("Completar##" + std::to_string(task->fields._._Id_k__BackingField)).c_str())) {
 					State.taskRpcQueue.push(new RpcCompleteTask(task->fields._._Id_k__BackingField));
 				}
 				else if (NormalPlayerTask_get_IsComplete(task, NULL)) {
-					ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), ("Completed!##" + std::to_string(task->fields._._Id_k__BackingField)).c_str());
+					ColoredButton(ImVec4(0.f, 1.f, 0.f, 1.f), ("¡Completada!##" + std::to_string(task->fields._._Id_k__BackingField)).c_str());
 				}
 
 				ImGui::SameLine();
@@ -232,25 +232,25 @@ namespace TasksTab {
 			}
 
 			GameOptions options;
-			if (!options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false) && ToggleButton("Bypass Visual Tasks Being Off", &State.BypassVisualTasks))
+			if (!options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false) && ToggleButton("Forzar Tareas Visuales (Aunque esten apagadas)", &State.BypassVisualTasks))
 				State.Save();
 
 			if (!State.BypassVisualTasks && options.GetGameMode() == GameModes__Enum::Normal && !options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false)) {
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Visual tasks are turned OFF in this lobby.");
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Any animations (other than cameras) are client-sided only!");
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Las tareas visuales estan DESACTIVADAS en esta sala.");
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "¡Cualquier animacion (salvo camaras) solo sera visible para ti!");
 			}
 			else if (!State.BypassVisualTasks && options.GetGameMode() == GameModes__Enum::HideNSeek)
-				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Animations other than cameras are client-sided only in Hide n Seek!");
+				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "¡En Las Escondidas, las animaciones solo son visibles para ti!");
 
 			if (State.mapType == Settings::MapType::Ship) {
 				if (!State.BypassVisualTasks && !options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false)) {
-					if (AnimatedButton("Play Shields Animation (Client-sided)"))
+					if (AnimatedButton("Activar Escudos (Solo para ti)"))
 					{
 						State.rpcQueue.push(new RpcPlayAnimation(1));
 					}
 				}
 				else {
-					if (AnimatedButton("Play Shields Animation"))
+					if (AnimatedButton("Activar Escudos"))
 					{
 						State.rpcQueue.push(new RpcPlayAnimation(1));
 					}
@@ -259,13 +259,13 @@ namespace TasksTab {
 
 			if (State.mapType == Settings::MapType::Ship) {
 				if (!State.BypassVisualTasks && !options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false)) {
-					if (AnimatedButton("Play Trash Animation (Client-sided)"))
+					if (AnimatedButton("Expulsar Desechos (Solo para ti)"))
 					{
 						State.rpcQueue.push(new RpcPlayAnimation(10));
 					}
 				}
 				else {
-					if (AnimatedButton("Play Trash Animation"))
+					if (AnimatedButton("Expulsar Desechos (Basura)"))
 					{
 						State.rpcQueue.push(new RpcPlayAnimation(10));
 					}
@@ -275,13 +275,13 @@ namespace TasksTab {
 			if (State.mapType == Settings::MapType::Ship || State.mapType == Settings::MapType::Pb) {
 
 				if (!State.BypassVisualTasks && !options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false)) {
-					if (ToggleButton("Play Weapons Animation (Client-sided)", &State.PlayWeaponsAnimation))
+					if (ToggleButton("Disparar Armeria (Solo para ti)", &State.PlayWeaponsAnimation))
 					{
 						State.Save();
 					}
 				}
 				else {
-					if (ToggleButton("Play Weapons Animation", &State.PlayWeaponsAnimation))
+					if (ToggleButton("Disparar Armeria", &State.PlayWeaponsAnimation))
 					{
 						State.Save();
 					}
@@ -289,7 +289,7 @@ namespace TasksTab {
 			}
 
 			if (!State.BypassVisualTasks && !options.GetBool(app::BoolOptionNames__Enum::VisualTasks, false)) {
-				if (ToggleButton("Play Medbay Scan Animation (Client-sided)", &State.PlayMedbayScan))
+				if (ToggleButton("Escaner Medico (Solo para ti)", &State.PlayMedbayScan))
 				{
 					if (State.PlayMedbayScan)
 					{
@@ -302,7 +302,7 @@ namespace TasksTab {
 				}
 			}
 			else {
-				if (ToggleButton("Play Medbay Scan Animation", &State.PlayMedbayScan))
+				if (ToggleButton("Escaner Medico (Medbay)", &State.PlayMedbayScan))
 				{
 					if (State.PlayMedbayScan)
 					{
@@ -315,7 +315,7 @@ namespace TasksTab {
 				}
 			}
 
-			if (!(State.mapType == Settings::MapType::Hq || State.mapType == Settings::MapType::Fungle) && ToggleButton("Fake Cameras In Use", &State.FakeCameraUsage)) {
+			if (!(State.mapType == Settings::MapType::Hq || State.mapType == Settings::MapType::Fungle) && ToggleButton("Fingir Camaras en Uso", &State.FakeCameraUsage)) {
 				State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Security, (State.FakeCameraUsage ? 1 : 0)));
 			}
 

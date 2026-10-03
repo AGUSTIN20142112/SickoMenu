@@ -391,7 +391,7 @@ namespace Menu {
 			ImGui::BeginChild("###SickoMenu", ImVec2(90 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
 			// Search field
 			ImGui::SetNextItemWidth(70 * State.dpiScale); // Adjust the width of the input box
-			if (InputStringWithHint("##Search", "Search...", &State.searchQuery)/* && State.AprilFoolsMode*/) {
+			if (InputStringWithHint("##Search", "Buscar...", &State.searchQuery)/* && State.AprilFoolsMode*/) {
 				/*if (ToLower(searchQuery) == StrRev("nosduh")) {
 					State.AprilFoolsMode = !State.AprilFoolsMode;
 					if (!State.AprilFoolsMode) State.DiddyPartyMode = false;
@@ -405,40 +405,40 @@ namespace Menu {
 				State.searchQuery = "";
 			}
 
-			if (ImGui::Selectable("About", openAbout)) {
+			if (ImGui::Selectable("Acerca de", openAbout)) {
 				CloseAllOtherTabs(Tabs::About);
 			}
-			if (ImGui::Selectable("Settings", openSettings)) {
+			if (ImGui::Selectable("Ajustes", openSettings)) {
 				CloseAllOtherTabs(Tabs::Settings);
 			}
-			if (ImGui::Selectable("Game", openGame)) {
+			if (ImGui::Selectable("Partida", openGame)) {
 				CloseAllOtherTabs(Tabs::Game);
 			}
-			if (ImGui::Selectable("Self", openSelf)) {
+			if (ImGui::Selectable("Personaje", openSelf)) {
 				CloseAllOtherTabs(Tabs::Self);
 			}
 			if (ImGui::Selectable("Radar", openRadar)) {
 				CloseAllOtherTabs(Tabs::Radar);
 			}
-			if (ImGui::Selectable("Replay", openReplay)) {
+			if (ImGui::Selectable("Repeticion", openReplay)) {
 				CloseAllOtherTabs(Tabs::Replay);
 			}
-			if (ImGui::Selectable("ESP", openEsp)) {
+			if (ImGui::Selectable("ESP (Vision)", openEsp)) {
 				CloseAllOtherTabs(Tabs::Esp);
 			}
-			if ((IsInGame() || IsInLobby()) && ImGui::Selectable("Players", openPlayers)) {
+			if ((IsInGame() || IsInLobby()) && ImGui::Selectable("Jugadores", openPlayers)) {
 				CloseAllOtherTabs(Tabs::Players);
 			}
-			if (((IsInGame() && GetPlayerData(*Game::pLocalPlayer)->fields.Tasks != NULL) || (IsInLobby() && IsHost())) && ImGui::Selectable("Tasks", openTasks)) {
+			if (((IsInGame() && GetPlayerData(*Game::pLocalPlayer)->fields.Tasks != NULL) || (IsInLobby() && IsHost())) && ImGui::Selectable("Tareas", openTasks)) {
 				CloseAllOtherTabs(Tabs::Tasks);
 			}
-			if (IsInGame() && ShipStatus__TypeInfo->static_fields->Instance != NULL && ImGui::Selectable("Sabotage", openSabotage)) {
+			if (IsInGame() && ShipStatus__TypeInfo->static_fields->Instance != NULL && ImGui::Selectable("Sabotaje", openSabotage)) {
 				CloseAllOtherTabs(Tabs::Sabotage);
 			}
-			if ((IsInGame() && !State.mapDoors.empty()) && ImGui::Selectable("Doors", openDoors)) {
+			if ((IsInGame() && !State.mapDoors.empty()) && ImGui::Selectable("Puertas", openDoors)) {
 				CloseAllOtherTabs(Tabs::Doors);
 			}
-			if (IsHost() && ImGui::Selectable("Host", openHost)) {
+			if (IsHost() && ImGui::Selectable("Anfitrion", openHost)) {
 				CloseAllOtherTabs(Tabs::Host);
 			}
 #ifdef _DEBUG
@@ -452,7 +452,7 @@ namespace Menu {
 			ImVec4 GreenCol = ImVec4(0.f, 1.f, 0.f, 1.f);
 			if (!isPanicWarning) {
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() - 90 * State.dpiScale, ImGui::GetWindowHeight() - 20 * State.dpiScale));
-				if (/*!State.AprilFoolsMode && */ColoredButton(PanicCol, "Disable Menu")) {
+				if (/*!State.AprilFoolsMode && */ColoredButton(PanicCol, "Desactivar Menu")) {
 					isPanicWarning = State.PanicWarning;
 					if (!State.PanicWarning) {
 						State.PanicMode = true;
@@ -472,15 +472,15 @@ namespace Menu {
 				ImGui::SetCursorPos(ImVec2(ImGui::GetWindowWidth() - 90 * State.dpiScale,
 					ImGui::GetWindowHeight() - 65 * State.dpiScale));
 				if (!panicKeybind) {
-					ImGui::TextColored(PanicCol, "No Panic");
-					ImGui::TextColored(PanicCol, "Keybind!");
+					ImGui::TextColored(PanicCol, "¡Sin atajo");
+					ImGui::TextColored(PanicCol, "de panico!");
 				}
 				else {
-					ImGui::TextColored(PanicCol, ("Press " + (std::string)KeyBinds::ToString(State.KeyBinds.Toggle_Sicko)).c_str());
-					ImGui::TextColored(PanicCol, ("to re-enable!"));
+					ImGui::TextColored(PanicCol, ("Presiona " + (std::string)KeyBinds::ToString(State.KeyBinds.Toggle_Sicko)).c_str());
+					ImGui::TextColored(PanicCol, ("para reactivar"));
 				}
-				ImGui::TextColored(PanicCol, "Continue?");
-				if (ColoredButton(PanicCol, "Yes")) {
+				ImGui::TextColored(PanicCol, "¿Continuar?");
+				if (ColoredButton(PanicCol, "Si")) {
 					isPanicWarning = false;
 					State.PanicMode = true;
 					State.MIG_ThemeChanged = true;

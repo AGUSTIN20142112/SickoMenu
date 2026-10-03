@@ -79,7 +79,7 @@ namespace DoorsTab {
 				ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Nothing can be sabotaged.");
 			}
 
-			if (AnimatedButton("Close All Doors"))
+			if (AnimatedButton("Cerrar Todas las Puertas"))
 			{
 				for (auto door : State.mapDoors)
 				{
@@ -87,13 +87,13 @@ namespace DoorsTab {
 				}
 			}
 
-			if (AnimatedButton("Close Room Door"))
+			if (AnimatedButton("Cerrar Puerta de la Sala"))
 			{
 				State.rpcQueue.push(new RpcCloseDoorsOfType(GetSystemTypes(GetTrueAdjustedPosition(*Game::pLocalPlayer)), false));
 			}
 
 			if (State.mapType == Settings::MapType::Pb || State.mapType == Settings::MapType::Airship || State.mapType == Settings::MapType::Fungle) {
-				if (AnimatedButton("Open All Doors"))
+				if (AnimatedButton("Abrir Todas las Puertas"))
 				{
 					for (auto door : State.mapDoors)
 					{
@@ -101,13 +101,13 @@ namespace DoorsTab {
 					}
 				}
 
-				if (AnimatedButton("Open Room Door"))
+				if (AnimatedButton("Abrir Puerta de la Sala"))
 				{
 					State.rpcQueue.push(new RpcOpenDoorsOfType(GetSystemTypes(GetTrueAdjustedPosition(*Game::pLocalPlayer))));
 				}
 			}
 
-			if (AnimatedButton("Pin All Doors"))
+			if (AnimatedButton("Bloquear Todas las Puertas"))
 			{
 				for (auto door : State.mapDoors)
 				{
@@ -118,25 +118,25 @@ namespace DoorsTab {
 					}
 				}
 			}
-			if (AnimatedButton("Unpin All Doors"))
+			if (AnimatedButton("Desbloquear Todas las Puertas"))
 			{
 				State.pinnedDoors.clear();
 			}
 
 			ImGui::NewLine();
 			if (!State.selectedDoors.empty()) {
-				if (AnimatedButton(State.selectedDoors.size() == 1 ? "Close Door" : "Close Doors")) {
+				if (AnimatedButton(State.selectedDoors.size() == 1 ? "Cerrar Puerta" : "Cerrar Puertas")) {
 					for (auto door : State.selectedDoors)
 						State.rpcQueue.push(new RpcCloseDoorsOfType(door, false));
 				}
 
-				if (AnimatedButton(State.selectedDoors.size() == 1 ? "Pin Door" : "Pin Doors")) {
+				if (AnimatedButton(State.selectedDoors.size() == 1 ? "Bloquear Puerta" : "Bloquear Puertas")) {
 					for (auto door : State.selectedDoors) {
 						bool isPinned = std::find(State.pinnedDoors.begin(), State.pinnedDoors.end(), door) != State.pinnedDoors.end();
 						if (!isPinned) State.rpcQueue.push(new RpcCloseDoorsOfType(door, true));
 					}
 				}
-				if (AnimatedButton(State.selectedDoors.size() == 1 ? "Unpin Door" : "Unpin Doors")) {
+				if (AnimatedButton(State.selectedDoors.size() == 1 ? "Desbloquear Puerta" : "Desbloquear Puertas")) {
 					for (auto door : State.selectedDoors) {
 						bool isPinned = std::find(State.pinnedDoors.begin(), State.pinnedDoors.end(), door) != State.pinnedDoors.end();
 						if (isPinned) State.pinnedDoors.erase(std::remove(State.pinnedDoors.begin(), State.pinnedDoors.end(), door), State.pinnedDoors.end());
@@ -144,7 +144,7 @@ namespace DoorsTab {
 				}
 
 				if ((State.mapType == Settings::MapType::Pb || State.mapType == Settings::MapType::Airship || State.mapType == Settings::MapType::Fungle) &&
-					AnimatedButton(State.selectedDoors.size() == 1 ? "Open Door" : "Open Doors"))
+					AnimatedButton(State.selectedDoors.size() == 1 ? "Abrir Puerta" : "Abrir Puertas"))
 				{
 					for (auto door : State.selectedDoors)
 						State.rpcQueue.push(new RpcOpenDoorsOfType(door));

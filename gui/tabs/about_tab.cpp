@@ -36,17 +36,17 @@ namespace AboutTab {
     void Render() {
         ImGui::SameLine(100 * State.dpiScale);
         ImGui::BeginChild("###AboutButtons", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
-        if (TabGroup("Welcome", openWelcome)) {
+        if (TabGroup("Bienvenido", openWelcome)) {
             CloseOtherGroups(Groups::Welcome);
         }
         ImGui::SameLine();
-        if (TabGroup("Credits", openCredits)) {
+        if (TabGroup("Creditos", openCredits)) {
             CloseOtherGroups(Groups::Credits);
         }
 
         ImGui::BeginChild("###About", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
         if (openWelcome) {
-            ImGui::Text(std::format("Welcome {}to ", State.HasOpenedMenuBefore ? "back " : "").c_str());
+            ImGui::Text(std::format("¡Bienvenido{} a ", State.HasOpenedMenuBefore ? " de nuevo" : "").c_str());
             ImGui::SameLine(0.0f, 0.0f);
             ImGui::TextColored(SickoCol, "SickoMenu");
             ImGui::SameLine(0.0f, 0.0f);
@@ -55,7 +55,7 @@ namespace AboutTab {
             else
                 ImGui::TextColored(GoldCol, std::format(" {}", State.SickoVersion).c_str());
             ImGui::SameLine(0.0f, 0.0f);
-            ImGui::Text(" by ");
+            ImGui::Text(" por ");
             ImGui::SameLine(0.0f, 0.0f);
             ImGui::TextColored(GoatCol, "g0aty");
             ImGui::SameLine(0.0f, 0.0f);
@@ -63,39 +63,39 @@ namespace AboutTab {
 
             ImGui::TextColored(SickoCol, "SickoMenu");
             ImGui::SameLine(0.0f, 0.0f);
-            ImGui::Text(" is a powerful utility for Among Us.");
-            ImGui::Text("It aims to improve the game experience for all players!");
-            ImGui::Text("Use the \"Check for Updates\" button to download the latest release!");
+            ImGui::Text(" es una potente utilidad para Among Us.");
+            ImGui::Text("¡Busca mejorar la experiencia de juego para todos!");
+            ImGui::Text("¡Usa el boton \"Buscar Actualizaciones\" para descargar la version mas reciente!");
             if (ColoredButton(DevCol, "GitHub")) {
                 OpenLink("https://github.com/g0aty/SickoMenu");
             }
             ImGui::SameLine();
-            if (ColoredButton(GoldCol, "Check for Updates")) {
+            if (ColoredButton(GoldCol, "Buscar Actualizaciones")) {
                 OpenLink("https://github.com/g0aty/SickoMenu/releases/latest");
             }
             ImGui::SameLine();
-            if (ColoredButton(State.RgbColor, "Donate")) {
+            if (ColoredButton(State.RgbColor, "Donar")) {
                 OpenLink("https://ko-fi.com/g0aty");
             }
-            ImGui::Text("Join the Discord server for support, bug reports, and sneak peeks!");
-            if (ColoredButton(ContributorCol, "Join our Discord!")) {
+            ImGui::Text("¡Unete al servidor de Discord para soporte, reportes y novedades!");
+            if (ColoredButton(ContributorCol, "¡Unirse a Discord!")) {
                 OpenLink("https://dsc.gg/sickos"); //SickoMenu discord invite
             }
 
             ImGui::TextColored(SickoCol, "SickoMenu");
             ImGui::SameLine(0.0f, 0.0f);
-            ImGui::Text(" is free and open-source software.");
+            ImGui::Text(" es software libre y de codigo abierto.");
 
             if (State.SickoVersion.find("pr") != std::string::npos || State.SickoVersion.find("rc") != std::string::npos) {
-                if (State.SickoVersion.find("pr") != std::string::npos) ImGui::TextColored(State.RgbColor, "You have access to pre-releases, enjoy!");
-                else ImGui::TextColored(State.RgbColor, "You have access to the release candidate, enjoy!");
-                BoldText("If you don't have access to the pre-release builds channel on our Discord and haven't self", ImVec4(0.f, 1.f, 0.f, 1.f));
-                BoldText("compiled, please report it to our support staff by making a ticket on our Discord server!", ImVec4(0.f, 1.f, 0.f, 1.f));
+                if (State.SickoVersion.find("pr") != std::string::npos) ImGui::TextColored(State.RgbColor, "Tienes acceso a versiones previas, ¡disfrutalo!");
+                else ImGui::TextColored(State.RgbColor, "Tienes acceso a la release candidate, ¡disfrutalo!");
+                BoldText("Si no tienes acceso al canal de pre-releases en Discord y no compilaste tu mismo,", ImVec4(0.f, 1.f, 0.f, 1.f));
+                BoldText("por favor reportalo creando un ticket en nuestro servidor de Discord.", ImVec4(0.f, 1.f, 0.f, 1.f));
             }
             else {
-                ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "If you've paid for this menu, demand a refund immediately.");
-                BoldText("Make sure you have downloaded the latest version of SickoMenu from GitHub or our", ImVec4(0.f, 1.f, 0.f, 1.f));
-                BoldText("official Discord!", ImVec4(0.f, 1.f, 0.f, 1.f));
+                ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Si pagaste por este menu, exige un reembolso de inmediato.");
+                BoldText("Asegurate de haber descargado la ultima version de SickoMenu desde GitHub o", ImVec4(0.f, 1.f, 0.f, 1.f));
+                BoldText("nuestro Discord oficial!", ImVec4(0.f, 1.f, 0.f, 1.f));
             }
             //hopefully stop people from reselling a foss menu for actual money
 

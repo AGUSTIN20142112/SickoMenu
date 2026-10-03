@@ -103,20 +103,20 @@ namespace SabotageTab {
             ImGui::Separator();
             ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
         }
-        if (AnimatedButton("Repair Sabotage")) {
+        if (AnimatedButton("Reparar Sabotaje")) {
             RepairSabotage(*Game::pLocalPlayer);
         }
 
-        if (ToggleButton("Auto Repair Sabotages", &State.AutoRepairSabotage)) {
+        if (ToggleButton("Auto-Reparar Sabotajes", &State.AutoRepairSabotage)) {
             State.Save();
         }
 
         ImGui::NewLine();
         if (State.DisableSabotages)
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Sabotages have been disabled. Nothing can be sabotaged.");
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Los sabotajes han sido desactivados. Nada puede sabotearse.");
         //i skidded some code from https://github.com/scp222thj/MalumMenu/
 
-        if (AnimatedButton("Sabotage All")) {
+        if (AnimatedButton("Sabotear Todo")) {
             if (State.mapType != Settings::MapType::Fungle) {
                 for (uint32_t i = 0; i < 5; i++)
                     State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Electrical, i));
@@ -138,7 +138,7 @@ namespace SabotageTab {
             State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Comms, 128));
         }
 
-        if (AnimatedButton("Random Sabotage")) {
+        if (AnimatedButton("Sabotaje Aleatorio")) {
             switch (State.mapType) {
             case Settings::MapType::Pb:
             {
@@ -196,36 +196,36 @@ namespace SabotageTab {
             }
         }
 
-        if (State.mapType != Settings::MapType::Fungle && AnimatedButton("Sabotage Lights")) {
+        if (State.mapType != Settings::MapType::Fungle && AnimatedButton("Sabotear Luces")) {
             for (uint32_t i = 0; i < 5; i++)
                 State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Electrical, i));
         }
         if (State.mapType == Settings::MapType::Ship || State.mapType == Settings::MapType::Hq || State.mapType == Settings::MapType::Fungle) {
-            if (AnimatedButton("Sabotage Reactor")) {
+            if (AnimatedButton("Sabotear Reactor")) {
                 State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Reactor, 128));
             }
         }
         else if (State.mapType == Settings::MapType::Pb) {
-            if (AnimatedButton("Sabotage Seismic Stabilizers")) {
+            if (AnimatedButton("Sabotear Estabilizadores Sismicos")) {
                 State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Laboratory, 128));
             }
         }
         else if (State.mapType == Settings::MapType::Airship) {
-            if (AnimatedButton("Sabotage Crash Course")) {
+            if (AnimatedButton("Sabotear Curso de Colision")) {
                 State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::HeliSabotage, 128));
             }
         }
         if (State.mapType == Settings::MapType::Ship || State.mapType == Settings::MapType::Hq) {
-            if (AnimatedButton("Sabotage Oxygen")) {
+            if (AnimatedButton("Sabotear Oxigeno")) {
                 State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::LifeSupp, 128));
             }
         }
         if (State.mapType == Settings::MapType::Fungle) {
-            if (AnimatedButton("Activate Mushroom Mixup")) {
+            if (AnimatedButton("Activar Mezcla de Hongos")) {
                 State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::MushroomMixupSabotage, 1));
             }
         }
-        if (AnimatedButton("Sabotage Comms")) {
+        if (AnimatedButton("Sabotear Comunicaciones")) {
             State.rpcQueue.push(new RpcUpdateSystem(SystemTypes__Enum::Comms, 128));
         }
 
@@ -234,7 +234,7 @@ namespace SabotageTab {
         ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
 
         if (State.mapType != Settings::MapType::Fungle) {
-            if (ToggleButton("Disable Lights", &State.DisableLights)) {
+            if (ToggleButton("Apagar Luces", &State.DisableLights)) {
                 if (auto switchSystem = (SwitchSystem*)il2cpp::Dictionary((*Game::pShipStatus)->fields.Systems)[SystemTypes__Enum::Electrical]) {
                     auto actualSwitches = switchSystem->fields.ActualSwitches;
                     auto expectedSwitches = switchSystem->fields.ExpectedSwitches;
@@ -247,17 +247,17 @@ namespace SabotageTab {
                 }
             }
             ImGui::SameLine();
-            if (ToggleButton("Disable Lights [Auto Moving Switches]", &State.DisableLightSwitches)) State.Save();
+            if (ToggleButton("Apagar Luces [Interruptores Automaticos]", &State.DisableLightSwitches)) State.Save();
         }
 
-        if (ToggleButton("Disable Fix Comms", &State.DisableComms)) State.Save();
+        if (ToggleButton("Impedir Reparar Comunicaciones", &State.DisableComms)) State.Save();
 
-        if (ToggleButton("Spam Sabotage Reactor", &State.DisableReactor)) State.Save();
+        if (ToggleButton("Spam Sabotaje Reactor", &State.DisableReactor)) State.Save();
 
-        if ((State.mapType == Settings::MapType::Ship || State.mapType == Settings::MapType::Hq) && ToggleButton("Spam Sabotage Oxygen", &State.DisableOxygen))
+        if ((State.mapType == Settings::MapType::Ship || State.mapType == Settings::MapType::Hq) && ToggleButton("Spam Sabotaje Oxigeno", &State.DisableOxygen))
             State.Save();
 
-        if (State.mapType == Settings::MapType::Fungle && ToggleButton("Infinite Mushroom Mixup", &State.InfiniteMushroomMixup))
+        if (State.mapType == Settings::MapType::Fungle && ToggleButton("Mezcla de Hongos Infinita", &State.InfiniteMushroomMixup))
             State.Save();
 
         ImGui::EndChild();

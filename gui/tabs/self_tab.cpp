@@ -276,25 +276,25 @@ namespace SelfTab {
         ImGui::BeginChild("###Self", ImVec2(500 * State.dpiScale, 0), true, ImGuiWindowFlags_NoBackground);
         if (openVisuals) {
             ImGui::Dummy(ImVec2(4, 4) * State.dpiScale);
-            if (ToggleButton("Max Vision", &State.MaxVision)) {
+            if (ToggleButton("Vision Maxima", &State.MaxVision)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Wallhack", &State.Wallhack)) {
+            if (ToggleButton("Atravesar Paredes (Wallhack)", &State.Wallhack)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Disable HUD", &State.DisableHud)) {
+            if (ToggleButton("Ocultar HUD (Interfaz)", &State.DisableHud)) {
                 if (!IsInGame()) State.DisableHud = false;
             }
 
-            if (ToggleButton("Freecam", &State.FreeCam)) {
+            if (ToggleButton("Camara Libre", &State.FreeCam)) {
                 State.playerToFollow = {};
                 State.Save();
             }
 
             ImGui::SameLine(130.f * State.dpiScale);
-            SteppedSliderFloat("Speed", &State.FreeCamSpeed, 0.f, 10.f, 0.1f, "%.2fx", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
+            SteppedSliderFloat("Velocidad", &State.FreeCamSpeed, 0.f, 10.f, 0.1f, "%.2fx", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
 
             if (ToggleButton("Zoom", &State.EnableZoom)) {
                 // State.Save();
@@ -309,35 +309,35 @@ namespace SelfTab {
             }
 
             ImGui::SameLine(130.f * State.dpiScale);
-            SteppedSliderFloat("Scale", &State.CameraHeight, 0.5f, 10.0f, 0.5f, "%.2fx", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
+            SteppedSliderFloat("Escala", &State.CameraHeight, 0.5f, 10.0f, 0.5f, "%.2fx", ImGuiSliderFlags_Logarithmic | ImGuiSliderFlags_NoInput);
 
-            if (ToggleButton("Scroll to Zoom / Shift + Scroll to Change Freecam Speed", &State.EnableZoom_ScrollZoom)) {
+            if (ToggleButton("Rueda raton para Zoom / Shift + Rueda para Vel. Camara", &State.EnableZoom_ScrollZoom)) {
                 State.Save();
             }
             
-            if (ToggleButton("Smooth Zoom", &State.EnableZoom_SmoothZoom)) {
+            if (ToggleButton("Zoom Suave", &State.EnableZoom_SmoothZoom)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Show Shadows While Zoomed", &State.EnableZoom_ShowShadows)) {
+            if (ToggleButton("Mostrar Sombras con Zoom", &State.EnableZoom_ShowShadows)) {
                 State.Save();
             }
 
             ImGui::Dummy(ImVec2(7, 7) * State.dpiScale);
 
-            if (ToggleButton("Always show Chat Button", &State.ChatAlwaysActive)) {
+            if (ToggleButton("Boton de Chat Siempre Visible", &State.ChatAlwaysActive)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Allow Ctrl+(C/V) in Chat", &State.ChatPaste)) { //add copying later
+            if (ToggleButton("Permitir Ctrl+(C/V) en Chat", &State.ChatPaste)) { //add copying later
                 State.Save();
             }
 
-            if (ToggleButton("Read Messages by Ghosts", &State.ReadGhostMessages)) {
+            if (ToggleButton("Leer Mensajes de Fantasmas", &State.ReadGhostMessages)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Read and Send SickoChat", &State.ReadAndSendSickoChat)) {
+            if (ToggleButton("Leer y Enviar SickoChat", &State.ReadAndSendSickoChat)) {
                 State.Save();
             }
             if (State.ReadAndSendSickoChat) ImGui::Text("Send SickoChat messages in regular chat by typing \"/sc [message]\"!");
@@ -593,11 +593,11 @@ namespace SelfTab {
         }
 
         if (openUtils) {
-            if (ToggleButton("Unlock Vents", &State.UnlockVents)) {
+            if (ToggleButton("Desbloquear Alcantarillas (Vents)", &State.UnlockVents)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Move While in Vent & Shapeshifting", &State.MoveInVentAndShapeshift)) {
+            if (ToggleButton("Moverse en Alcantarilla y Transformacion", &State.MoveInVentAndShapeshift)) {
                 if (*Game::pLocalPlayer == NULL) State.Save();
                 else if (!State.MoveInVentAndShapeshift && (State.InMeeting || (*Game::pLocalPlayer)->fields.inVent)) {
                     (*Game::pLocalPlayer)->fields.moveable = false;
@@ -605,16 +605,16 @@ namespace SelfTab {
                 }
             }
             ImGui::SameLine();
-            if (ToggleButton("Always Move", &State.AlwaysMove)) {
+            if (ToggleButton("Siempre Moverse", &State.AlwaysMove)) {
                 State.Save();
             }
 
-            if (ToggleButton("Kill Immunity", &State.KillImmunity)) {
+            if (ToggleButton("Inmunidad a Asesinatos", &State.KillImmunity)) {
                 SendKillImmuneToggle(State.KillImmunity);
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("Make Role Abilities Bypass Comms Sabotages", &State.RolesBypassCommsSabotage)) {
+            if (ToggleButton("Habilidades Ignoran Sabotaje Comms", &State.RolesBypassCommsSabotage)) {
                 State.Save();
             }
 
@@ -622,15 +622,15 @@ namespace SelfTab {
                 State.Save();
             }
             ImGui::SameLine();*/
-            if (ToggleButton("Copy Lobby Code on Disconnect", &State.AutoCopyLobbyCode)) {
+            if (ToggleButton("Copiar Codigo de Sala al Desconectar", &State.AutoCopyLobbyCode)) {
                 State.Save();
             }
 
-            if (ToggleButton("NoClip", &State.NoClip)) {
+            if (ToggleButton("Atravesar Paredes (NoClip)", &State.NoClip)) {
                 State.Save();
             }
             ImGui::SameLine();
-            if (ToggleButton("No Seeker Animation", &State.NoSeekerAnim)) State.Save();
+            if (ToggleButton("Sin Animacion de Buscador", &State.NoSeekerAnim)) State.Save();
 
             /*if (ToggleButton("Kill Other Impostors", &State.KillImpostors)) {
                 State.Save();
